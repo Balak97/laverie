@@ -1,0 +1,111 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block contenu %}
+<div class="max-w-7xl mx-auto py-6">
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold text-gray-900">Mon espace</h1>
+        <p class="text-gray-600 mt-2">Bienvenue, {{ user.first_name|default:user.username }}</p>
+    </div>
+
+    <!-- Statistiques (cartes cliquables) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <a href="{% url 'laverie:mes_tickets' %}" class="group block bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:border-cyan-300 hover:shadow-lg transition-all duration-200 active:scale-[0.99]">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-600 text-sm font-medium group-hover:text-cyan-600 transition-colors">Mes tickets laverie</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-2 group-hover:text-cyan-700 transition-colors">{{ mes_tickets|default:0 }}</p>
+                </div>
+                <div class="bg-cyan-100 rounded-full p-3 group-hover:scale-110 transition-transform duration-200">
+                    <svg class="w-8 h-8 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+            </div>
+            <p class="text-xs text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Voir mes tickets →</p>
+        </a>
+
+        <a href="{% url 'signalements:mes_signalements' %}" class="group block bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:border-amber-300 hover:shadow-lg transition-all duration-200 active:scale-[0.99]">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-600 text-sm font-medium group-hover:text-amber-600 transition-colors">Mes signalements</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-2 group-hover:text-amber-700 transition-colors">{{ mes_signalements|default:0 }}</p>
+                </div>
+                <div class="bg-amber-100 rounded-full p-3 group-hover:scale-110 transition-transform duration-200">
+                    <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                </div>
+            </div>
+            <p class="text-xs text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Voir mes signalements →</p>
+        </a>
+
+        <a href="{% url 'signalements:mes_signalements' %}" class="group block bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all duration-200 active:scale-[0.99]">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-600 text-sm font-medium group-hover:text-blue-600 transition-colors">En attente de résolution</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-2 group-hover:text-blue-700 transition-colors">{{ signalements_non_resolus|default:0 }}</p>
+                </div>
+                <div class="bg-blue-100 rounded-full p-3 group-hover:scale-110 transition-transform duration-200">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+            </div>
+            <p class="text-xs text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Suivre l'état →</p>
+        </a>
+    </div>
+
+    <!-- Tickets actifs (encart interactif) -->
+    {% if mes_tickets %}
+    <a href="{% url 'laverie:mes_tickets' %}" class="group block bg-cyan-50 border-2 border-cyan-200 hover:border-cyan-400 hover:bg-cyan-100/50 rounded-xl p-4 mb-6 transition-all duration-200 shadow-sm hover:shadow-md">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="font-semibold text-gray-900 group-hover:text-cyan-800">Réservation(s) laverie en cours</p>
+                <p class="text-sm text-gray-600">{{ mes_tickets }} ticket{{ mes_tickets|pluralize }}</p>
+            </div>
+            <span class="bg-cyan-500 group-hover:bg-cyan-600 text-white px-4 py-2 rounded-lg font-medium transition inline-flex items-center gap-1">
+                Voir mes tickets
+                <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </span>
+        </div>
+    </a>
+    {% endif %}
+
+    <!-- Actions principales (cartes avec hover) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <a href="{% url 'laverie:accueil' %}" class="group block p-6 bg-white rounded-xl shadow-sm border-2 border-gray-200 hover:border-cyan-400 hover:shadow-lg transition-all duration-200 active:scale-[0.99]">
+            <div class="flex items-start gap-4">
+                <span class="flex-shrink-0 w-12 h-12 rounded-xl bg-cyan-100 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">🧺</span>
+                <div class="flex-1 min-w-0">
+                    <h2 class="text-xl font-bold text-gray-900 group-hover:text-cyan-700 mb-2">Laverie</h2>
+                    <p class="text-gray-600 text-sm mb-3">Réserver une machine à laver, consulter les créneaux et mes tickets.</p>
+                    <span class="inline-flex items-center gap-1 text-cyan-600 font-medium group-hover:gap-2 transition-all">Accéder à la laverie →</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="{% url 'signalements:signaler' %}" class="group block p-6 bg-white rounded-xl shadow-sm border-2 border-gray-200 hover:border-amber-400 hover:shadow-lg transition-all duration-200 active:scale-[0.99]">
+            <div class="flex items-start gap-4">
+                <span class="flex-shrink-0 w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">⚠️</span>
+                <div class="flex-1 min-w-0">
+                    <h2 class="text-xl font-bold text-gray-900 group-hover:text-amber-700 mb-2">Signaler un problème</h2>
+                    <p class="text-gray-600 text-sm mb-3">Décrire un problème (équipement, bâtiment, etc.) pour suivi par les agents.</p>
+                    <span class="inline-flex items-center gap-1 text-amber-600 font-medium group-hover:gap-2 transition-all">Créer un signalement →</span>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Lien mes signalements -->
+    <div class="mt-6">
+        <a href="{% url 'signalements:mes_signalements' %}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-gray-900 font-medium transition border border-gray-200 hover:border-gray-300">
+            Voir mes signalements
+            {% if signalements_non_resolus %}
+            <span class="bg-amber-100 text-amber-800 text-xs px-2 py-0.5 rounded-full font-medium">{{ signalements_non_resolus }} en attente</span>
+            {% endif %}
+            <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+    </div>
+</div>
+{% endblock %}

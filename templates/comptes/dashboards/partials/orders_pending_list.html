@@ -1,0 +1,55 @@
+{% for order in orders_pending %}
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-md transition cursor-pointer order-item" data-order-number="{{ order.order_number }}">
+    <div class="flex-1 order-clickable min-w-0">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+            <p class="font-semibold text-sm sm:text-base text-gray-900">#{{ order.order_number }}</p>
+            <span class="text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full bg-orange-100 text-orange-800">
+                En attente
+            </span>
+            <span class="text-[10px] sm:text-xs text-cyan-600 hover:text-cyan-700 font-medium">
+                👁️ Voir détails
+            </span>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-600 mb-1 line-clamp-2">{{ order.shipping_address|truncatewords:8 }}</p>
+        
+        <!-- Afficher un aperçu des produits avec leurs attributs -->
+        <div class="mt-2 space-y-1">
+            {% for item in order.items.all|slice:":3" %}
+            <p class="text-[10px] sm:text-xs text-gray-700 line-clamp-1">
+                <span class="font-medium">{{ item.quantity }}x</span> {{ item.product.name }}
+                {% if item.get_attributes_display %}
+                <span class="text-cyan-600">({{ item.get_attributes_display|truncatechars:20 }})</span>
+                {% endif %}
+            </p>
+            {% endfor %}
+            {% if order.items.count > 3 %}
+            <p class="text-[10px] sm:text-xs text-gray-500 italic">... et {{ order.items.count|add:"-3" }} autre(s) produit(s)</p>
+            {% endif %}
+        </div>
+        
+        <p class="text-[10px] sm:text-xs text-gray-500 mt-2">Créée le {{ order.created_at|date:"d M Y H:i" }}</p>
+        <p class="text-base sm:text-lg font-bold text-gray-900 mt-2 sm:hidden">{{ order.total_amount|floatformat:0 }} FCFA</p>
+    </div>
+    <div class="text-right sm:text-left sm:ml-4 flex-shrink-0" onclick="event.stopPropagation();">
+        <p class="hidden sm:block font-bold text-gray-900 mb-2 text-lg">{{ order.total_amount|floatformat:0 }} FCFA</p>
+        <form method="POST" action="{% url 'assign_coursier_to_order' order.order_number %}" class="flex flex-col sm:flex-row gap-2 sm:gap-2">
+            {% csrf_token %}
+            <input type="hidden" name="package_and_assign" value="1">
+            <select name="coursier_id" class="text-xs sm:text-sm border border-gray-300 rounded-lg px-2 sm:px-3 py-2 sm:mr-2 flex-1 min-w-0" required>
+                <option value="">Sélectionner un livreur</option>
+                {% for coursier in coursiers %}
+                <option value="{{ coursier.id }}">
+                    {{ coursier.get_full_name|default:coursier.email|truncatechars:20 }}
+                </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 active:bg-cyan-700 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm transition whitespace-nowrap">
+                Emballer et Assigner
+            </button>
+        </form>
+    </div>
+</div>
+{% empty %}
+<p class="text-sm sm:text-base text-gray-500 text-center py-4">Aucune commande en attente pour le moment</p>
+{% endfor %}
+

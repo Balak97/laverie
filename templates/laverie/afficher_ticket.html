@@ -1,0 +1,36 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block contenu %}
+<div class="min-h-[70vh] flex flex-col items-center justify-center px-4 py-8">
+    <a href="{% url 'laverie:mes_tickets' %}" class="absolute top-20 right-4 text-indigo-600 hover:text-indigo-700 text-sm font-medium">
+        Fermer
+    </a>
+    <div class="w-full max-w-md bg-white rounded-3xl shadow-xl border-2 border-indigo-200 p-8 text-center">
+        <p class="text-sm text-gray-500 uppercase tracking-wide mb-2">Dortoir 3 — Laverie</p>
+        <p class="text-4xl sm:text-5xl font-black text-indigo-600 mb-6">Ticket #{{ resa.numero|default:resa.pk }}</p>
+        <div class="space-y-4 text-left bg-gray-50 rounded-2xl p-5">
+            <div>
+                <p class="text-xs text-gray-500 uppercase">Machine</p>
+                <p class="text-xl font-bold text-gray-900">{{ resa.machine.nom }}</p>
+            </div>
+            <div>
+                <p class="text-xs text-gray-500 uppercase">Programme</p>
+                <p class="text-lg font-semibold text-gray-800">{{ resa.fonction.nom|default:"—" }} — {{ resa.duree_affichage }}</p>
+            </div>
+            <div>
+                <p class="text-xs text-gray-500 uppercase">Créneau</p>
+                <p class="text-lg font-semibold text-gray-800">{{ resa.debut|date:"d/m/Y" }} · {{ resa.debut|time:"H:i" }} → {{ resa.fin|time:"H:i" }}</p>
+            </div>
+            <div>
+                <p class="text-xs text-gray-500 uppercase">Titulaire</p>
+                <p class="text-lg font-semibold text-gray-800">{{ resa.utilisateur.get_full_name|default:"Utilisateur" }}</p>
+            </div>
+        </div>
+        <p class="mt-6 text-sm font-medium text-amber-700 bg-amber-50 rounded-xl py-2 px-4">
+            Présentez ce ticket à la machine pour éviter les conflits.
+        </p>
+        <p class="mt-4 text-xs text-gray-400">{{ resa.get_statut_display }}</p>
+    </div>
+</div>
+{% endblock %}

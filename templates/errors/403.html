@@ -1,0 +1,10 @@
+{% extends "home.html" %}
+{% block contenu %}
+<div class="text-center py-16 px-4">
+  <h1 class="text-4xl font-bold text-yellow-500">403</h1>
+  <p class="text-gray-600 mt-4 text-lg">Accès interdit. Vous n'avez pas la permission d'accéder à cette page.</p>
+  <a href="{% url 'blog:home' %}" class="mt-6 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+    Retour à l'accueil
+  </a>
+</div>
+{% endblock %}

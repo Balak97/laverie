@@ -1,0 +1,86 @@
+# French (default)
+# Copyright (C) 2025
+# This file is distributed under the same license as the project.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: fr\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Dortoir 3"
+msgstr "Dortoir 3"
+
+msgid "Laverie"
+msgstr "Laverie"
+
+msgid "Messages"
+msgstr "Messages"
+
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+msgid "Log out"
+msgstr "Déconnexion"
+
+msgid "Log in"
+msgstr "Se connecter"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Home"
+msgstr "Accueil"
+
+msgid "Language"
+msgstr "Langue"
+
+msgid "Welcome to Dortoir 3"
+msgstr "Bienvenue au Dortoir 3"
+
+msgid "Services and information for your dormitory."
+msgstr "Services et informations de votre dortoir."
+
+msgid "Book a washing machine online."
+msgstr "Réserver une machine à laver en ligne."
+
+msgid "Report a problem"
+msgstr "Signaler un problème"
+
+msgid "Describe an issue for the team to handle."
+msgstr "Décrire un problème pour que l'équipe le prenne en charge."
+
+msgid "Dortoir 3 — Dormitory services"
+msgstr "Dortoir 3 — Services du dortoir"
+
+msgid "About"
+msgstr "À propos"
+
+msgid "Laundry room"
+msgstr "Salle à laver"
+
+msgid "Book your machine online."
+msgstr "Réservez votre machine en ligne."
+
+msgid "My tickets"
+msgstr "Mes tickets"
+
+msgid "Manage machines"
+msgstr "Gérer les machines"
+
+msgid "It's your turn"
+msgstr "C'est votre tour"
+
+msgid "Ticket"
+msgstr "Ticket"
+
+msgid "Show ticket"
+msgstr "Afficher le ticket"

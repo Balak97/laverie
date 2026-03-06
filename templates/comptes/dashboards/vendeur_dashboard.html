@@ -1,0 +1,444 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block contenu %}
+<div class="max-w-7xl mx-auto py-4 sm:py-6 px-3 sm:px-4">
+    <div class="mb-4 sm:mb-6">
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Dashboard Vendeur</h1>
+        <p class="text-sm sm:text-base text-gray-600 mt-1 sm:mt-2">Gérez vos produits et ventes</p>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
+        <div class="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-200">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                <div class="flex-1 min-w-0">
+                    <p class="text-gray-600 text-xs sm:text-sm font-medium">Produits actifs</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">{{ total_products }}</p>
+                </div>
+                <div class="bg-blue-100 rounded-full p-2 sm:p-3 flex-shrink-0">
+                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-200">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                <div class="flex-1 min-w-0">
+                    <p class="text-gray-600 text-xs sm:text-sm font-medium">Rupture de stock</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-red-600 mt-1 sm:mt-2">{{ out_of_stock }}</p>
+                </div>
+                <div class="bg-red-100 rounded-full p-2 sm:p-3 flex-shrink-0">
+                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-200">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                <div class="flex-1 min-w-0">
+                    <p class="text-gray-600 text-xs sm:text-sm font-medium">Commandes</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">{{ total_orders_with_products }}</p>
+                </div>
+                <div class="bg-green-100 rounded-full p-2 sm:p-3 flex-shrink-0">
+                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1 12H6L5 9z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-200 col-span-2 lg:col-span-1">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                <div class="flex-1 min-w-0">
+                    <p class="text-gray-600 text-xs sm:text-sm font-medium">Chiffre d'affaires</p>
+                    <p class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mt-1 sm:mt-2 break-words">{{ total_sales|floatformat:0 }} FCFA</p>
+                </div>
+                <div class="bg-yellow-100 rounded-full p-2 sm:p-3 flex-shrink-0">
+                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Commandes en attente à emballer -->
+    <div class="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-200 mb-4 sm:mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <h2 class="text-lg sm:text-xl font-bold text-gray-900">Commandes en attente</h2>
+            <div class="flex items-center gap-2 sm:gap-3">
+                <span id="pending-count" class="text-xs sm:text-sm text-gray-600">{{ orders_pending.count }} commande(s)</span>
+                <button id="refresh-btn" class="text-xs sm:text-sm text-cyan-600 hover:text-cyan-700 font-medium flex items-center gap-1 px-2 py-1 hover:bg-cyan-50 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    <span class="hidden sm:inline">Actualiser</span>
+                </button>
+            </div>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-500 mb-4">Cliquez sur une commande pour voir les détails • Emballer la commande et assigner un livreur pour la valider</p>
+        <div id="pending-orders-list" class="space-y-3">
+            {% for order in orders_pending %}
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-md transition cursor-pointer order-item" data-order-number="{{ order.order_number }}">
+                <div class="flex-1 order-clickable min-w-0">
+                    <div class="flex flex-wrap items-center gap-2 mb-2">
+                        <p class="font-semibold text-sm sm:text-base text-gray-900">#{{ order.order_number }}</p>
+                        <span class="text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full bg-orange-100 text-orange-800">
+                            En attente
+                        </span>
+                        <span class="text-[10px] sm:text-xs text-cyan-600 hover:text-cyan-700 font-medium">
+                            👁️ Voir détails
+                        </span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-gray-600 mb-1 line-clamp-2">{{ order.shipping_address|truncatewords:8 }}</p>
+                    <p class="text-[10px] sm:text-xs text-gray-500">Créée le {{ order.created_at|date:"d M Y H:i" }}</p>
+                    <p class="text-base sm:text-lg font-bold text-gray-900 mt-2 sm:hidden">{{ order.total_amount|floatformat:0 }} FCFA</p>
+                </div>
+                <div class="text-right sm:text-left sm:ml-4 flex-shrink-0" onclick="event.stopPropagation();">
+                    <p class="hidden sm:block font-bold text-gray-900 mb-2 text-lg">{{ order.total_amount|floatformat:0 }} FCFA</p>
+                    <form method="POST" action="{% url 'assign_coursier_to_order' order.order_number %}" class="flex flex-col sm:flex-row gap-2 sm:gap-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="package_and_assign" value="1">
+                        <select name="coursier_id" class="text-xs sm:text-sm border border-gray-300 rounded-lg px-2 sm:px-3 py-2 sm:mr-2 flex-1 min-w-0" required>
+                            <option value="">Sélectionner un livreur</option>
+                            {% for coursier in coursiers %}
+                            <option value="{{ coursier.id }}">
+                                {{ coursier.get_full_name|default:coursier.email|truncatechars:20 }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 active:bg-cyan-700 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm transition whitespace-nowrap">
+                            Emballer et Assigner
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-sm sm:text-base text-gray-500 text-center py-4">Aucune commande en attente pour le moment</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Gestion des coursiers -->
+    <div class="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-200 mb-4 sm:mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3 sm:mb-4">
+            <h2 class="text-lg sm:text-xl font-bold text-gray-900">Gérer les livreurs</h2>
+            <a href="{% url 'list_users' %}" class="text-xs sm:text-sm text-cyan-500 hover:text-cyan-600 font-medium px-3 py-2 bg-cyan-50 rounded-lg hover:bg-cyan-100 transition inline-block text-center">
+                Promouvoir un utilisateur en livreur
+            </a>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-600">Les utilisateurs s'inscrivent comme clients. Vous pouvez les promouvoir en livreurs depuis la liste des utilisateurs.</p>
+    </div>
+
+    <!-- Commandes emballées (sans coursier assigné) -->
+    <div class="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-200 mb-4 sm:mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+            <h2 class="text-lg sm:text-xl font-bold text-gray-900">Commandes emballées à assigner</h2>
+            <span id="to-assign-count" class="text-xs sm:text-sm text-gray-600">{{ orders_to_assign.count }} commande(s)</span>
+        </div>
+        <div id="to-assign-orders-list" class="space-y-3">
+            {% for order in orders_to_assign %}
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <div class="flex-1 min-w-0">
+                    <div class="flex flex-wrap items-center gap-2 mb-2">
+                        <p class="font-semibold text-sm sm:text-base text-gray-900">#{{ order.order_number }}</p>
+                        <span class="text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full bg-blue-100 text-blue-800">
+                            Emballé
+                        </span>
+                        {% if order.coursier %}
+                        <span class="text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full bg-green-100 text-green-800">
+                            Assigné à {{ order.coursier.get_full_name|default:order.coursier.email|truncatechars:15 }}
+                        </span>
+                        {% else %}
+                        <span class="text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full bg-yellow-100 text-yellow-800">
+                            Non assigné
+                        </span>
+                        {% endif %}
+                    </div>
+                    <p class="text-xs sm:text-sm text-gray-600 mb-1 line-clamp-2">{{ order.shipping_address|truncatewords:8 }}</p>
+                    <p class="text-[10px] sm:text-xs text-gray-500">Créée le {{ order.created_at|date:"d M Y H:i" }}</p>
+                    <p class="text-base sm:text-lg font-bold text-gray-900 mt-2 sm:hidden">{{ order.total_amount|floatformat:0 }} FCFA</p>
+                </div>
+                <div class="text-right sm:text-left sm:ml-4 flex-shrink-0">
+                    <p class="hidden sm:block font-bold text-gray-900 mb-2 text-lg">{{ order.total_amount|floatformat:0 }} FCFA</p>
+                    <form method="POST" action="{% url 'assign_coursier_to_order' order.order_number %}" class="flex flex-col sm:flex-row gap-2 sm:gap-2">
+                        {% csrf_token %}
+                        <select name="coursier_id" class="text-xs sm:text-sm border border-gray-300 rounded-lg px-2 sm:px-3 py-2 sm:mr-2 flex-1 min-w-0">
+                            <option value="">Sélectionner un livreur</option>
+                            {% for coursier in coursiers %}
+                            <option value="{{ coursier.id }}" {% if order.coursier == coursier %}selected{% endif %}>
+                                {{ coursier.get_full_name|default:coursier.email|truncatechars:20 }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 active:bg-cyan-700 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm transition whitespace-nowrap">
+                            Assigner
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-sm sm:text-base text-gray-500 text-center py-4">Aucune commande emballée pour le moment</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Mes produits -->
+    <div class="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <h2 class="text-lg sm:text-xl font-bold text-gray-900">Mes produits récents</h2>
+            <a href="{% url 'home' %}" class="text-xs sm:text-sm text-cyan-500 hover:text-cyan-600 font-medium px-3 py-2 bg-cyan-50 rounded-lg hover:bg-cyan-100 transition inline-block text-center sm:inline">
+                Voir tous les produits
+            </a>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+            {% for product in my_products %}
+            <a href="{% url 'product_detail' product.slug %}" class="block">
+                <div class="bg-gray-50 rounded-lg overflow-hidden hover:shadow-md transition">
+                    {% if product.image %}
+                        <div class="w-full h-24 sm:h-28 md:h-32 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+                        </div>
+                    {% else %}
+                        <div class="w-full h-24 sm:h-28 md:h-32 bg-gray-100 flex items-center justify-center">
+                            <span class="text-gray-400 text-xl sm:text-2xl">📷</span>
+                        </div>
+                    {% endif %}
+                    <div class="p-2 sm:p-3">
+                        <p class="text-[10px] sm:text-xs font-semibold text-gray-800 truncate line-clamp-2 min-h-[2rem]">{{ product.name }}</p>
+                        <p class="text-[10px] sm:text-xs text-gray-600 mt-1">Stock: {{ product.stock }}</p>
+                        <p class="text-xs sm:text-sm font-bold text-gray-900 mt-1">{{ product.base_price|floatformat:0 }} FCFA</p>
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+            <div class="col-span-full text-center py-6 sm:py-8 text-gray-500 text-sm sm:text-base">
+                Aucun produit disponible
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour afficher les détails de la commande -->
+<div id="orderModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-white rounded-xl sm:rounded-2xl shadow-xl max-w-3xl w-full max-h-[95vh] sm:max-h-[90vh] flex flex-col">
+        <div class="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 flex-shrink-0">
+            <h3 class="text-lg sm:text-xl font-bold text-gray-900" id="modalOrderNumber">Détails de la commande</h3>
+            <button onclick="closeOrderModal()" class="text-gray-500 hover:text-gray-700 p-1 hover:bg-gray-100 rounded-lg transition">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="flex-1 p-4 sm:p-6 overflow-y-auto" id="modalContent">
+            <div class="text-center py-8">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-600 mx-auto"></div>
+                <p class="text-gray-600 mt-4">Chargement des détails...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let refreshInterval = null;
+
+// Fonction pour ouvrir le modal avec les détails de la commande
+function openOrderModal(orderNumber) {
+    const modal = document.getElementById('orderModal');
+    const modalContent = document.getElementById('modalContent');
+    const modalOrderNumber = document.getElementById('modalOrderNumber');
+    
+    modalOrderNumber.textContent = `Commande #${orderNumber}`;
+    modal.classList.remove('hidden');
+    modalContent.innerHTML = `
+        <div class="text-center py-8">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-600 mx-auto"></div>
+            <p class="text-gray-600 mt-4">Chargement des détails...</p>
+        </div>
+    `;
+    
+    // Récupérer les détails via AJAX
+    fetch(`/api/order/${orderNumber}/details/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const order = data.order;
+                let itemsHtml = '';
+                order.items.forEach(item => {
+                    itemsHtml += `
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            ${item.image ? `<img src="${item.image}" alt="${item.name}" class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg flex-shrink-0">` : '<div class="w-16 h-16 sm:w-20 sm:h-20 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0"><span class="text-gray-400 text-xl sm:text-2xl">📷</span></div>'}
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm sm:text-base font-semibold text-gray-900 line-clamp-2">${item.name}</h4>
+                                ${item.attributes ? `<p class="text-xs sm:text-sm text-cyan-600 mt-1 break-words"><span class="font-medium">Spécifications:</span> ${item.attributes}</p>` : ''}
+                                <div class="flex flex-wrap gap-2 sm:gap-3 mt-2">
+                                    <p class="text-xs sm:text-sm text-gray-600">Quantité: ${item.quantity}</p>
+                                    <p class="text-xs sm:text-sm text-gray-600">Prix unitaire: ${item.price.toFixed(0)} FCFA</p>
+                                </div>
+                            </div>
+                            <div class="text-left sm:text-right w-full sm:w-auto">
+                                <p class="text-base sm:text-lg font-bold text-gray-900">${item.total.toFixed(0)} FCFA</p>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                modalContent.innerHTML = `
+                    <div class="space-y-4 sm:space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                            <div>
+                                <p class="text-xs sm:text-sm text-gray-600 mb-1">Statut</p>
+                                <p class="text-sm sm:text-base font-semibold text-gray-900">${order.status}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs sm:text-sm text-gray-600 mb-1">Date</p>
+                                <p class="text-sm sm:text-base font-semibold text-gray-900">${order.created_at}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs sm:text-sm text-gray-600 mb-1">Client</p>
+                                <p class="text-sm sm:text-base font-semibold text-gray-900 break-words">${order.user_email}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs sm:text-sm text-gray-600 mb-1">Téléphone</p>
+                                <p class="text-sm sm:text-base font-semibold text-gray-900">${order.user_phone || 'Non renseigné'}</p>
+                            </div>
+                            <div class="sm:col-span-2">
+                                <p class="text-xs sm:text-sm text-gray-600 mb-1">Mode de paiement</p>
+                                <p class="text-sm sm:text-base font-semibold text-gray-900">${order.payment_method}</p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <p class="text-xs sm:text-sm text-gray-600 mb-2">Adresse de livraison</p>
+                            <p class="text-sm sm:text-base text-gray-900 bg-gray-50 p-3 rounded-lg border border-gray-200 break-words">${order.shipping_address}</p>
+                        </div>
+                        
+                        <div>
+                            <p class="text-xs sm:text-sm text-gray-600 mb-3 font-semibold">Articles de la commande</p>
+                            <div class="space-y-2 sm:space-y-3">
+                                ${itemsHtml}
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 pt-3 sm:pt-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-base sm:text-lg font-bold text-gray-900">Total</span>
+                                <span class="text-xl sm:text-2xl font-bold text-cyan-600">${order.total_amount.toFixed(0)} FCFA</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                modalContent.innerHTML = `
+                    <div class="text-center py-8">
+                        <p class="text-red-600">Erreur: ${data.error || 'Impossible de charger les détails'}</p>
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            modalContent.innerHTML = `
+                <div class="text-center py-8">
+                    <p class="text-red-600">Une erreur s'est produite lors du chargement</p>
+                </div>
+            `;
+        });
+}
+
+// Fonction pour fermer le modal
+function closeOrderModal() {
+    document.getElementById('orderModal').classList.add('hidden');
+}
+
+// Fermer le modal si on clique en dehors
+document.getElementById('orderModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeOrderModal();
+    }
+});
+
+// Fonction pour rafraîchir les commandes
+function refreshOrders() {
+    fetch('/api/orders/refresh/')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Mettre à jour les compteurs
+                document.getElementById('pending-count').textContent = `${data.pending_count} commande(s)`;
+                document.getElementById('to-assign-count').textContent = `${data.to_assign_count} commande(s)`;
+                
+                // Mettre à jour les listes si elles ont changé
+                if (data.pending_html) {
+                    const pendingList = document.getElementById('pending-orders-list');
+                    pendingList.innerHTML = data.pending_html;
+                    // Toujours réattacher les listeners après mise à jour
+                    attachOrderListeners();
+                }
+                
+                if (data.to_assign_html) {
+                    document.getElementById('to-assign-orders-list').innerHTML = data.to_assign_html;
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Erreur lors du rafraîchissement:', error);
+        });
+}
+
+// Fonction pour réattacher les listeners sur les commandes
+function attachOrderListeners() {
+    document.querySelectorAll('.order-item').forEach(item => {
+        const orderNumber = item.dataset.orderNumber;
+        if (!orderNumber) return;
+        
+        const clickableDiv = item.querySelector('.order-clickable');
+        if (clickableDiv) {
+            // Supprimer tous les anciens listeners pour éviter les duplications
+            const newClickableDiv = clickableDiv.cloneNode(true);
+            clickableDiv.parentNode.replaceChild(newClickableDiv, clickableDiv);
+            
+            // Ajouter le nouveau listener sur le nouvel élément
+            newClickableDiv.addEventListener('click', function(e) {
+                e.stopPropagation();
+                openOrderModal(orderNumber);
+            });
+        }
+    });
+}
+
+// Rafraîchissement automatique toutes les 10 secondes
+document.addEventListener('DOMContentLoaded', function() {
+    attachOrderListeners();
+    
+    // Rafraîchir automatiquement toutes les 10 secondes
+    refreshInterval = setInterval(refreshOrders, 10000);
+    
+    // Bouton de rafraîchissement manuel
+    document.getElementById('refresh-btn').addEventListener('click', function() {
+        refreshOrders();
+    });
+    
+    // Arrêter le rafraîchissement automatique quand la page n'est plus visible
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+                refreshInterval = null;
+            }
+        } else {
+            if (!refreshInterval) {
+                refreshInterval = setInterval(refreshOrders, 10000);
+            }
+        }
+    });
+});
+</script>
+{% endblock %}
+

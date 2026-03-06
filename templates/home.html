@@ -1,0 +1,77 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="{% get_current_language as lang %}{{ lang }}" id="htmlElement">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Dortoir 3" %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{% static 'favicon.svg' %}">
+    <link rel="alternate icon" type="image/x-icon" href="{% static 'favicon.svg' %}">
+    <link rel="apple-touch-icon" href="{% static 'favicon.svg' %}">
+    <link rel="shortcut icon" href="{% static 'favicon.svg' %}">
+
+    <!-- Tailwind CSS (généré par django-tailwind) -->
+ 
+ <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+ 
+
+    <!-- htmx pour interactivité dynamique -->
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6"
+            integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm"
+            crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-white text-gray-900 flex flex-col min-h-screen m-0 overflow-x-hidden">
+
+    <!-- Header avec Navbar -->
+    <header>
+        {% include "nav_footer/nav.html" %}
+    </header>
+
+    {% include "nav_footer/alert.html" %}
+
+    <!-- Contenu principal de la page -->
+    <main id="mainContent" class="flex-grow lg:ml-0 px-2 sm:px-4 md:px-6 md:pt-24 pt-16 sm:pt-20">
+        {% block contenu %}
+        <div class="max-w-4xl mx-auto py-8 sm:py-12 px-4">
+            <div class="text-center mb-10">
+                <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">{% trans "Welcome to Dortoir 3" %}</h1>
+                <p class="text-gray-600 text-lg">{% trans "Services and information for your dormitory." %}</p>
+            </div>
+            <div class="max-w-md mx-auto space-y-3">
+                <a href="{% url 'laverie:accueil' %}" class="flex items-center gap-4 p-5 rounded-2xl border-2 border-indigo-100 bg-indigo-50/50 hover:bg-indigo-100/50 hover:border-indigo-200 transition">
+                    <span class="text-3xl">🧺</span>
+                    <div class="text-left">
+                        <span class="font-semibold text-gray-900 block">{% trans "Laverie" %}</span>
+                        <span class="text-sm text-gray-600">{% trans "Book a washing machine online." %}</span>
+                    </div>
+                </a>
+                <a href="{% url 'signalements:signaler' %}" class="flex items-center gap-4 p-5 rounded-2xl border-2 border-amber-100 bg-amber-50/50 hover:bg-amber-100/50 hover:border-amber-200 transition">
+                    <span class="text-3xl">⚠️</span>
+                    <div class="text-left">
+                        <span class="font-semibold text-gray-900 block">{% trans "Report a problem" %}</span>
+                        <span class="text-sm text-gray-600">{% trans "Describe an issue for the team to handle." %}</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    {% include "nav_footer/footer.html" %}
+
+    <!-- Chatbox assistant (réponses + boutons vers les fonctionnalités) -->
+   
+    <!-- Scripts globaux -->
+    <script src="{% static 'js/chat.js' %}"></script>
+    {% block extra_script %}
+        <!-- Exemple : ajouter des scripts ici si nécessaire -->
+    {% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,262 @@
+{% load static  %}
+
+<!-- ========================= -->
+<!-- SLIDER - VERSION ULTRA-COOL AVEC BLUR DÉGRADÉ -->
+<!-- ========================= -->
+
+<div class="relative w-full overflow-hidden bg-gray-50">
+
+  <!-- Slider Container -->
+  <div class="relative w-full h-96 md:h-[400px] lg:h-[500px]">
+
+    <!-- Slide 1 -->
+    <div class="absolute inset-0 transition-opacity duration-1500 opacity-100 slide active">
+      <img src="{% static 'images/slide1.jpg' %}" 
+           class="w-full h-full object-cover transform scale-105 hover:scale-110 transition-transform duration-2000" 
+           alt="Bienvenue aux étudiants maliens en Russie">
+      
+      <!-- Blur dégradé -->
+      <div class="absolute bottom-0 left-0 right-0 h-48 md:h-60 lg:h-72 
+                  bg-blue-900/70 backdrop-blur-md mask-gradient">
+      </div>
+
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 
+                  text-center text-white px-4 z-10">
+        <h2 class="text-3xl md:text-4xl font-bold animate-fade-in-up text-shadow-lg">
+          Bienvenue aux étudiants maliens en Russie
+        </h2>
+        <p class="mt-3 text-lg md:text-xl animate-fade-in-up delay-200 text-shadow-md">
+          Votre communauté, vos échanges, vos opportunités
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="absolute inset-0 transition-opacity duration-1500 opacity-0 slide">
+      <img src="{% static 'images/slide2.jpg' %}" 
+           class="w-full h-full object-cover transform scale-105 hover:scale-110 transition-transform duration-2000" 
+           alt="Événements culturels">
+      
+      <div class="absolute bottom-0 left-0 right-0 h-48 md:h-60 lg:h-72 
+                  bg-blue-900/70 backdrop-blur-md mask-gradient">
+      </div>
+
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 
+                  text-center text-white px-4 z-10">
+        <h2 class="text-3xl md:text-4xl font-bold animate-fade-in-up text-shadow-lg">
+          Événements culturels
+        </h2>
+        <p class="mt-3 text-lg md:text-xl animate-fade-in-up delay-200 text-shadow-md">
+          Participez aux rencontres et activités de la communauté
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="absolute inset-0 transition-opacity duration-1500 opacity-0 slide">
+      <img src="{% static 'images/slide3.jpg' %}" 
+           class="w-full h-full object-cover transform scale-105 hover:scale-110 transition-transform duration-2000" 
+           alt="Ressources pour étudiants">
+      
+      <div class="absolute bottom-0 left-0 right-0 h-48 md:h-60 lg:h-72 
+                  bg-blue-900/70 backdrop-blur-md mask-gradient">
+      </div>
+
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 
+                  text-center text-white px-4 z-10">
+        <h2 class="text-3xl md:text-4xl font-bold animate-fade-in-up text-shadow-lg">
+          Ressources pour étudiants
+        </h2>
+        <p class="mt-3 text-lg md:text-xl animate-fade-in-up delay-200 text-shadow-md">
+          Guides, conseils et aides pour la vie étudiante en Russie
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="absolute inset-0 transition-opacity duration-1500 opacity-0 slide">
+      <img src="{% static 'images/slide4.jpg' %}" 
+           class="w-full h-full object-cover transform scale-105 hover:scale-110 transition-transform duration-2000" 
+           alt="Partage d’expériences">
+      
+      <div class="absolute bottom-0 left-0 right-0 h-48 md:h-60 lg:h-72 
+                  bg-blue-900/70 backdrop-blur-md mask-gradient">
+      </div>
+
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 
+                  text-center text-white px-4 z-10">
+        <h2 class="text-3xl md:text-4xl font-bold animate-fade-in-up text-shadow-lg">
+          Partage d’expériences
+        </h2>
+        <p class="mt-3 text-lg md:text-xl animate-fade-in-up delay-200 text-shadow-md">
+          Découvrez les témoignages de vos camarades
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="absolute inset-0 transition-opacity duration-1500 opacity-0 slide">
+      <img src="{% static 'images/slide5.jpg' %}" 
+           class="w-full h-full object-cover transform scale-105 hover:scale-110 transition-transform duration-2000" 
+           alt="Rejoignez la communauté">
+      
+      <div class="absolute bottom-0 left-0 right-0 h-48 md:h-60 lg:h-72 
+                  bg-blue-900/70 backdrop-blur-md mask-gradient">
+      </div>
+
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 
+                  text-center text-white px-4 z-10">
+        <h2 class="text-3xl md:text-4xl font-bold animate-fade-in-up text-shadow-lg">
+          Rejoignez la communauté
+        </h2>
+        <p class="mt-3 text-lg md:text-xl animate-fade-in-up delay-200 text-shadow-md">
+          Inscrivez-vous et connectez-vous avec d'autres étudiants
+        </p>
+      </div>
+    </div>
+
+    <!-- Slide Indicators -->
+    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+      {% for i in "12345" %}
+        <button class="w-4 h-4 rounded-full bg-white bg-opacity-40 hover:bg-opacity-80 
+                       transition-all duration-500 focus:outline-none focus:ring-2 
+                       focus:ring-white focus:ring-offset-2 scale-100 hover:scale-125 
+                       shadow-lg hover:shadow-xl"
+                data-slide="{{ forloop.counter0 }}"
+                aria-label="Aller à la diapositive {{ forloop.counter }}">
+        </button>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- STYLES PERSONNALISÉS -->
+<!-- ========================= -->
+<style>
+/* --- Animations principales --- */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+/* --- Effets texte --- */
+.text-shadow-lg {
+  text-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.text-shadow-md {
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Indicateurs animés --- */
+button[data-slide].active {
+  background-color: white;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+  transform: scale(1.2);
+}
+
+/* --- Transition fluide des slides --- */
+.slide {
+  will-change: opacity;
+}
+
+/* --- Effet subtil sur l'image (zoom lent) --- */
+img {
+  transition: transform 12s ease-out;
+}
+img:hover {
+  transform: scale(1.1) !important;
+}
+
+/* --- Utilité pour le blur dégradé --- */
+.mask-gradient {
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: cover;
+  mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+  mask-repeat: no-repeat;
+  mask-size: cover;
+}
+</style>
+
+<!-- ========================= -->
+<!-- SCRIPT SLIDER -->
+<!-- ========================= -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("🎬 Slider cinematico chargé !");
+
+  const slides = document.querySelectorAll('.slide');
+  const indicators = document.querySelectorAll('[data-slide]');
+  let current = 0;
+
+  function showSlide(index) {
+    console.log(`🎬 Affichage du slide ${index + 1}`);
+
+    // Masquer tous les slides
+    slides.forEach(slide => {
+      slide.classList.remove('opacity-100');
+      slide.classList.add('opacity-0');
+    });
+
+    // Réinitialiser les animations des éléments textuels
+    slides.forEach(slide => {
+      slide.querySelectorAll('.animate-fade-in-up').forEach(el => {
+        el.style.animation = 'none';
+        el.offsetHeight; // Force reflow
+        el.style.animation = '';
+      });
+    });
+
+    // Afficher le slide actif
+    slides[index].classList.remove('opacity-0');
+    slides[index].classList.add('opacity-100');
+
+    // Relancer les animations uniquement sur ce slide
+    slides[index].querySelectorAll('.animate-fade-in-up').forEach(el => {
+      el.style.animation = '';
+    });
+
+    // Mettre à jour les indicateurs
+    indicators.forEach((ind, i) => {
+      ind.classList.toggle('active', i === index);
+    });
+
+    current = index;
+  }
+
+  // Déclenche automatique toutes les 7 secondes
+  setInterval(() => {
+    showSlide((current + 1) % slides.length);
+  }, 7000);
+
+  // Navigation manuelle
+  indicators.forEach(indicator => {
+    indicator.addEventListener('click', () => {
+      const index = parseInt(indicator.dataset.slide);
+      showSlide(index);
+    });
+  });
+
+  // Afficher le premier slide
+  showSlide(0);
+});
+</script>

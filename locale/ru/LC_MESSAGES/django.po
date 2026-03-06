@@ -1,0 +1,85 @@
+# Russian
+# Copyright (C) 2025
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: ru\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "Dortoir 3"
+msgstr "Общежитие 3"
+
+msgid "Laverie"
+msgstr "Прачечная"
+
+msgid "Messages"
+msgstr "Сообщения"
+
+msgid "Dashboard"
+msgstr "Панель управления"
+
+msgid "Log out"
+msgstr "Выйти"
+
+msgid "Log in"
+msgstr "Войти"
+
+msgid "Profile"
+msgstr "Профиль"
+
+msgid "Home"
+msgstr "Главная"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Welcome to Dortoir 3"
+msgstr "Добро пожаловать в Общежитие 3"
+
+msgid "Services and information for your dormitory."
+msgstr "Услуги и информация вашего общежития."
+
+msgid "Book a washing machine online."
+msgstr "Забронировать стиральную машину онлайн."
+
+msgid "Report a problem"
+msgstr "Сообщить о проблеме"
+
+msgid "Describe an issue for the team to handle."
+msgstr "Опишите проблему для обработки командой."
+
+msgid "Dortoir 3 — Dormitory services"
+msgstr "Общежитие 3 — Услуги общежития"
+
+msgid "About"
+msgstr "О нас"
+
+msgid "Laundry room"
+msgstr "Прачечная"
+
+msgid "Book your machine online."
+msgstr "Забронируйте машину онлайн."
+
+msgid "My tickets"
+msgstr "Мои билеты"
+
+msgid "Manage machines"
+msgstr "Управление машинами"
+
+msgid "It's your turn"
+msgstr "Ваша очередь"
+
+msgid "Ticket"
+msgstr "Билет"
+
+msgid "Show ticket"
+msgstr "Показать билет"

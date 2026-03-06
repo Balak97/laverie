@@ -1,0 +1,15 @@
+
+{% extends 'home.html' %}
+
+{% block contenu %}
+  <div class="text-center p-5 bg-white rounded shadow">
+    <h1 class="text-success mb-3">Compte activé</h1>
+    <p class="lead">Votre compte a été activé avec succès ! Vous allez être redirigé vers la page de connexion dans 5 secondes.</p>
+  </div>
+
+  <script>
+  setTimeout(() => {
+    window.location.replace('/');
+  }, 5000);
+</script>
+{% endblock %}

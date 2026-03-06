@@ -1,0 +1,55 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block contenu %}
+<div class="max-w-3xl mx-auto py-4 sm:py-6 px-3 sm:px-4">
+    <div class="mb-4">
+        <a href="{% url 'laverie:accueil' %}" class="text-indigo-600 hover:text-indigo-700 font-medium inline-flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Retour à la salle à laver
+        </a>
+    </div>
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+        <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center">
+                <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold text-gray-900">{{ machine.nom }} — Tickets en cours</h1>
+                <p class="text-sm text-gray-600">Réservations en attente et en cours sur cette machine.</p>
+            </div>
+        </div>
+        {% if fin_dernier_ticket %}
+        <p class="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-4">
+            <strong>Fin du dernier ticket :</strong> {{ fin_dernier_ticket|date:"d/m/Y" }} à {{ fin_dernier_ticket|time }}
+        </p>
+        {% endif %}
+        {% if tickets %}
+        <ul class="space-y-2">
+            {% for r in tickets %}
+            <li class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl border border-gray-100 bg-gray-50 hover:bg-gray-100 transition">
+                <div class="flex items-center gap-3 flex-wrap">
+                    <span class="font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded text-sm">#{{ r.numero|default:r.pk }}</span>
+                    <span class="font-medium text-gray-900">{{ r.utilisateur.get_full_name|default:"Utilisateur" }}</span>
+                    <span class="text-sm text-gray-600">— {{ r.fonction.nom|default:"—" }} ({{ r.duree_minutes }} min)</span>
+                </div>
+                <div class="text-sm text-gray-600">
+                    {{ r.debut|date:"d/m" }} {{ r.debut|time }} → {{ r.fin|time }}
+                </div>
+                <span class="px-2 py-0.5 rounded text-xs font-medium
+                    {% if r.statut == 'reserve' %}bg-amber-100 text-amber-800
+                    {% else %}bg-blue-100 text-blue-800{% endif %}">
+                    {{ r.get_statut_display }}
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-gray-500 text-center py-8">Aucun ticket en cours sur cette machine.</p>
+        <a href="{% url 'laverie:reserver' %}?machine={{ machine.id }}" class="block w-full text-center bg-indigo-500 hover:bg-indigo-600 text-white py-2.5 rounded-xl font-medium transition mt-2">
+            Réserver cette machine
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

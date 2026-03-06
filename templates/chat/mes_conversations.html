@@ -1,0 +1,84 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block contenu %}
+<div class="max-w-7xl mx-auto py-4 sm:py-6 px-3 sm:px-4">
+    <!-- En-tête -->
+    <div class="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 mb-4 sm:mb-6 md:mb-8 text-white">
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2">Mes conversations</h1>
+        <p class="text-cyan-50 text-xs sm:text-sm md:text-base">Gérez toutes vos conversations</p>
+    </div>
+
+    {% if conversations %}
+    <div class="grid grid-cols-1 gap-4 sm:gap-6">
+        {% for conversation in conversations %}
+        <a href="{% url 'chat:conversation_detail' conversation.id %}" 
+           class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 block">
+            <div class="p-4 sm:p-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4 flex-1 min-w-0">
+                        <div class="flex-shrink-0">
+                            {% if conversation.other_participant.photo %}
+                            <img src="{{ conversation.other_participant.photo.url }}" 
+                                 alt="{{ conversation.other_participant.display_name }}" 
+                                 class="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-gray-200">
+                            {% else %}
+                            <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white text-lg sm:text-xl font-bold border-2 border-gray-200">
+                                {{ conversation.other_participant.first_name|first|default:conversation.other_participant.email|first|upper }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h3 class="text-base sm:text-lg font-bold text-gray-900 truncate">
+                                    {{ conversation.other_participant.display_name }}
+                                </h3>
+                                <span class="w-2 h-2 rounded-full {% if conversation.other_participant.is_online %}bg-green-400{% else %}bg-gray-400{% endif %}" title="{% if conversation.other_participant.is_online %}En ligne{% else %}Hors ligne{% endif %}"></span>
+                                <span class="px-2 py-1 rounded text-xs font-semibold
+                                    {% if conversation.type_conversation == 'monkilo' %}bg-purple-100 text-purple-800
+                                    {% else %}bg-green-100 text-green-800{% endif %}">
+                                    {% if conversation.type_conversation == 'monkilo' %}Mon Kilo
+                                    {% else %}E-commerce{% endif %}
+                                </span>
+                            </div>
+                            <p class="text-xs sm:text-sm text-gray-500 truncate">
+                                {{ conversation.content_object }}
+                            </p>
+                            {% if conversation.messages.last %}
+                            <p class="text-xs sm:text-sm text-gray-600 mt-1 truncate">
+                                {{ conversation.messages.last.contenu|truncatechars:60 }}
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end gap-2 ml-4">
+                        <span class="text-xs text-gray-500">
+                            {{ conversation.date_modification|date:"d/m/Y H:i" }}
+                        </span>
+                        {% if conversation.unread_count > 0 %}
+                        <span class="bg-red-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-2">
+                            {{ conversation.unread_count }}
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-white rounded-xl shadow-lg p-8 sm:p-12 md:p-16 border-2 border-dashed border-gray-300 text-center">
+        <div class="max-w-md mx-auto">
+            <div class="bg-gray-100 rounded-full w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 flex items-center justify-center">
+                <svg class="w-10 h-10 sm:w-12 sm:h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                </svg>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3">Aucune conversation</h3>
+            <p class="text-sm sm:text-base text-gray-600">Vous n'avez pas encore de conversation. Les conversations apparaîtront ici lorsque vous commencerez à échanger avec d'autres utilisateurs.</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

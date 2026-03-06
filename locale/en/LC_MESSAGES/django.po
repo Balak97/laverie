@@ -1,0 +1,85 @@
+# English
+# Copyright (C) 2025
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: en\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Dortoir 3"
+msgstr "Dormitory 3"
+
+msgid "Laverie"
+msgstr "Laundry"
+
+msgid "Messages"
+msgstr "Messages"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Log out"
+msgstr "Log out"
+
+msgid "Log in"
+msgstr "Log in"
+
+msgid "Profile"
+msgstr "Profile"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Language"
+msgstr "Language"
+
+msgid "Welcome to Dortoir 3"
+msgstr "Welcome to Dormitory 3"
+
+msgid "Services and information for your dormitory."
+msgstr "Services and information for your dormitory."
+
+msgid "Book a washing machine online."
+msgstr "Book a washing machine online."
+
+msgid "Report a problem"
+msgstr "Report a problem"
+
+msgid "Describe an issue for the team to handle."
+msgstr "Describe an issue for the team to handle."
+
+msgid "Dortoir 3 — Dormitory services"
+msgstr "Dormitory 3 — Dormitory services"
+
+msgid "About"
+msgstr "About"
+
+msgid "Laundry room"
+msgstr "Laundry room"
+
+msgid "Book your machine online."
+msgstr "Book your machine online."
+
+msgid "My tickets"
+msgstr "My tickets"
+
+msgid "Manage machines"
+msgstr "Manage machines"
+
+msgid "It's your turn"
+msgstr "It's your turn"
+
+msgid "Ticket"
+msgstr "Ticket"
+
+msgid "Show ticket"
+msgstr "Show ticket"

@@ -1,0 +1,48 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block contenu %}
+<div class="max-w-7xl mx-auto py-6">
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold text-gray-900">Liste des utilisateurs</h1>
+        <p class="text-gray-600 mt-2">Promouvoir des utilisateurs en livreurs</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+        <div class="mb-4">
+            <p class="text-sm text-gray-600">
+                Les utilisateurs s'inscrivent comme clients. Vous pouvez les promouvoir en livreurs. 
+                Une fois promus, ils pourront être assignés aux commandes emballées.
+            </p>
+        </div>
+        
+        <div class="space-y-3">
+            {% for user in users %}
+            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <div class="flex-1">
+                    <div class="flex items-center gap-3 mb-2">
+                        <p class="font-semibold text-gray-900">
+                            {{ user.get_full_name|default:"Utilisateur sans nom" }}
+                        </p>
+                        <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800">
+                            {{ user.get_user_type_display }}
+                        </span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-1">{{ user.email }}</p>
+                    <p class="text-xs text-gray-500">Inscrit le {{ user.date_joined|date:"d M Y" }}</p>
+                </div>
+                <div class="ml-4">
+                    <a href="{% url 'promote_to_coursier' user.id %}" 
+                       class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg text-sm transition inline-block">
+                        Promouvoir en livreur
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-gray-500 text-center py-8">Aucun utilisateur client disponible</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
