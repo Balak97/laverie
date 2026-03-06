@@ -83,3 +83,69 @@ msgstr "Билет"
 
 msgid "Show ticket"
 msgstr "Показать билет"
+
+msgid "Access your personal space"
+msgstr "Доступ в личный кабинет"
+
+msgid "Phone or email"
+msgstr "Телефон или e-mail"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Don't have an account?"
+msgstr "Нет аккаунта?"
+
+msgid "Sign up"
+msgstr "Регистрация"
+
+msgid "or"
+msgstr "или"
+
+msgid "Activate an account"
+msgstr "Активировать аккаунт"
+
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+msgid "Create an account"
+msgstr "Создать аккаунт"
+
+msgid "Fill in the form below to register."
+msgstr "Заполните форму ниже для регистрации."
+
+msgid "Create account"
+msgstr "Создать аккаунт"
+
+msgid "Already have an account?"
+msgstr "Уже есть аккаунт?"
+
+msgid "Enter your password"
+msgstr "Введите пароль"
+
+msgid "Confirm password"
+msgstr "Подтвердите пароль"
+
+msgid "Confirm your password"
+msgstr "Подтвердите пароль"
+
+msgid "Email address"
+msgstr "Адрес электронной почты"
+
+msgid "First name"
+msgstr "Имя"
+
+msgid "Last name"
+msgstr "Фамилия"
+
+msgid "Phone number"
+msgstr "Номер телефона"
+
+msgid "Photo"
+msgstr "Фото"
+
+msgid "This email is already in use."
+msgstr "Этот e-mail уже используется."
+
+msgid "Photo must not exceed 2 MB."
+msgstr "Фото не должно превышать 2 МБ."

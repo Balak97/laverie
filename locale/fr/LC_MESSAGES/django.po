@@ -84,3 +84,69 @@ msgstr "Ticket"
 
 msgid "Show ticket"
 msgstr "Afficher le ticket"
+
+msgid "Access your personal space"
+msgstr "Accédez à votre espace personnel"
+
+msgid "Phone or email"
+msgstr "Téléphone ou e-mail"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "Don't have an account?"
+msgstr "Pas de compte ?"
+
+msgid "Sign up"
+msgstr "S'inscrire"
+
+msgid "or"
+msgstr "ou"
+
+msgid "Activate an account"
+msgstr "Activer un compte"
+
+msgid "Forgot password?"
+msgstr "Mot de passe oublié ?"
+
+msgid "Create an account"
+msgstr "Créer un compte"
+
+msgid "Fill in the form below to register."
+msgstr "Remplissez le formulaire ci-dessous pour vous inscrire."
+
+msgid "Create account"
+msgstr "Créer le compte"
+
+msgid "Already have an account?"
+msgstr "Vous avez déjà un compte ?"
+
+msgid "Enter your password"
+msgstr "Entrez votre mot de passe"
+
+msgid "Confirm password"
+msgstr "Confirmer le mot de passe"
+
+msgid "Confirm your password"
+msgstr "Confirmez le mot de passe"
+
+msgid "Email address"
+msgstr "Adresse e-mail"
+
+msgid "First name"
+msgstr "Prénom"
+
+msgid "Last name"
+msgstr "Nom"
+
+msgid "Phone number"
+msgstr "Numéro de téléphone"
+
+msgid "Photo"
+msgstr "Photo"
+
+msgid "This email is already in use."
+msgstr "Cet e-mail est déjà utilisé."
+
+msgid "Photo must not exceed 2 MB."
+msgstr "La photo ne doit pas dépasser 2 Mo."

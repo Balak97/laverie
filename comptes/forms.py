@@ -1,67 +1,74 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
+from django.utils.translation import gettext_lazy as _
 from .models import CustomUser
 
 
 class CustomUserCreationForm(UserCreationForm):
     password1 = forms.CharField(
-        label="Mot de passe",
+        label=_("Password"),
         widget=forms.PasswordInput(attrs={
-            'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg '
-                     'focus:outline-none focus:ring-3 focus:ring-green-200 focus:border-green-500',
-            'placeholder': 'Entrez votre mot de passe'
+            'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl '
+                     'focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500',
+            'placeholder': _("Enter your password"),
         })
     )
     password2 = forms.CharField(
-        label="Confirmer le mot de passe",
+        label=_("Confirm password"),
         widget=forms.PasswordInput(attrs={
-            'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg '
-                     'focus:outline-none focus:ring-3 focus:ring-green-200 focus:border-green-500',
-            'placeholder': 'Confirmez le mot de passe'
+            'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl '
+                     'focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500',
+            'placeholder': _("Confirm your password"),
         })
     )
 
     class Meta:
         model = CustomUser
         fields = ['email', 'first_name', 'last_name', 'telephone', 'photo']
-
+        labels = {
+            'email': _("Email address"),
+            'first_name': _("First name"),
+            'last_name': _("Last name"),
+            'telephone': _("Phone number"),
+            'photo': _("Photo"),
+        }
         widgets = {
             'email': forms.EmailInput(attrs={
-                'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg '
-                         'focus:outline-none focus:ring-3 focus:ring-blue-200 focus:border-blue-500',
-                'placeholder': 'Adresse e-mail'
+                'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl '
+                         'focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500',
+                'placeholder': _("Email address"),
             }),
             'first_name': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg '
-                         'focus:outline-none focus:ring-3 focus:ring-blue-200 focus:border-blue-500',
-                'placeholder': 'Prénom'
+                'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl '
+                         'focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500',
+                'placeholder': _("First name"),
             }),
             'last_name': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg '
-                         'focus:outline-none focus:ring-3 focus:ring-blue-200 focus:border-blue-500',
-                'placeholder': 'Nom'
+                'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl '
+                         'focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500',
+                'placeholder': _("Last name"),
             }),
             'telephone': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg '
-                         'focus:outline-none focus:ring-3 focus:ring-blue-200 focus:border-blue-500',
-                'placeholder': 'Numéro de téléphone'
+                'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl '
+                         'focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500',
+                'placeholder': _("Phone number"),
             }),
             'photo': forms.ClearableFileInput(attrs={
-                'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg '
-                         'focus:outline-none focus:ring-3 focus:ring-blue-200 focus:border-blue-500',
+                'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl '
+                         'focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:text-indigo-600',
             }),
         }
 
     def clean_email(self):
         email = self.cleaned_data.get('email', '').strip().lower()
         if CustomUser.objects.filter(email=email).exists():
-            raise forms.ValidationError("Cet e-mail est déjà utilisé.")
+            raise forms.ValidationError(_("This email is already in use."))
         return email
 
     def clean_photo(self):
         photo = self.cleaned_data.get('photo')
         if photo and photo.size > 2 * 1024 * 1024:  # 2 Mo max
-            raise forms.ValidationError("La photo ne doit pas dépasser 2 Mo.")
+            raise forms.ValidationError(_("Photo must not exceed 2 MB."))
         return photo
 
 
