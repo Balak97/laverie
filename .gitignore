@@ -1,0 +1,8 @@
+__pycache__/ 
+db.sqlite3
+env
+settings.py
+media
+entrypoint.sh
+Dockerfile
+docker-compose.yml
