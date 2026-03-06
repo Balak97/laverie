@@ -53,7 +53,7 @@ class ReservationForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        initial_machine = kwargs.get('initial', {}).get('machine')
+        initial_machine = (kwargs.get('initial') or {}).get('machine')
         self.fields['machine'].queryset = Machine.objects.filter(active=True)
         self.fields['machine'].widget.attrs['class'] = 'w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500'
         if initial_machine:
