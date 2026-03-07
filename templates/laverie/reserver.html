@@ -3,15 +3,15 @@
 {% load i18n %}
 
 {% block contenu %}
-<div class="max-w-2xl mx-auto py-4 sm:py-6 px-3 sm:px-4">
-    <div class="mb-6">
-        <a href="{% url 'laverie:accueil' %}" class="text-teal-600 hover:text-teal-700 font-medium inline-flex items-center gap-1">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-            {% trans "Back to laundry room" %}
+<div class="max-w-2xl mx-auto py-3 sm:py-6 px-3 sm:px-4 pb-6 min-h-[100dvh] flex flex-col" style="padding-bottom: max(1.5rem, env(safe-area-inset-bottom));">
+    <div class="mb-4 sm:mb-6">
+        <a href="{% url 'laverie:accueil' %}" class="text-teal-600 hover:text-teal-700 font-medium inline-flex items-center gap-1.5 py-2 -ml-1 min-h-[44px] min-w-[44px] items-center touch-manipulation">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            <span class="text-sm sm:text-base">{% trans "Back to laundry room" %}</span>
         </a>
     </div>
 
-    <div class="mb-6 p-4 rounded-xl bg-cyan-50 border border-cyan-200 text-sm text-cyan-900">
+    <div class="mb-4 sm:mb-6 p-3 sm:p-4 rounded-xl bg-cyan-50 border border-cyan-200 text-cyan-900 text-xs sm:text-sm leading-relaxed">
         <p class="font-medium mb-1">{% trans "Good to know" %}</p>
         <p class="mb-2">{% trans "You will be placed directly after the last person on this machine. Your slot will start 5 minutes after theirs (time to remove laundry)." %}</p>
         {% if prochain_debut %}
@@ -44,26 +44,26 @@
         </div>
         {% endif %}
 
-        <!-- Panneau type machine à laver (cadran + écran) -->
-        <div id="panel-machine" class="{% if not machine_prechoice %}hidden{% endif %} w-full max-w-sm mx-auto mb-6">
-            <div class="relative bg-gradient-to-b from-slate-300 to-slate-400 rounded-[2.5rem] p-6 shadow-2xl border-4 border-slate-500/50" style="box-shadow: inset 0 2px 4px rgba(255,255,255,0.3), 0 8px 32px rgba(0,0,0,0.2);">
+        <!-- Panneau type machine à laver (cadran + écran) - adapté mobile -->
+        <div id="panel-machine" class="{% if not machine_prechoice %}hidden{% endif %} w-full max-w-[min(100%,20rem)] sm:max-w-sm mx-auto mb-4 sm:mb-6">
+            <div class="relative bg-gradient-to-b from-slate-300 to-slate-400 rounded-[1.75rem] sm:rounded-[2.5rem] p-4 sm:p-6 shadow-2xl border-2 sm:border-4 border-slate-500/50" style="box-shadow: inset 0 2px 4px rgba(255,255,255,0.3), 0 8px 32px rgba(0,0,0,0.2);">
 
                 <!-- Écran LCD : programme + durée -->
-                <div id="resa-ecran" class="mb-5 mx-2 rounded-xl bg-emerald-950/90 border-2 border-emerald-700/80 p-4 font-mono shadow-inner min-h-[80px] flex flex-col justify-center" style="box-shadow: inset 0 0 20px rgba(0,0,0,0.4);">
-                    <div id="ecran-programme" class="text-xl font-bold text-emerald-300">—</div>
-                    <div id="ecran-duree" class="text-emerald-400/90 text-sm mt-1">{% trans "Turn the dial" %}</div>
+                <div id="resa-ecran" class="mb-4 sm:mb-5 mx-1 sm:mx-2 rounded-lg sm:rounded-xl bg-emerald-950/90 border-2 border-emerald-700/80 p-3 sm:p-4 font-mono shadow-inner min-h-[72px] sm:min-h-[80px] flex flex-col justify-center" style="box-shadow: inset 0 0 20px rgba(0,0,0,0.4);">
+                    <div id="ecran-programme" class="text-lg sm:text-xl font-bold text-emerald-300 break-words">—</div>
+                    <div id="ecran-duree" class="text-emerald-400/90 text-xs sm:text-sm mt-0.5 sm:mt-1">{% trans "Turn the dial" %}</div>
                 </div>
 
-                <!-- Potentiomètre : cadran + graduations (noms des programmes) cliquables -->
-                <div class="flex items-center justify-center gap-2 sm:gap-4">
-                    <div class="relative w-52 h-52 sm:w-64 sm:h-64 flex-shrink-0" id="potentiometer-wrapper">
+                <!-- Potentiomètre : cadran + graduations - tailles adaptées mobile -->
+                <div class="flex items-center justify-center">
+                    <div class="relative w-[180px] h-[180px] sm:w-52 sm:h-52 md:w-64 md:h-64 flex-shrink-0" id="potentiometer-wrapper">
                         <!-- Graduations : noms des programmes en cercle, cliquables -->
                         <div id="dial-labels" class="absolute inset-0">
                             <div id="dial-labels-inner" class="relative w-full h-full"></div>
                         </div>
-                        <!-- Cadran central (knob draggable, zone confortable) -->
+                        <!-- Cadran central (knob draggable) - zone tactile large sur mobile -->
                         <div id="potentiometer-container" class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <div id="knob-zone" class="relative w-32 h-32 sm:w-40 sm:h-40 pointer-events-auto cursor-grab active:cursor-grabbing select-none flex items-center justify-center" style="touch-action: none;">
+                            <div id="knob-zone" class="relative w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 pointer-events-auto cursor-grab active:cursor-grabbing select-none flex items-center justify-center touch-manipulation" style="touch-action: none;">
                                 <svg class="w-full h-full drop-shadow-lg absolute" viewBox="0 0 120 120" aria-hidden="true">
                                 <defs>
                                     <linearGradient id="dial-bevel" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -119,11 +119,11 @@
 
         {% if form.fonction.errors %}<p class="text-red-600 text-sm mb-4 text-center">{{ form.fonction.errors.0 }}</p>{% endif %}
 
-        <div class="flex gap-3">
-            <button type="submit" id="btn-submit" class="flex-1 bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 rounded-xl transition" disabled>
+        <div class="flex flex-col-reverse sm:flex-row gap-3 mt-auto pt-4">
+            <button type="submit" id="btn-submit" class="w-full sm:flex-1 bg-teal-500 hover:bg-teal-600 active:bg-teal-700 text-white font-semibold py-3.5 sm:py-3 rounded-xl transition min-h-[48px] touch-manipulation" disabled>
                 {% trans "Confirm reservation" %}
             </button>
-            <a href="{% url 'laverie:accueil' %}" class="px-4 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 font-medium">{% trans "Cancel" %}</a>
+            <a href="{% url 'laverie:accueil' %}" class="w-full sm:w-auto sm:flex-shrink-0 text-center px-4 py-3.5 sm:py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 active:bg-gray-100 font-medium min-h-[48px] flex items-center justify-center touch-manipulation">{% trans "Cancel" %}</a>
         </div>
     </form>
 </div>

@@ -44,6 +44,43 @@
                 {% trans "Show ticket" %}
             </a>
         </div>
+        <div id="accueil-countdown" class="mt-4 pt-4 border-t border-emerald-200" data-end="{{ mon_ticket_en_cours.fin|date:'c' }}" data-duration-minutes="{{ mon_ticket_en_cours.duree_minutes }}">
+            <p class="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">{% trans "Time remaining" %}</p>
+            <p id="accueil-countdown-display" class="text-2xl sm:text-3xl font-black text-emerald-700 tabular-nums">--</p>
+            <div class="mt-2 h-2 bg-emerald-200 rounded-full overflow-hidden">
+                <div id="accueil-countdown-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-1000 ease-linear" style="width: 100%"></div>
+            </div>
+        </div>
+        <script>
+        (function() {
+            var block = document.getElementById('accueil-countdown');
+            var display = document.getElementById('accueil-countdown-display');
+            var bar = document.getElementById('accueil-countdown-bar');
+            if (!block || !display) return;
+            var endStr = block.getAttribute('data-end');
+            var durationMin = parseInt(block.getAttribute('data-duration-minutes'), 10) || 60;
+            if (!endStr) return;
+            var totalMs = durationMin * 60 * 1000;
+            function update() {
+                var now = new Date();
+                var end = new Date(endStr.replace(' ', 'T'));
+                var remainingMs = Math.max(0, end - now);
+                var remaining = Math.floor(remainingMs / 1000);
+                var pct = totalMs > 0 ? Math.min(100, (remainingMs / totalMs) * 100) : 0;
+                if (bar) bar.style.width = pct + '%';
+                if (remaining <= 0) {
+                    display.textContent = '0 min 00 s';
+                    display.classList.add('text-gray-500');
+                    return;
+                }
+                var min = Math.floor(remaining / 60);
+                var sec = remaining % 60;
+                display.textContent = min + ' min ' + (sec < 10 ? '0' : '') + sec + ' s';
+            }
+            update();
+            setInterval(update, 1000);
+        })();
+        </script>
     </div>
     {% endif %}
 

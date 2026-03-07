@@ -1,17 +1,17 @@
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{% get_current_language as lang %}{{ lang }}">
 <head>
     <meta charset="UTF-8">
-    <title>Vérification email</title>
+    <title>{% trans "Email verification" %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    
 </head>
 <body class="bg-light">
 
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="text-center">
-            <h1 class="display-5 text-primary">📧 Vérifiez votre boîte mail...</h1>
-            <p class="mt-3 text-muted">Nous vous avons envoyé un lien d'activation.<br>Merci de cliquer dessus pour finaliser votre inscription.</p>
+            <h1 class="display-5 text-primary">📧 {% trans "Check your mailbox..." %}</h1>
+            <p class="mt-3 text-muted">{% trans "We have sent you an activation link." %}<br>{% trans "Please click it to complete your registration." %}</p>
         </div>
     </div>
 

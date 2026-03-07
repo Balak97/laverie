@@ -1,10 +1,9 @@
-
 {% extends 'home.html' %}
-
+{% load i18n %}
 {% block contenu %}
   <div class="text-center p-5 bg-white rounded shadow">
-    <h1 class="text-success mb-3">Compte activé</h1>
-    <p class="lead">Votre compte a été activé avec succès ! Vous allez être redirigé vers la page de connexion dans 5 secondes.</p>
+    <h1 class="text-success mb-3">{% trans "Account activated" %}</h1>
+    <p class="lead">{% trans "Your account has been successfully activated! You will be redirected to the login page in 5 seconds." %}</p>
   </div>
 
   <script>

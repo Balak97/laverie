@@ -1,21 +1,21 @@
 {% extends "home.html" %}
+{% load i18n %}
 {% block contenu %}
 <div class="max-w-3xl mx-auto py-8 px-4">
 
-  <!-- Bloc de compte bloqué -->
   <div class="bg-white shadow-lg rounded-2xl p-6 border border-red-200 text-center">
     <h1 class="text-2xl font-extrabold text-red-600 mb-4">
-      ⚠️ Compte bloqué
+      ⚠️ {% trans "Account locked" %}
     </h1>
     <p class="text-gray-700 mb-4">
-      Trop de tentatives de connexion ont été effectuées.<br>
-      Votre compte ou votre adresse IP est temporairement bloqué.
+      {% trans "Too many login attempts have been made." %}<br>
+      {% trans "Your account or IP address is temporarily locked." %}
     </p>
     <p class="text-gray-500 mb-6">
-      Veuillez réessayer plus tard.
+      {% trans "Please try again later." %}
     </p>
     <a href="{% url 'login' %}" class="inline-block bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition">
-      Retour à la page de connexion
+      {% trans "Back to login page" %}
     </a>
   </div>
 

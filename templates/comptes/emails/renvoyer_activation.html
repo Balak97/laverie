@@ -1,8 +1,9 @@
 {% extends 'home.html' %}
+{% load i18n %}
 {% block contenu %}
 
 <div class="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6 mt-35">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Renvoyer le lien d’activation</h2>
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">{% trans "Resend activation link" %}</h2>
 
     {% if error %}
         <div class="mb-4 text-red-600 text-sm text-center">
@@ -16,14 +17,14 @@
             type="email"
             name="email"
             required
-            placeholder="Votre adresse e-mail"
+            placeholder="{% trans 'Your email address' %}"
             class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
         <button
             type="submit"
             class="w-full bg-blue-600 text-white font-medium py-2 rounded-md hover:bg-blue-700 transition-colors"
         >
-            Renvoyer le lien
+            {% trans "Resend link" %}
         </button>
     </form>
 </div>

@@ -1,3 +1,4 @@
+from typing import Any
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -109,7 +110,7 @@ def reserver(request):
 
 @login_required
 def tickets_machine(request, pk):
-    """Affiche les tickets en cours (en attente + en cours) pour une machine."""
+    """Affiche les tickets en cours (en attente + en cours) pour une machine ; lien vers le chat pour échanger avec chaque titulaire."""
     Reservation.marquer_tickets_termines()
     Reservation.marquer_tickets_en_cours()
     machine = get_object_or_404(Machine, pk=pk, active=True)
@@ -164,14 +165,14 @@ def annuler_ticket(request, pk):
     resa.statut = 'annule'
     resa.save()
 
-    # Notifier par e-mail (en russe) : 1) ceux qui suivent (debut > annulé), 2) tous les autres sur la machine si besoin
+    # Envoyer un message (e-mail en russe) à tous ceux qui nous suivent dans la file sur la même machine
     import logging
     from .emails import envoyer_email_changement_horaire
     from django.contrib.auth import get_user_model
 
     logger = logging.getLogger(__name__)
-    # Personnes dont le créneau commence après l'annulé sur la même machine
-    suivants = list(
+    # Personnes dont le créneau commence après le nôtre sur la même machine (ceux qui nous suivent dans la file)
+    suivants = set(
         Reservation.objects.filter(
             machine=machine,
             statut__in=('reserve', 'en_cours'),
@@ -180,18 +181,8 @@ def annuler_ticket(request, pk):
         .values_list('utilisateur', flat=True)
         .distinct()
     )
-    # Inclure aussi tous les autres avec une résa sur cette machine (au cas où les créneaux se chevauchent ou ordre différent)
-    autres = set(
-        Reservation.objects.filter(
-            machine=machine,
-            statut__in=('reserve', 'en_cours'),
-        )
-        .values_list('utilisateur', flat=True)
-        .distinct()
-    )
-    destinataires = set(suivants) | autres
-    destinataires.discard(request.user.pk)
-    logger.info("Laverie annulation: machine=%s, debut_annule=%s, destinataires=%s", machine.pk, debut_annule, destinataires)
+    destinataires = suivants - {request.user.pk}
+    logger.info("Laverie annulation: machine=%s, debut_annule=%s, destinataires (suivants)=%s", machine.pk, debut_annule, destinataires)
 
     User = get_user_model()
     for user_id in destinataires:

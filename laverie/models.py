@@ -150,3 +150,27 @@ class Reservation(models.Model):
             debut__lte=now,
             fin__gte=now,
         ).update(statut='en_cours')
+
+
+class ChatMachineMessage(models.Model):
+    """Message dans le chat d'une machine : échange entre les personnes ayant un ticket sur cette machine."""
+    machine = models.ForeignKey(
+        Machine,
+        on_delete=models.CASCADE,
+        related_name='chat_messages',
+    )
+    auteur = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='chat_messages_laverie',
+    )
+    texte = models.TextField(max_length=1000)
+    date_creation = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['date_creation']
+        verbose_name = _('Machine chat message')
+        verbose_name_plural = _('Machine chat messages')
+
+    def __str__(self):
+        return f"{self.auteur} — {self.machine}: {self.texte[:40]}…"

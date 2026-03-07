@@ -302,8 +302,10 @@ def list_users(request):
     
     context = {
         'users': users,
+        'user_display_default': gettext('User'),
     }
     return render(request, 'comptes/list_users.html', context)
+
 
 @login_required
 def profile(request):

@@ -29,28 +29,80 @@
         <ul class="space-y-2">
             {% for r in tickets %}
             <li class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl border border-gray-100 bg-gray-50 hover:bg-gray-100 transition">
-                <div class="flex items-center gap-3 flex-wrap">
+                <div class="flex items-center gap-3 flex-wrap flex-1 min-w-0">
                     <span class="font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded text-sm">#{{ r.numero|default:r.pk }}</span>
                     <span class="font-medium text-gray-900">{{ r.utilisateur.get_full_name|default:user_display_default }}</span>
                     <span class="text-sm text-gray-600">— {{ r.fonction.nom|default:"—" }} ({{ r.duree_minutes }} {% trans "min" %})</span>
                 </div>
+                {% if r.statut == 'en_cours' %}
+                <div class="countdown-ticket w-full sm:w-auto sm:min-w-[140px] flex items-center gap-2 order-last sm:order-none" data-end="{{ r.fin|date:'c' }}" data-duration-minutes="{{ r.duree_minutes }}">
+                    <span class="text-xs text-indigo-600 font-medium whitespace-nowrap">{% trans "Time remaining" %}:</span>
+                    <span class="countdown-display font-bold text-indigo-600 tabular-nums text-sm">--</span>
+                    <div class="flex-1 min-w-[60px] h-1.5 bg-indigo-200 rounded-full overflow-hidden">
+                        <div class="countdown-bar h-full bg-indigo-500 rounded-full transition-all duration-1000 ease-linear" style="width: 100%"></div>
+                    </div>
+                </div>
+                {% endif %}
                 <div class="text-sm text-gray-600">
                     {{ r.debut|date:"d/m" }} {{ r.debut|time }} → {{ r.fin|time }}
                 </div>
-                <span class="px-2 py-0.5 rounded text-xs font-medium
-                    {% if r.statut == 'reserve' %}bg-amber-100 text-amber-800
-                    {% else %}bg-blue-100 text-blue-800{% endif %}">
-                    {{ r.get_statut_display }}
-                </span>
+                <div class="flex items-center gap-2">
+                    <a href="{% url 'chat:conversation_with_user' r.utilisateur_id %}" class="text-indigo-600 hover:text-indigo-700 text-sm font-medium inline-flex items-center gap-1" title="{% trans 'Send a message' %}">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                        {% trans "Message" %}
+                    </a>
+                    <span class="px-2 py-0.5 rounded text-xs font-medium
+                        {% if r.statut == 'reserve' %}bg-amber-100 text-amber-800
+                        {% else %}bg-blue-100 text-blue-800{% endif %}">
+                        {{ r.get_statut_display }}
+                    </span>
+                </div>
             </li>
             {% endfor %}
         </ul>
+        <script>
+        (function() {
+            var blocks = document.querySelectorAll('.countdown-ticket');
+            if (!blocks.length) return;
+            function updateOne(block) {
+                var display = block.querySelector('.countdown-display');
+                var bar = block.querySelector('.countdown-bar');
+                var endStr = block.getAttribute('data-end');
+                var durationMin = parseInt(block.getAttribute('data-duration-minutes'), 10) || 60;
+                if (!endStr || !display) return;
+                var totalMs = durationMin * 60 * 1000;
+                var now = new Date();
+                var end = new Date(endStr.replace(' ', 'T'));
+                var remainingMs = Math.max(0, end - now);
+                var remaining = Math.floor(remainingMs / 1000);
+                var pct = totalMs > 0 ? Math.min(100, (remainingMs / totalMs) * 100) : 0;
+                if (bar) bar.style.width = pct + '%';
+                if (remaining <= 0) {
+                    display.textContent = '0 min 00 s';
+                    display.classList.add('text-gray-500');
+                    return;
+                }
+                var min = Math.floor(remaining / 60);
+                var sec = remaining % 60;
+                display.textContent = min + ' min ' + (sec < 10 ? '0' : '') + sec + ' s';
+            }
+            function updateAll() {
+                blocks.forEach(updateOne);
+            }
+            updateAll();
+            setInterval(updateAll, 1000);
+        })();
+        </script>
         {% else %}
         <p class="text-gray-500 text-center py-8">{% trans "No ticket in progress on this machine." %}</p>
         <a href="{% url 'laverie:reserver' %}?machine={{ machine.id }}" class="block w-full text-center bg-indigo-500 hover:bg-indigo-600 text-white py-2.5 rounded-xl font-medium transition mt-2">
             {% trans "Book this machine" %}
         </a>
         {% endif %}
+
+        <p class="mt-6 text-sm text-gray-500">
+            {% trans "To exchange with a ticket owner, click « Message » next to their name to open the chat." %}
+        </p>
     </div>
 </div>
 {% endblock %}
