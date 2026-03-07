@@ -708,9 +708,15 @@
 <script>
 const conversationId = {{ conversation.id }};
 const userId = {{ user.id }};
+const otherParticipantName = "{{ other_participant.display_name|escapejs }}";
 const messagesContainer = document.getElementById('messages-container');
 const messageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input');
+
+// Demander la permission pour les notifications (temps réel)
+if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+}
 
 // Fonction pour générer le contenu HTML d'un message
 function getMessageContent(msg, isSender) {
@@ -770,7 +776,7 @@ function loadMessages() {
         loadingIndicator.classList.add('active');
     }
     
-    fetch(`/chat/conversation/${conversationId}/messages/`)
+    fetch(`/chat/conversation/${conversationId}/messages/?t=${Date.now()}`, { cache: 'no-store', credentials: 'same-origin' })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -780,6 +786,19 @@ function loadMessages() {
                 // Vérifier si les messages ont changé
                 const newMessagesMap = new Map();
                 data.messages.forEach(msg => newMessagesMap.set(msg.id, msg));
+                
+                // Nouveaux messages (pas encore dans currentMessages)
+                const newMessagesFromOther = data.messages.filter(function(msg) {
+                    return !currentMessages.has(msg.id) && !msg.is_sender;
+                });
+                
+                // Notification navigateur si on reçoit un message et que l'onglet est en arrière-plan
+                if (newMessagesFromOther.length > 0 && document.hidden && 'Notification' in window && Notification.permission === 'granted') {
+                    const last = newMessagesFromOther[newMessagesFromOther.length - 1];
+                    const body = (last.contenu || '').trim().slice(0, 80) + (last.contenu && last.contenu.length > 80 ? '…' : '');
+                    var n = new Notification(otherParticipantName || 'Message', { body: body || 'Nouveau message' });
+                    n.onclick = function() { window.focus(); n.close(); };
+                }
                 
                 // Comparer avec les messages actuels
                 let hasChanges = false;
@@ -1105,23 +1124,39 @@ messageForm.addEventListener('submit', function(e) {
         formData.append('fichier', file);
     }
 
+    const csrfInput = document.querySelector('[name=csrfmiddlewaretoken]');
+    const headers = {};
+    if (csrfInput && csrfInput.value) {
+        headers['X-CSRFToken'] = csrfInput.value;
+    }
+
     fetch(`/chat/conversation/${conversationId}/send/`, {
         method: 'POST',
-        body: formData
+        body: formData,
+        headers: headers,
+        credentials: 'same-origin'
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
+    .then(function(response) {
+        return response.text().then(function(text) {
+            try {
+                return { ok: response.ok, data: JSON.parse(text) };
+            } catch (e) {
+                return { ok: false, data: { success: false, error: response.status === 403 ? 'Session expirée ou jeton invalide. Rechargez la page.' : 'Erreur serveur (' + response.status + ').' } };
+            }
+        });
+    })
+    .then(function(result) {
+        if (result.data.success) {
             messageInput.value = '';
             fileInput.value = '';
             filePreview.classList.add('hidden');
             messageTypeInput.value = 'text';
             loadMessages();
         } else {
-            alert('Erreur: ' + data.error);
+            alert('Erreur: ' + (result.data.error || 'Une erreur est survenue.'));
         }
     })
-    .catch(error => {
+    .catch(function(error) {
         console.error('Erreur:', error);
         alert('Une erreur est survenue lors de l\'envoi du message.');
     });
@@ -1144,8 +1179,8 @@ function updateOnlineStatus(isOnline) {
     }
 }
 
-// Charger les messages toutes les 3 secondes
-setInterval(loadMessages, 3000);
+// Charger les messages en temps réel (toutes les 1 seconde)
+setInterval(loadMessages, 1000);
 
 // Charger les messages au chargement de la page
 loadMessages();

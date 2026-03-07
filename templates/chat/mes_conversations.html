@@ -11,53 +11,44 @@
 
     {% if conversations %}
     <div class="grid grid-cols-1 gap-4 sm:gap-6">
-        {% for conversation in conversations %}
-        <a href="{% url 'chat:conversation_detail' conversation.id %}" 
+        {% for item in conversations %}
+        <a href="{% url 'chat:conversation_detail' item.conversation.id %}" 
            class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 block">
             <div class="p-4 sm:p-6">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4 flex-1 min-w-0">
                         <div class="flex-shrink-0">
-                            {% if conversation.other_participant.photo %}
-                            <img src="{{ conversation.other_participant.photo.url }}" 
-                                 alt="{{ conversation.other_participant.display_name }}" 
+                            {% if item.other_participant.photo %}
+                            <img src="{{ item.other_participant.photo.url }}" 
+                                 alt="{{ item.other_participant.display_name }}" 
                                  class="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-gray-200">
                             {% else %}
                             <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white text-lg sm:text-xl font-bold border-2 border-gray-200">
-                                {{ conversation.other_participant.first_name|first|default:conversation.other_participant.email|first|upper }}
+                                {{ item.other_participant.first_name|first|default:item.other_participant.email|first|upper }}
                             </div>
                             {% endif %}
                         </div>
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-2 mb-1">
                                 <h3 class="text-base sm:text-lg font-bold text-gray-900 truncate">
-                                    {{ conversation.other_participant.display_name }}
+                                    {{ item.other_participant.display_name }}
                                 </h3>
-                                <span class="w-2 h-2 rounded-full {% if conversation.other_participant.is_online %}bg-green-400{% else %}bg-gray-400{% endif %}" title="{% if conversation.other_participant.is_online %}En ligne{% else %}Hors ligne{% endif %}"></span>
-                                <span class="px-2 py-1 rounded text-xs font-semibold
-                                    {% if conversation.type_conversation == 'monkilo' %}bg-purple-100 text-purple-800
-                                    {% else %}bg-green-100 text-green-800{% endif %}">
-                                    {% if conversation.type_conversation == 'monkilo' %}Mon Kilo
-                                    {% else %}E-commerce{% endif %}
-                                </span>
+                                <span class="w-2 h-2 rounded-full {% if item.other_participant.is_online %}bg-green-400{% else %}bg-gray-400{% endif %}" title="{% if item.other_participant.is_online %}En ligne{% else %}Hors ligne{% endif %}"></span>
                             </div>
-                            <p class="text-xs sm:text-sm text-gray-500 truncate">
-                                {{ conversation.content_object }}
-                            </p>
-                            {% if conversation.messages.last %}
+                            {% if item.last_message %}
                             <p class="text-xs sm:text-sm text-gray-600 mt-1 truncate">
-                                {{ conversation.messages.last.contenu|truncatechars:60 }}
+                                {{ item.last_message.contenu|truncatechars:60 }}
                             </p>
                             {% endif %}
                         </div>
                     </div>
                     <div class="flex flex-col items-end gap-2 ml-4">
                         <span class="text-xs text-gray-500">
-                            {{ conversation.date_modification|date:"d/m/Y H:i" }}
+                            {{ item.last_activity|date:"d/m/Y H:i" }}
                         </span>
-                        {% if conversation.unread_count > 0 %}
+                        {% if item.unread_count > 0 %}
                         <span class="bg-red-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-2">
-                            {{ conversation.unread_count }}
+                            {{ item.unread_count }}
                         </span>
                         {% endif %}
                     </div>
