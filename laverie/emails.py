@@ -1,9 +1,12 @@
 """
 Envoi d'e-mails pour la laverie (notification de changement d'horaire après annulation).
 """
+import logging
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
+
+logger = logging.getLogger(__name__)
 
 
 def get_domain(request=None):
@@ -59,6 +62,7 @@ def envoyer_email_changement_horaire(utilisateur, request=None):
     from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@localhost')
     to_email = utilisateur.email
     if not to_email:
+        logger.warning("Laverie: pas d'email pour l'utilisateur %s, notification non envoyée.", utilisateur.pk)
         return
 
     email = EmailMultiAlternatives(
@@ -68,4 +72,8 @@ def envoyer_email_changement_horaire(utilisateur, request=None):
         [to_email],
     )
     email.attach_alternative(html_content, 'text/html')
-    email.send(fail_silently=True)
+    try:
+        email.send(fail_silently=False)
+        logger.info("Laverie: email changement horaire envoyé à %s", to_email)
+    except Exception as e:
+        logger.exception("Laverie: échec envoi email changement horaire à %s: %s", to_email, e)

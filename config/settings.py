@@ -100,3 +100,9 @@ LOGOUT_REDIRECT_URL = 'laverie:accueil'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# E-mail (laverie, activation, etc.)
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@dortoir3.local')
+# En développement : afficher les e-mails dans la console au lieu de les envoyer
+if DEBUG and not os.environ.get('EMAIL_HOST'):
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

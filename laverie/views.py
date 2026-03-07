@@ -164,9 +164,14 @@ def annuler_ticket(request, pk):
     resa.statut = 'annule'
     resa.save()
 
-    # Notifier par e-mail (en russe) toutes les personnes qui suivent sur la même machine
+    # Notifier par e-mail (en russe) : 1) ceux qui suivent (debut > annulé), 2) tous les autres sur la machine si besoin
+    import logging
     from .emails import envoyer_email_changement_horaire
-    suivants = (
+    from django.contrib.auth import get_user_model
+
+    logger = logging.getLogger(__name__)
+    # Personnes dont le créneau commence après l'annulé sur la même machine
+    suivants = list(
         Reservation.objects.filter(
             machine=machine,
             statut__in=('reserve', 'en_cours'),
@@ -175,15 +180,26 @@ def annuler_ticket(request, pk):
         .values_list('utilisateur', flat=True)
         .distinct()
     )
-    from django.contrib.auth import get_user_model
+    # Inclure aussi tous les autres avec une résa sur cette machine (au cas où les créneaux se chevauchent ou ordre différent)
+    autres = set(
+        Reservation.objects.filter(
+            machine=machine,
+            statut__in=('reserve', 'en_cours'),
+        )
+        .values_list('utilisateur', flat=True)
+        .distinct()
+    )
+    destinataires = set(suivants) | autres
+    destinataires.discard(request.user.pk)
+    logger.info("Laverie annulation: machine=%s, debut_annule=%s, destinataires=%s", machine.pk, debut_annule, destinataires)
+
     User = get_user_model()
-    for user_id in suivants:
-        if user_id != request.user.pk:
-            try:
-                user = User.objects.get(pk=user_id)
-                envoyer_email_changement_horaire(user, request=request)
-            except Exception:
-                pass
+    for user_id in destinataires:
+        try:
+            user = User.objects.get(pk=user_id)
+            envoyer_email_changement_horaire(user, request=request)
+        except Exception:
+            pass
 
     messages.success(request, 'Réservation annulée.')
     return redirect('laverie:mes_tickets')
