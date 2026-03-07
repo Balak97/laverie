@@ -75,11 +75,13 @@ def conversation_detail(request, pk):
 @login_required
 @require_http_methods(['GET'])
 def conversation_messages_json(request, pk):
-    """Retourne les messages de la conversation en JSON (pour le rechargement AJAX)."""
+    """Retourne les messages de la conversation en JSON (pour le rechargement AJAX). Marque les messages reçus comme lus."""
     conv = get_object_or_404(Conversation, pk=pk)
     if request.user != conv.participant1 and request.user != conv.participant2:
         return JsonResponse({'success': False, 'error': 'Forbidden'}, status=403)
     other = conv.participant2 if request.user == conv.participant1 else conv.participant1
+    # Marquer comme lus les messages reçus (émetteur = l'autre), pour mise à jour du badge en temps réel
+    Message.objects.filter(conversation=conv).exclude(sender=request.user).update(lu=True)
     messages_qs = conv.messages.select_related('sender').order_by('date_envoi')[:100]
     messages = []
     for m in messages_qs:

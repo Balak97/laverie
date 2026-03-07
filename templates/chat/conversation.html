@@ -792,12 +792,19 @@ function loadMessages() {
                     return !currentMessages.has(msg.id) && !msg.is_sender;
                 });
                 
-                // Notification navigateur si on reçoit un message et que l'onglet est en arrière-plan
-                if (newMessagesFromOther.length > 0 && document.hidden && 'Notification' in window && Notification.permission === 'granted') {
-                    const last = newMessagesFromOther[newMessagesFromOther.length - 1];
-                    const body = (last.contenu || '').trim().slice(0, 80) + (last.contenu && last.contenu.length > 80 ? '…' : '');
-                    var n = new Notification(otherParticipantName || 'Message', { body: body || 'Nouveau message' });
-                    n.onclick = function() { window.focus(); n.close(); };
+                // Notifications temps réel : navigateur + titre de l'onglet si message reçu en arrière-plan
+                if (newMessagesFromOther.length > 0 && document.hidden) {
+                    var origTitle = document.title;
+                    if (origTitle.indexOf('(') !== 0) {
+                        window.CHAT_ORIG_TITLE = window.CHAT_ORIG_TITLE || origTitle;
+                    }
+                    document.title = '(' + newMessagesFromOther.length + ') ' + (window.CHAT_ORIG_TITLE || 'Nouveau message');
+                    if ('Notification' in window && Notification.permission === 'granted') {
+                        var last = newMessagesFromOther[newMessagesFromOther.length - 1];
+                        var body = (last.contenu || '').trim().slice(0, 80) + (last.contenu && last.contenu.length > 80 ? '…' : '');
+                        var n = new Notification(otherParticipantName || 'Message', { body: body || 'Nouveau message' });
+                        n.onclick = function() { window.focus(); n.close(); };
+                    }
                 }
                 
                 // Comparer avec les messages actuels
@@ -1181,6 +1188,17 @@ function updateOnlineStatus(isOnline) {
 
 // Charger les messages en temps réel (toutes les 1 seconde)
 setInterval(loadMessages, 1000);
+
+// Restaurer le titre de l'onglet quand l'utilisateur revient sur la page
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden && window.CHAT_ORIG_TITLE) {
+        document.title = window.CHAT_ORIG_TITLE;
+    }
+});
+// Conserver le titre initial pour les notifications
+if (!window.CHAT_ORIG_TITLE) {
+    window.CHAT_ORIG_TITLE = document.title;
+}
 
 // Charger les messages au chargement de la page
 loadMessages();
