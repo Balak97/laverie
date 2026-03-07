@@ -1,22 +1,23 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block contenu %}
 <div class="max-w-3xl mx-auto py-4 sm:py-6 px-3 sm:px-4">
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
         <div>
-            <h1 class="text-xl sm:text-2xl font-bold text-gray-900">Messages du bandeau</h1>
-            <p class="text-gray-600 text-sm">Ces messages défilent en haut de la page laverie, au-dessus des machines.</p>
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-900">{% trans "Banner messages" %}</h1>
+            <p class="text-gray-600 text-sm">{% trans "These messages scroll at the top of the laundry page, above the machines." %}</p>
         </div>
         <a href="{% url 'laverie:agent_message_ajout' %}" class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2.5 rounded-xl font-semibold transition inline-flex items-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            Publier un message
+            {% trans "Post a message" %}
         </a>
     </div>
     <div class="mb-4">
         <a href="{% url 'laverie:agent_machines' %}" class="text-teal-600 hover:text-teal-700 font-medium inline-flex items-center gap-1">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-            Retour à la gestion des machines
+            {% trans "Back to machine management" %}
         </a>
     </div>
 
@@ -26,20 +27,25 @@
         <div class="bg-white rounded-xl shadow border border-gray-100 p-4 flex flex-wrap items-center justify-between gap-3">
             <div class="flex-1 min-w-0">
                 <p class="font-medium text-gray-900">{{ msg.texte }}</p>
-                <p class="text-xs text-gray-500 mt-1">Ordre {{ msg.ordre }} · {{ msg.active|yesno:"Affiché,Masqué" }}{% if msg.auteur %} · {{ msg.auteur.get_full_name|default:msg.auteur.email }}{% endif %}</p>
+                <p class="text-xs text-gray-500 mt-1">{% trans "Order" %} {{ msg.ordre }} · {% if msg.active %}{% trans "Displayed" %}{% else %}{% trans "Hidden" %}{% endif %}{% if msg.auteur %} · {{ msg.auteur.get_full_name|default:msg.auteur.email }}{% endif %}</p>
             </div>
             <div class="flex items-center gap-2">
-                <a href="{% url 'laverie:agent_message_modifier' msg.pk %}" class="text-teal-600 hover:text-teal-700 text-sm font-medium">Modifier</a>
-                <form action="{% url 'laverie:agent_message_supprimer' msg.pk %}" method="post" onsubmit="return confirm('Supprimer ce message ?');" class="inline">
+                <a href="{% url 'laverie:agent_message_modifier' msg.pk %}" class="text-teal-600 hover:text-teal-700 text-sm font-medium">{% trans "Edit" %}</a>
+                <form action="{% url 'laverie:agent_message_supprimer' msg.pk %}" method="post" class="inline" data-confirm="{% trans 'Delete this message?' %}">
                     {% csrf_token %}
-                    <button type="submit" class="text-red-600 hover:text-red-700 text-sm font-medium">Supprimer</button>
+                    <button type="submit" class="text-red-600 hover:text-red-700 text-sm font-medium">{% trans "Delete" %}</button>
                 </form>
             </div>
         </div>
         {% endfor %}
     </div>
+    <script>
+    document.querySelectorAll('form[data-confirm]').forEach(function(f) {
+        f.addEventListener('submit', function(e) { if (!confirm(this.getAttribute('data-confirm'))) e.preventDefault(); });
+    });
+    </script>
     {% else %}
-    <p class="text-gray-500 bg-gray-50 rounded-xl p-6 text-center">Aucun message. Publiez-en un pour qu'il défile en haut de la page laverie.</p>
+    <p class="text-gray-500 bg-gray-50 rounded-xl p-6 text-center">{% trans "No messages. Post one to have it scroll at the top of the laundry page." %}</p>
     {% endif %}
 </div>
 {% endblock %}

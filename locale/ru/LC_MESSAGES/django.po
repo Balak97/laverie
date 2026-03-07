@@ -67,22 +67,22 @@ msgid "Laundry room"
 msgstr "Прачечная"
 
 msgid "Book your machine online."
-msgstr "Забронируйте машину онлайн."
+msgstr "Забронируйте стиральную машину онлайн."
 
 msgid "My tickets"
-msgstr "Мои билеты"
+msgstr "Мои талоны"
 
 msgid "Manage machines"
-msgstr "Управление машинами"
+msgstr "Управление стиральными машинами"
 
 msgid "It's your turn"
 msgstr "Ваша очередь"
 
 msgid "Ticket"
-msgstr "Билет"
+msgstr "Талон"
 
 msgid "Show ticket"
-msgstr "Показать билет"
+msgstr "Показать талон"
 
 msgid "Access your personal space"
 msgstr "Доступ в личный кабинет"
@@ -149,3 +149,252 @@ msgstr "Этот e-mail уже используется."
 
 msgid "Photo must not exceed 2 MB."
 msgstr "Фото не должно превышать 2 МБ."
+
+msgid "Good to know"
+msgstr "Полезно знать"
+
+msgid "You will be placed directly after the last person on this machine. Your slot will start 5 minutes after theirs (time to remove laundry)."
+msgstr "Вы будете поставлены сразу после последнего человека на этой стиральной машине. Ваш слот начнётся через 5 минут после окончания его (время на выгрузку белья)."
+
+msgid "Your start time will be at earliest:"
+msgstr "Ваше время начала — не ранее:"
+
+msgid "at"
+msgstr "в"
+
+msgid "Be present at your slot start time to respect the machine and other users."
+msgstr "Приходите к началу вашего слота, чтобы уважать стиральную машину и других пользователей."
+
+msgid "Announcements"
+msgstr "Объявления"
+
+msgid "Machines"
+msgstr "Стиральные машины"
+
+msgid "Until"
+msgstr "До"
+
+msgid "Available"
+msgstr "Доступно"
+
+msgid "In progress"
+msgstr "В процессе"
+
+msgid "User"
+msgstr "Пользователь"
+
+msgid "Queue"
+msgstr "Очередь"
+
+msgid "No ticket — machine available."
+msgstr "Нет талона — стиральная машина свободна."
+
+msgid "View tickets"
+msgstr "Просмотр талонов"
+
+msgid "Book"
+msgstr "Забронировать"
+
+msgid "No machine configured at the moment."
+msgstr "Нет настроенных стиральных машин."
+
+msgid "Back to laundry room"
+msgstr "Назад в прачечную"
+
+msgid "Tickets in progress"
+msgstr "Талоны в процессе"
+
+msgid "Reservations waiting and in progress on this machine."
+msgstr "Брони в ожидании и в процессе на этой стиральной машине."
+
+msgid "End of last ticket:"
+msgstr "Конец последнего талона:"
+
+msgid "min"
+msgstr "мин"
+
+msgid "No ticket in progress on this machine."
+msgstr "Нет талона в процессе на этой стиральной машине."
+
+msgid "Book this machine"
+msgstr "Забронировать эту стиральную машину"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Dortoir 3 — Laverie"
+msgstr "Общежитие 3 — Прачечная"
+
+msgid "Machine"
+msgstr "Стиральная машина"
+
+msgid "Programme"
+msgstr "Программа"
+
+msgid "Time slot"
+msgstr "Время"
+
+msgid "Holder"
+msgstr "Владелец"
+
+msgid "Show this ticket at the machine to avoid conflicts."
+msgstr "Покажите этот талон у машины, чтобы избежать конфликтов."
+
+msgid "Your washing machine reservations."
+msgstr "Ваши резервации стиральных машин."
+
+msgid "New reservation"
+msgstr "Новая резервация"
+
+msgid "Cancel this reservation?"
+msgstr "Отменить эту резервацию?"
+
+msgid "Cancel"
+msgstr "Отменить"
+
+msgid "You have no reservations."
+msgstr "У вас нет резерваций."
+
+msgid "Book a slot"
+msgstr "Записаться на слот"
+
+msgid "Turn the dial"
+msgstr "Поверните циферблат"
+
+msgid "Confirm reservation"
+msgstr "Подтвердить резервацию"
+
+msgid "No program"
+msgstr "Нет программы"
+
+msgid "Reserved"
+msgstr "Забронировано"
+
+msgid "Completed"
+msgstr "Завершено"
+
+msgid "Cancelled"
+msgstr "Отменено"
+
+msgid "Error while copying."
+msgstr "Ошибка при копировании."
+
+msgid "Add machines and their programs. Drag a program onto another machine to copy it."
+msgstr "Добавляйте машины и их программы. Перетащите программу на другую машину, чтобы скопировать."
+
+msgid "Add machine"
+msgstr "Добавить машину"
+
+msgid "Add program"
+msgstr "Добавить программу"
+
+msgid "Banner messages"
+msgstr "Сообщения баннера"
+
+msgid "Reported issues"
+msgstr "Сообщённые проблемы"
+
+msgid "Active"
+msgstr "Активна"
+
+msgid "Inactive"
+msgstr "Неактивна"
+
+msgid "Order"
+msgstr "Порядок"
+
+msgid "Edit"
+msgstr "Изменить"
+
+msgid "Programs"
+msgstr "Программы"
+
+msgid "Hide = no longer offer for reservation. Show = reactivate."
+msgstr "Скрыть = больше не предлагать для резервации. Показать = снова активировать."
+
+msgid "Drag to another machine to copy"
+msgstr "Перетащите на другую машину для копирования"
+
+msgid "Hide"
+msgstr "Скрыть"
+
+msgid "Show"
+msgstr "Показать"
+
+msgid "Hide this program"
+msgstr "Скрыть эту программу"
+
+msgid "Show this program"
+msgstr "Показать эту программу"
+
+msgid "Drop a program here to copy it."
+msgstr "Перетащите программу сюда, чтобы скопировать."
+
+msgid "Add some"
+msgstr "Добавить"
+
+msgid "No machines"
+msgstr "Нет машин"
+
+msgid "Add a machine to start managing the laundry room."
+msgstr "Добавьте машину, чтобы начать управлять прачечной."
+
+msgid "These messages scroll at the top of the laundry page, above the machines."
+msgstr "Эти сообщения прокручиваются вверху страницы прачечной, над машинами."
+
+msgid "Post a message"
+msgstr "Опубликовать сообщение"
+
+msgid "Back to machine management"
+msgstr "Назад к управлению машинами"
+
+msgid "Displayed"
+msgstr "Отображается"
+
+msgid "Hidden"
+msgstr "Скрыто"
+
+msgid "Delete this message?"
+msgstr "Удалить это сообщение?"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "No messages. Post one to have it scroll at the top of the laundry page."
+msgstr "Нет сообщений. Опубликуйте одно, чтобы оно отображалось вверху страницы прачечной."
+
+msgid "Back to machines"
+msgstr "Назад к машинам"
+
+msgid "Edit program"
+msgstr "Изменить программу"
+
+msgid "New program"
+msgstr "Новая программа"
+
+msgid "Edit the program."
+msgstr "Измените программу."
+
+msgid "Choose the machine, program name and duration."
+msgstr "Выберите машину, название программы и длительность."
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Back to messages"
+msgstr "Назад к сообщениям"
+
+msgid "Edit message"
+msgstr "Изменить сообщение"
+
+msgid "Edit machine"
+msgstr "Изменить машину"
+
+msgid "New machine"
+msgstr "Новая машина"
+
+msgid "Edit the name, order or status."
+msgstr "Измените название, порядок или статус."
+
+msgid "Set the name and display order."
+msgstr "Укажите название и порядок отображения."

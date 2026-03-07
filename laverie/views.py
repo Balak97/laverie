@@ -3,6 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.urls import reverse
+from django.db.models import Max
+from django.utils.translation import gettext_lazy as _
 from .models import Machine, FonctionMachine, Reservation, MessageLaverie
 from .forms import MachineForm, FonctionMachineForm, ReservationForm, MessageLaverieForm
 
@@ -49,6 +53,7 @@ def accueil(request):
     return render(request, 'laverie/accueil.html', {
         'machines': machines, 'now': now, 'annonces': annonces,
         'mon_ticket_en_cours': mon_ticket_en_cours,
+        'user_display_default': _('User'),
     })
 
 
@@ -73,7 +78,33 @@ def reserver(request):
         messages.success(request, f'Ticket #{resa.numero} enregistré : {resa.machine.nom} — {resa.fonction.nom} le {resa.debut.strftime("%d/%m/%Y à %H:%M")}.')
         return redirect('laverie:mes_tickets')
     machines = Machine.objects.filter(active=True).prefetch_related('fonctions').order_by('ordre', 'nom')
-    return render(request, 'laverie/reserver.html', {'form': form, 'machines': machines, 'machine_prechoice': machine_prechoice})
+    prochain_debut = None
+    if machine_prechoice:
+        from datetime import timedelta
+        dernier = (
+            Reservation.objects.filter(
+                machine=machine_prechoice,
+                statut__in=('reserve', 'en_cours'),
+                fin__gt=timezone.now(),
+            )
+            .order_by('-fin')
+            .first()
+        )
+        if dernier:
+            prochain_debut = dernier.fin + timedelta(minutes=5)
+        else:
+            prochain_debut = timezone.now()
+    programmes_par_machine = {}
+    for m in machines:
+        programmes_par_machine[str(m.id)] = [
+            {'id': f.id, 'nom': f.nom, 'duree': f.duree_affichage()}
+            for f in m.fonctions.filter(active=True).order_by('ordre', 'nom')
+        ]
+    return render(request, 'laverie/reserver.html', {
+        'form': form, 'machines': machines, 'machine_prechoice': machine_prechoice,
+        'prochain_debut': prochain_debut,
+        'programmes_par_machine': programmes_par_machine,
+    })
 
 
 @login_required
@@ -97,6 +128,7 @@ def tickets_machine(request, pk):
         'machine': machine,
         'tickets': tickets,
         'fin_dernier_ticket': fin_dernier,
+        'user_display_default': _('User'),
     })
 
 
@@ -117,7 +149,7 @@ def afficher_ticket(request, pk):
     Reservation.marquer_tickets_termines()
     Reservation.marquer_tickets_en_cours()
     resa = get_object_or_404(Reservation, pk=pk, utilisateur=request.user)
-    return render(request, 'laverie/afficher_ticket.html', {'resa': resa})
+    return render(request, 'laverie/afficher_ticket.html', {'resa': resa, 'user_display_default': _('User')})
 
 
 @login_required
@@ -231,6 +263,52 @@ def agent_fonction_modifier(request, pk):
         messages.success(request, 'Fonction mise à jour.')
         return redirect('laverie:agent_machines')
     return render(request, 'laverie/agent/fonction_form.html', {'form': form, 'fonction': fonction})
+
+
+@login_required
+def agent_fonction_toggle_active(request, pk):
+    """Active ou désactive une fonction (masquée du potentiomètre de réservation)."""
+    if not is_agent(request.user):
+        messages.error(request, 'Accès réservé aux agents.')
+        return redirect('laverie:accueil')
+    fonction = get_object_or_404(FonctionMachine, pk=pk)
+    fonction.active = not fonction.active
+    fonction.save()
+    status = 'affichée' if fonction.active else 'masquée'
+    messages.success(request, f'Programme « {fonction.nom } » {status} sur la réservation.')
+    return redirect('laverie:agent_machines')
+
+
+@login_required
+@require_POST
+def agent_fonction_copier(request):
+    """Copie une fonction vers une autre machine (glisser-déposer)."""
+    if not is_agent(request.user):
+        return JsonResponse({'success': False, 'error': 'Accès refusé'}, status=403)
+    fonction_id = request.POST.get('fonction_id')
+    machine_id = request.POST.get('machine_id')
+    if not fonction_id or not machine_id:
+        return JsonResponse({'success': False, 'error': 'Paramètres manquants'}, status=400)
+    source = get_object_or_404(FonctionMachine, pk=fonction_id)
+    target_machine = get_object_or_404(Machine, pk=machine_id)
+    if source.machine_id == int(machine_id):
+        return JsonResponse({'success': False, 'error': 'Même machine'}, status=400)
+    nom = source.nom
+    if target_machine.fonctions.filter(nom=nom).exists():
+        nom = f"{source.nom} (copie)"
+    ordre_max = target_machine.fonctions.aggregate(Max('ordre'))['ordre__max'] or 0
+    FonctionMachine.objects.create(
+        machine=target_machine,
+        nom=nom,
+        duree_minutes=source.duree_minutes,
+        ordre=ordre_max + 1,
+        active=True,
+    )
+    messages.success(request, f'Programme « {source.nom } » copié sur {target_machine.nom}.')
+    return JsonResponse({
+        'success': True,
+        'redirect': reverse('laverie:agent_machines'),
+    })
 
 
 @login_required

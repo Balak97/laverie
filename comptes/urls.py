@@ -25,6 +25,7 @@ urlpatterns = [
     path('logout/', views.log_out, name='logout'),
 
     path('creer_un_compte/', views.register, name='creation_compte'),
+    path('inscription-en-attente/', views.registration_pending, name='registration_pending'),
     path('activate/<uidb64>/<token>/', views.activate, name='activate'),
     path('renvoyer-activation/', views.resend_activation_view, name='resend_activation'),
 

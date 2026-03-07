@@ -150,3 +150,252 @@ msgstr "Cet e-mail est déjà utilisé."
 
 msgid "Photo must not exceed 2 MB."
 msgstr "La photo ne doit pas dépasser 2 Mo."
+
+msgid "Good to know"
+msgstr "À savoir"
+
+msgid "You will be placed directly after the last person on this machine. Your slot will start 5 minutes after theirs (time to remove laundry)."
+msgstr "Vous serez placé(e) directement après la dernière personne sur cette machine. Votre créneau débutera 5 minutes après la fin du sien (temps de retrait du linge)."
+
+msgid "Your start time will be at earliest:"
+msgstr "Votre heure de début sera au plus tôt :"
+
+msgid "at"
+msgstr "à"
+
+msgid "Be present at your slot start time to respect the machine and other users."
+msgstr "Soyez présent(e) à l'heure de début de votre créneau pour respecter la machine et les autres utilisateurs."
+
+msgid "Announcements"
+msgstr "Annonces"
+
+msgid "Machines"
+msgstr "Machines"
+
+msgid "Until"
+msgstr "Jusqu'à"
+
+msgid "Available"
+msgstr "Disponible"
+
+msgid "In progress"
+msgstr "En cours"
+
+msgid "User"
+msgstr "Utilisateur"
+
+msgid "Queue"
+msgstr "File d'attente"
+
+msgid "No ticket — machine available."
+msgstr "Aucun ticket — machine disponible."
+
+msgid "View tickets"
+msgstr "Voir les tickets"
+
+msgid "Book"
+msgstr "Réserver"
+
+msgid "No machine configured at the moment."
+msgstr "Aucune machine configurée pour le moment."
+
+msgid "Back to laundry room"
+msgstr "Retour à la salle à laver"
+
+msgid "Tickets in progress"
+msgstr "Tickets en cours"
+
+msgid "Reservations waiting and in progress on this machine."
+msgstr "Réservations en attente et en cours sur cette machine."
+
+msgid "End of last ticket:"
+msgstr "Fin du dernier ticket :"
+
+msgid "min"
+msgstr "min"
+
+msgid "No ticket in progress on this machine."
+msgstr "Aucun ticket en cours sur cette machine."
+
+msgid "Book this machine"
+msgstr "Réserver cette machine"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Dortoir 3 — Laverie"
+msgstr "Dortoir 3 — Laverie"
+
+msgid "Machine"
+msgstr "Machine"
+
+msgid "Programme"
+msgstr "Programme"
+
+msgid "Time slot"
+msgstr "Créneau"
+
+msgid "Holder"
+msgstr "Titulaire"
+
+msgid "Show this ticket at the machine to avoid conflicts."
+msgstr "Présentez ce ticket à la machine pour éviter les conflits."
+
+msgid "Your washing machine reservations."
+msgstr "Vos réservations de machine à laver."
+
+msgid "New reservation"
+msgstr "Nouvelle réservation"
+
+msgid "Cancel this reservation?"
+msgstr "Annuler cette réservation ?"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "You have no reservations."
+msgstr "Vous n'avez aucune réservation."
+
+msgid "Book a slot"
+msgstr "Prendre un ticket"
+
+msgid "Turn the dial"
+msgstr "Tournez le cadran"
+
+msgid "Confirm reservation"
+msgstr "Confirmer la réservation"
+
+msgid "No program"
+msgstr "Aucun programme"
+
+msgid "Reserved"
+msgstr "Réservé"
+
+msgid "Completed"
+msgstr "Terminé"
+
+msgid "Cancelled"
+msgstr "Annulé"
+
+msgid "Error while copying."
+msgstr "Erreur lors de la copie."
+
+msgid "Add machines and their programs. Drag a program onto another machine to copy it."
+msgstr "Ajoutez les machines et leurs programmes. Glissez un programme sur une autre machine pour le copier."
+
+msgid "Add machine"
+msgstr "Ajouter une machine"
+
+msgid "Add program"
+msgstr "Ajouter une fonction"
+
+msgid "Banner messages"
+msgstr "Messages du bandeau"
+
+msgid "Reported issues"
+msgstr "Problèmes signalés"
+
+msgid "Active"
+msgstr "Active"
+
+msgid "Inactive"
+msgstr "Inactive"
+
+msgid "Order"
+msgstr "Ordre"
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Programs"
+msgstr "Programmes"
+
+msgid "Hide = no longer offer for reservation. Show = reactivate."
+msgstr "Masquer = ne plus proposer à la réservation. Afficher = réactiver."
+
+msgid "Drag to another machine to copy"
+msgstr "Glisser vers une autre machine pour copier"
+
+msgid "Hide"
+msgstr "Masquer"
+
+msgid "Show"
+msgstr "Afficher"
+
+msgid "Hide this program"
+msgstr "Masquer ce programme"
+
+msgid "Show this program"
+msgstr "Afficher ce programme"
+
+msgid "Drop a program here to copy it."
+msgstr "Déposez un programme ici pour le copier."
+
+msgid "Add some"
+msgstr "En ajouter"
+
+msgid "No machines"
+msgstr "Aucune machine"
+
+msgid "Add a machine to start managing the laundry room."
+msgstr "Ajoutez une machine pour commencer à gérer la laverie."
+
+msgid "These messages scroll at the top of the laundry page, above the machines."
+msgstr "Ces messages défilent en haut de la page laverie, au-dessus des machines."
+
+msgid "Post a message"
+msgstr "Publier un message"
+
+msgid "Back to machine management"
+msgstr "Retour à la gestion des machines"
+
+msgid "Displayed"
+msgstr "Affiché"
+
+msgid "Hidden"
+msgstr "Masqué"
+
+msgid "Delete this message?"
+msgstr "Supprimer ce message ?"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "No messages. Post one to have it scroll at the top of the laundry page."
+msgstr "Aucun message. Publiez-en un pour qu'il défile en haut de la page laverie."
+
+msgid "Back to machines"
+msgstr "Retour aux machines"
+
+msgid "Edit program"
+msgstr "Modifier la fonction"
+
+msgid "New program"
+msgstr "Nouvelle fonction (programme)"
+
+msgid "Edit the program."
+msgstr "Modifiez le programme."
+
+msgid "Choose the machine, program name and duration."
+msgstr "Choisissez la machine, le nom du programme et la durée."
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Back to messages"
+msgstr "Retour aux messages"
+
+msgid "Edit message"
+msgstr "Modifier le message"
+
+msgid "Edit machine"
+msgstr "Modifier la machine"
+
+msgid "New machine"
+msgstr "Nouvelle machine"
+
+msgid "Edit the name, order or status."
+msgstr "Modifiez le nom, l'ordre ou le statut."
+
+msgid "Set the name and display order."
+msgstr "Définissez le nom et l'ordre d'affichage."

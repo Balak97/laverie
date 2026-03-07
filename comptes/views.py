@@ -43,7 +43,7 @@ def register(request):
     Inscription d'un nouvel utilisateur avec validation par e-mail.
     """
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST, request.FILES)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.email  # l'identifiant sera l'email
@@ -56,13 +56,21 @@ def register(request):
             except Exception:
                 pass
 
-            return render(request, 'comptes/emails/registration_pending.html')
+            return redirect('registration_pending')
         else:
             messages.error(request, "Veuillez corriger les erreurs dans le formulaire.")
     else:
         form = CustomUserCreationForm()
 
     return render(request, 'comptes/register.html', {'form': form})
+
+
+def registration_pending(request):
+    """
+    Page affichée après une inscription réussie (accès en GET uniquement).
+    Utiliser une redirection après POST évite le renvoi des données au rechargement (F5).
+    """
+    return render(request, 'comptes/emails/registration_pending.html')
 
 
 @login_required

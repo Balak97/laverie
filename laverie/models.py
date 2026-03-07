@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from django.db.models import Max
 
 
@@ -70,10 +71,10 @@ class FonctionMachine(models.Model):
 class Reservation(models.Model):
     """Ticket / réservation d'un créneau sur une machine."""
     STATUT_CHOICES = [
-        ('reserve', 'Réservé'),
-        ('en_cours', 'En cours'),
-        ('termine', 'Terminé'),
-        ('annule', 'Annulé'),
+        ('reserve', _('Reserved')),
+        ('en_cours', _('In progress')),
+        ('termine', _('Completed')),
+        ('annule', _('Cancelled')),
     ]
     utilisateur = models.ForeignKey(
         settings.AUTH_USER_MODEL,

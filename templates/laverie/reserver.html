@@ -1,106 +1,335 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block contenu %}
 <div class="max-w-2xl mx-auto py-4 sm:py-6 px-3 sm:px-4">
     <div class="mb-6">
         <a href="{% url 'laverie:accueil' %}" class="text-teal-600 hover:text-teal-700 font-medium inline-flex items-center gap-1">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-            Retour à la salle à laver
+            {% trans "Back to laundry room" %}
         </a>
     </div>
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-        <h1 class="text-xl font-bold text-gray-900 mb-1">Prendre un ticket</h1>
-        <p class="text-gray-600 text-sm mb-6">{% if machine_prechoice %}Choisissez le programme et l'heure.{% else %}Choisissez la machine, le programme et l’heure de début.{% endif %}</p>
 
-        <form method="post" id="form-resa">
-            {% csrf_token %}
-            {% if form.non_field_errors %}
-            <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{{ form.non_field_errors }}</div>
-            {% endif %}
-            <div class="space-y-4">
-                {% if machine_prechoice %}
-                <div>
-                    <input type="hidden" name="machine" value="{{ machine_prechoice.id }}">
-                    <p class="text-sm font-medium text-gray-700">Machine</p>
-                    <p class="mt-1 py-2.5 px-4 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 font-medium">{{ machine_prechoice.nom }}</p>
-                </div>
-                <div class="relative">
-                    <label for="id_fonction" class="block text-sm font-medium text-gray-700 mb-1">Programme</label>
-                    <div class="relative">
-                        {{ form.fonction }}
-                        <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                        </span>
-                    </div>
-                    {% if form.fonction.errors %}<p class="text-red-600 text-sm mt-1">{{ form.fonction.errors.0 }}</p>{% endif %}
-                </div>
-                {% else %}
-                <div>
-                    <label for="id_machine" class="block text-sm font-medium text-gray-700 mb-1">Machine</label>
-                    <div class="relative">
-                        {{ form.machine }}
-                        <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                        </span>
-                    </div>
-                    {% if form.machine.errors %}<p class="text-red-600 text-sm mt-1">{{ form.machine.errors.0 }}</p>{% endif %}
-                </div>
-                <div>
-                    <label for="id_fonction" class="block text-sm font-medium text-gray-700 mb-1">Programme</label>
-                    <div class="relative">
-                    <select name="fonction" id="id_fonction" class="select-resa w-full pl-4 pr-10 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white cursor-pointer text-gray-900 shadow-sm appearance-none" required>
-                        <option value="">Choisir d’abord une machine</option>
-                        {% for m in machines %}
-                        {% for f in m.fonctions.all %}
-                        <option value="{{ f.id }}" data-machine="{{ m.id }}" data-duree="{{ f.duree_minutes }}" {% if form.fonction.value == f.id %}selected{% endif %}>{{ f.nom }} — {{ f.duree_affichage }}</option>
-                        {% endfor %}
-                        {% endfor %}
-                    </select>
-                        <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                        </span>
-                    </div>
-                    {% if form.fonction.errors %}<p class="text-red-600 text-sm mt-1">{{ form.fonction.errors.0 }}</p>{% endif %}
-                </div>
-                {% endif %}
-                <div>
-                    <label for="id_debut" class="block text-sm font-medium text-gray-700 mb-1">Début du créneau <span class="text-gray-500 font-normal">(optionnel)</span></label>
-                    {{ form.debut }}
-                    <p class="text-gray-500 text-xs mt-1">Laisser vide pour être placé automatiquement après le dernier ticket de la machine.</p>
-                    {% if form.debut.errors %}<p class="text-red-600 text-sm mt-1">{{ form.debut.errors.0 }}</p>{% endif %}
-                </div>
-            </div>
-            <div class="mt-6 flex gap-3">
-                <button type="submit" class="flex-1 bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 rounded-xl transition">
-                    Confirmer la réservation
-                </button>
-                <a href="{% url 'laverie:accueil' %}" class="px-4 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 font-medium">Annuler</a>
-            </div>
-        </form>
+    <div class="mb-6 p-4 rounded-xl bg-cyan-50 border border-cyan-200 text-sm text-cyan-900">
+        <p class="font-medium mb-1">{% trans "Good to know" %}</p>
+        <p class="mb-2">{% trans "You will be placed directly after the last person on this machine. Your slot will start 5 minutes after theirs (time to remove laundry)." %}</p>
+        {% if prochain_debut %}
+        <p class="font-semibold">{% trans "Your start time will be at earliest:" %} <span class="text-cyan-700">{{ prochain_debut|date:"d/m/Y" }} {% trans "at" %} {{ prochain_debut|time:"H:i" }}</span>.</p>
+        {% endif %}
+        <p class="mt-2 text-cyan-800">{% trans "Be present at your slot start time to respect the machine and other users." %}</p>
     </div>
+
+    {{ programmes_par_machine|json_script:"programmes-data" }}
+
+    <form method="post" id="form-resa" data-msg-no-program="{% trans 'No program' %}">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        {% if machine_prechoice %}
+        <input type="hidden" name="machine" id="id_machine" value="{{ machine_prechoice.id }}">
+        <p class="text-sm font-medium text-gray-700 mb-2 text-center">{% trans "Machine" %} · {{ machine_prechoice.nom }}</p>
+        {% else %}
+        <div class="mb-4">
+            <label for="id_machine" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Machine" %}</label>
+            <div class="relative">
+                {{ form.machine }}
+                <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </span>
+            </div>
+            {% if form.machine.errors %}<p class="text-red-600 text-sm mt-1">{{ form.machine.errors.0 }}</p>{% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Panneau type machine à laver (cadran + écran) -->
+        <div id="panel-machine" class="{% if not machine_prechoice %}hidden{% endif %} w-full max-w-sm mx-auto mb-6">
+            <div class="relative bg-gradient-to-b from-slate-300 to-slate-400 rounded-[2.5rem] p-6 shadow-2xl border-4 border-slate-500/50" style="box-shadow: inset 0 2px 4px rgba(255,255,255,0.3), 0 8px 32px rgba(0,0,0,0.2);">
+
+                <!-- Écran LCD : programme + durée -->
+                <div id="resa-ecran" class="mb-5 mx-2 rounded-xl bg-emerald-950/90 border-2 border-emerald-700/80 p-4 font-mono shadow-inner min-h-[80px] flex flex-col justify-center" style="box-shadow: inset 0 0 20px rgba(0,0,0,0.4);">
+                    <div id="ecran-programme" class="text-xl font-bold text-emerald-300">—</div>
+                    <div id="ecran-duree" class="text-emerald-400/90 text-sm mt-1">{% trans "Turn the dial" %}</div>
+                </div>
+
+                <!-- Potentiomètre : cadran + graduations (noms des programmes) cliquables -->
+                <div class="flex items-center justify-center gap-2 sm:gap-4">
+                    <div class="relative w-52 h-52 sm:w-64 sm:h-64 flex-shrink-0" id="potentiometer-wrapper">
+                        <!-- Graduations : noms des programmes en cercle, cliquables -->
+                        <div id="dial-labels" class="absolute inset-0">
+                            <div id="dial-labels-inner" class="relative w-full h-full"></div>
+                        </div>
+                        <!-- Cadran central (knob draggable, zone confortable) -->
+                        <div id="potentiometer-container" class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            <div id="knob-zone" class="relative w-32 h-32 sm:w-40 sm:h-40 pointer-events-auto cursor-grab active:cursor-grabbing select-none flex items-center justify-center" style="touch-action: none;">
+                                <svg class="w-full h-full drop-shadow-lg absolute" viewBox="0 0 120 120" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="dial-bevel" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#e2e8f0"/>
+                                        <stop offset="25%" style="stop-color:#94a3b8"/>
+                                        <stop offset="50%" style="stop-color:#64748b"/>
+                                        <stop offset="75%" style="stop-color:#475569"/>
+                                        <stop offset="100%" style="stop-color:#334155"/>
+                                    </linearGradient>
+                                    <radialGradient id="dial-face" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" style="stop-color:#475569"/>
+                                        <stop offset="70%" style="stop-color:#334155"/>
+                                        <stop offset="100%" style="stop-color:#1e293b"/>
+                                    </radialGradient>
+                                    <linearGradient id="knob-metal" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#f1f5f9"/>
+                                        <stop offset="30%" style="stop-color:#cbd5e1"/>
+                                        <stop offset="60%" style="stop-color:#94a3b8"/>
+                                        <stop offset="100%" style="stop-color:#64748b"/>
+                                    </linearGradient>
+                                    <linearGradient id="knob-shine" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:rgba(255,255,255,0.5)"/>
+                                        <stop offset="50%" style="stop-color:rgba(255,255,255,0)"/>
+                                        <stop offset="100%" style="stop-color:rgba(0,0,0,0.15)"/>
+                                    </linearGradient>
+                                    <filter id="knob-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0f172a" flood-opacity="0.5"/>
+                                        <feDropShadow dx="0" dy="1" stdDeviation="0.5" flood-color="#fff" flood-opacity="0.2"/>
+                                    </filter>
+                                </defs>
+                                <circle cx="60" cy="60" r="56" fill="none" stroke="url(#dial-bevel)" stroke-width="8"/>
+                                <circle cx="60" cy="60" r="48" fill="url(#dial-face)" stroke="#1e293b" stroke-width="1"/>
+                                <circle cx="60" cy="14" r="3" fill="#14b8a6" opacity="0.9"/>
+                                <rect x="58.5" y="14" width="3" height="8" rx="1" fill="#14b8a6" opacity="0.9"/>
+                                <g filter="url(#knob-shadow)">
+                                    <circle cx="60" cy="60" r="24" fill="url(#knob-metal)" stroke="#94a3b8" stroke-width="1.5"/>
+                                    <circle cx="60" cy="60" r="21" fill="none" stroke="url(#knob-shine)" stroke-width="2" opacity="0.6"/>
+                                    <circle cx="60" cy="60" r="4" fill="#0f172a"/>
+                                </g>
+                                </svg>
+                                <!-- Aiguille en HTML/CSS : rotation via style.transform (fiable partout) -->
+                                <div id="resa-aiguille" class="absolute pointer-events-none" style="width: 8px; height: 50%; left: 50%; top: 0; margin-left: -4px; transform-origin: 50% 100%;">
+                                    <div class="w-full h-full rounded-full bg-gradient-to-t from-teal-700 to-teal-400" style="box-shadow: 0 0 2px rgba(0,0,0,0.3);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="fonction" id="id_fonction" required value="">
+            </div>
+        </div>
+
+        {% if form.fonction.errors %}<p class="text-red-600 text-sm mb-4 text-center">{{ form.fonction.errors.0 }}</p>{% endif %}
+
+        <div class="flex gap-3">
+            <button type="submit" id="btn-submit" class="flex-1 bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 rounded-xl transition" disabled>
+                {% trans "Confirm reservation" %}
+            </button>
+            <a href="{% url 'laverie:accueil' %}" class="px-4 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 font-medium">{% trans "Cancel" %}</a>
+        </div>
+    </form>
 </div>
 
 <script>
 (function() {
+    var programmesData = document.getElementById('programmes-data');
+    var programmesParMachine = programmesData ? JSON.parse(programmesData.textContent) : {};
     var machineSelect = document.getElementById('id_machine');
-    var fonctionSelect = document.getElementById('id_fonction');
-    if (!fonctionSelect) return;
-    if (!machineSelect) return;
-    function filterFonctions() {
-        var mid = machineSelect.value;
-        for (var i = 0; i < fonctionSelect.options.length; i++) {
-            var opt = fonctionSelect.options[i];
-            if (opt.value === '') { opt.style.display = 'block'; continue; }
-            opt.style.display = opt.getAttribute('data-machine') === mid ? 'block' : 'none';
-            if (opt.getAttribute('data-machine') !== mid && opt.selected) opt.selected = false;
-        }
-        if (!mid) fonctionSelect.value = '';
+    var panelMachine = document.getElementById('panel-machine');
+    var fonctionInput = document.getElementById('id_fonction');
+    var ecranProgramme = document.getElementById('ecran-programme');
+    var ecranDuree = document.getElementById('ecran-duree');
+    var btnSubmit = document.getElementById('btn-submit');
+    var needleEl = document.getElementById('resa-aiguille');
+    var knobZone = document.getElementById('knob-zone');
+    var dialLabelsInner = document.getElementById('dial-labels-inner');
+
+    var currentMachineId = null;
+    var programmes = [];
+    var selectedIndex = 0;
+    var rotation = 0;
+    var step = 360;
+    var isDragging = false;
+    var startX, startRotation;
+
+    function getMachineId() {
+        if (machineSelect) return machineSelect.value || null;
+        return currentMachineId;
     }
-    machineSelect.addEventListener('change', filterFonctions);
-    var qs = new URLSearchParams(window.location.search);
-    var prefMachine = qs.get('machine');
-    if (prefMachine) { machineSelect.value = prefMachine; filterFonctions(); }
+
+    function buildLabelButtons() {
+        if (!dialLabelsInner) return;
+        dialLabelsInner.innerHTML = '';
+        if (programmes.length === 0) return;
+        var n = programmes.length;
+        var radiusPercent = 46;
+        var maxW = n > 4 ? '4rem' : '5rem';
+        var fontSize = n > 5 ? '0.65rem' : (n > 3 ? '0.7rem' : '0.75rem');
+        for (var i = 0; i < n; i++) {
+            var angleDeg = i * (360 / n);
+            var angleRad = angleDeg * Math.PI / 180;
+            var x = 50 + radiusPercent * Math.sin(angleRad);
+            var y = 50 - radiusPercent * Math.cos(angleRad);
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'absolute font-semibold rounded-full px-2 py-0.5 border shadow-sm transition-all duration-200 pointer-events-auto overflow-hidden text-ellipsis ' +
+                (i === selectedIndex ? 'bg-teal-500 text-white border-teal-600 shadow-teal-500/30 shadow-md ring-2 ring-teal-400/50' : 'text-slate-600 bg-white/95 hover:bg-teal-50 hover:border-teal-300 border-slate-200 hover:text-teal-700');
+            btn.style.left = x + '%';
+            btn.style.top = y + '%';
+            btn.style.transform = 'translate(-50%, -50%)';
+            btn.style.maxWidth = maxW;
+            btn.style.fontSize = fontSize;
+            btn.style.whiteSpace = 'nowrap';
+            btn.textContent = programmes[i].nom;
+            btn.setAttribute('title', programmes[i].nom);
+            btn.setAttribute('data-index', i);
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                var idx = parseInt(this.getAttribute('data-index'), 10);
+                setSelectedIndex(idx);
+            });
+            dialLabelsInner.appendChild(btn);
+        }
+    }
+
+    function applyKnobRotation(angle) {
+        var a = angle !== undefined ? angle : rotation;
+        var el = document.getElementById('resa-aiguille');
+        if (el) el.style.transform = 'rotate(' + a + 'deg)';
+    }
+
+    function animateNeedleTo(targetRot) {
+        var startRot = rotation;
+        var duration = 220;
+        var startTime = null;
+        function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var elapsed = timestamp - startTime;
+            var frac = Math.min(elapsed / duration, 1);
+            frac = frac * (2 - frac);
+            var current = startRot + (targetRot - startRot) * frac;
+            applyKnobRotation(current);
+            if (frac < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+        rotation = targetRot;
+    }
+
+    function setSelectedIndex(i) {
+        if (programmes.length === 0) return;
+        selectedIndex = ((i % programmes.length) + programmes.length) % programmes.length;
+        step = 360 / programmes.length;
+        var targetRot = selectedIndex * step;
+        animateNeedleTo(targetRot);
+        updateScreen();
+        updateFonctionInput();
+        updateLabelSelection();
+    }
+
+    function updateLabelSelection() {
+        if (!dialLabelsInner) return;
+        var btns = dialLabelsInner.querySelectorAll('button[data-index]');
+        for (var b = 0; b < btns.length; b++) {
+            var idx = parseInt(btns[b].getAttribute('data-index'), 10);
+            var selected = idx === selectedIndex;
+            btns[b].className = 'absolute font-semibold rounded-full px-2 py-0.5 border shadow-sm transition-all duration-200 pointer-events-auto overflow-hidden text-ellipsis ' +
+                (selected ? 'bg-teal-500 text-white border-teal-600 shadow-teal-500/30 shadow-md ring-2 ring-teal-400/50' : 'text-slate-600 bg-white/95 hover:bg-teal-50 hover:border-teal-300 border-slate-200 hover:text-teal-700');
+        }
+    }
+
+    function loadProgrammes() {
+        var mid = getMachineId();
+        if (!mid) {
+            programmes = [];
+            if (panelMachine) panelMachine.classList.add('hidden');
+            return;
+        }
+        programmes = programmesParMachine[mid] || [];
+        if (panelMachine) panelMachine.classList.remove('hidden');
+        selectedIndex = 0;
+        rotation = 0;
+        step = programmes.length ? 360 / programmes.length : 360;
+        applyKnobRotation();
+        buildLabelButtons();
+        updateLabelSelection();
+        updateScreen();
+        updateFonctionInput();
+    }
+
+    function updateScreen() {
+        if (programmes.length === 0) {
+            if (ecranProgramme) ecranProgramme.textContent = '—';
+            if (ecranDuree) {
+                var formEl = document.getElementById('form-resa');
+                ecranDuree.textContent = (formEl && formEl.getAttribute('data-msg-no-program')) || 'No program';
+            }
+            if (btnSubmit) btnSubmit.disabled = true;
+            return;
+        }
+        var p = programmes[selectedIndex];
+        if (ecranProgramme) ecranProgramme.textContent = p.nom;
+        if (ecranDuree) ecranDuree.textContent = p.duree;
+        if (btnSubmit) btnSubmit.disabled = false;
+    }
+
+    function updateFonctionInput() {
+        if (programmes.length && fonctionInput) {
+            fonctionInput.value = programmes[selectedIndex].id;
+        } else if (fonctionInput) {
+            fonctionInput.value = '';
+        }
+    }
+
+    function setIndexFromRotation(deg) {
+        if (programmes.length === 0) return;
+        rotation = ((deg % 360) + 360) % 360;
+        step = 360 / programmes.length;
+        selectedIndex = Math.round(rotation / step) % programmes.length;
+        if (selectedIndex < 0) selectedIndex += programmes.length;
+        applyKnobRotation(rotation);
+        updateScreen();
+        updateFonctionInput();
+        updateLabelSelection();
+    }
+
+    if (machineSelect) {
+        machineSelect.addEventListener('change', function() {
+            currentMachineId = machineSelect.value;
+            loadProgrammes();
+        });
+    }
+
+    if (knobZone && needleEl) {
+        knobZone.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            startX = e.clientX;
+            startRotation = rotation;
+        });
+        document.addEventListener('mousemove', function(e) {
+            if (!isDragging) return;
+            var delta = e.clientX - startX;
+            setIndexFromRotation(startRotation + delta * 1.2);
+        });
+        document.addEventListener('mouseup', function() { isDragging = false; });
+
+        knobZone.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            isDragging = true;
+            startRotation = rotation;
+            startX = e.touches[0].clientX;
+        }, { passive: false });
+        knobZone.addEventListener('touchmove', function(e) {
+            if (!isDragging) return;
+            var delta = e.touches[0].clientX - startX;
+            setIndexFromRotation(startRotation + delta * 1.2);
+            startX = e.touches[0].clientX;
+            startRotation = rotation;
+        });
+        knobZone.addEventListener('touchend', function() { isDragging = false; });
+    }
+
+    if (document.querySelector('input[name="machine"][value]')) {
+        currentMachineId = document.querySelector('input[name="machine"]').value;
+    }
+    loadProgrammes();
 })();
 </script>
 {% endblock %}

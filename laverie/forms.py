@@ -43,13 +43,10 @@ class FonctionMachineForm(forms.ModelForm):
 
 
 class ReservationForm(forms.ModelForm):
-    """Réservation : choix machine, fonction, et optionnellement date de début.
-    Si pas de date : le créneau est placé après le dernier ticket actif de la machine.
-    Si date fournie : vérification de disponibilité puis attribution du créneau.
-    """
+    """Réservation : choix machine et programme. Le créneau est placé automatiquement après le dernier ticket actif."""
     class Meta:
         model = Reservation
-        fields = ('machine', 'fonction', 'debut')
+        fields = ('machine', 'fonction')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -64,16 +61,6 @@ class ReservationForm(forms.ModelForm):
         self.fields['fonction'].label_from_instance = lambda obj: f"{obj.nom} — {obj.duree_affichage()}"
         self.fields['fonction'].widget.attrs['class'] = 'select-resa w-full pl-4 pr-10 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white cursor-pointer text-gray-900 shadow-sm appearance-none'
         self.fields['machine'].widget.attrs['class'] = 'select-resa w-full pl-4 pr-10 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white cursor-pointer text-gray-900 shadow-sm appearance-none'
-        self.fields['debut'].required = False
-        self.fields['debut'].widget = forms.DateTimeInput(
-            attrs={
-                'type': 'datetime-local',
-                'class': 'w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500',
-                'placeholder': 'Optionnel',
-            },
-            format='%Y-%m-%dT%H:%M'
-        )
-        self.fields['debut'].input_formats = ['%Y-%m-%dT%H:%M', '%Y-%m-%d %H:%M']
 
     def _get_debut_apres_dernier_ticket(self, machine):
         """Retourne le début du prochain créneau = fin du dernier ticket + 5 min (retrait/remise du linge)."""
@@ -96,42 +83,18 @@ class ReservationForm(forms.ModelForm):
         data = super().clean()
         machine = data.get('machine')
         fonction = data.get('fonction')
-        debut_saisi = data.get('debut')
 
         if not machine or not fonction:
             return data
         if fonction.machine_id != machine.id:
             self.add_error('fonction', 'Cette fonction n\'appartient pas à la machine choisie.')
-            return data
-
-        from datetime import timedelta
-        duree = fonction.duree_minutes
-
-        if debut_saisi is None or (isinstance(debut_saisi, str) and not debut_saisi.strip()):
-            # Pas de date choisie : placer après le dernier ticket actif de la machine
-            debut = self._get_debut_apres_dernier_ticket(machine)
-            data['debut'] = debut
-        else:
-            # Date choisie : vérifier qu'elle est dans le futur et que le créneau est libre
-            debut = debut_saisi
-            if debut < timezone.now():
-                self.add_error('debut', 'Le créneau ne peut pas être dans le passé.')
-                return data
-            fin = debut + timedelta(minutes=duree)
-            if Reservation.objects.filter(
-                machine=machine,
-                statut__in=('reserve', 'en_cours'),
-                debut__lt=fin,
-                fin__gt=debut,
-            ).exists():
-                self.add_error('debut', 'Ce créneau est déjà pris pour cette machine.')
         return data
 
     def save(self, commit=True):
+        from datetime import timedelta
         instance = super().save(commit=False)
-        if instance.fonction and instance.debut:
-            from datetime import timedelta
-            instance.fin = instance.debut + timedelta(minutes=instance.fonction.duree_minutes)
+        instance.debut = self._get_debut_apres_dernier_ticket(instance.machine)
+        instance.fin = instance.debut + timedelta(minutes=instance.fonction.duree_minutes)
         if commit:
             instance.save()
         return instance

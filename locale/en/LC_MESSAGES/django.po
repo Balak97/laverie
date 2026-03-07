@@ -149,3 +149,252 @@ msgstr "This email is already in use."
 
 msgid "Photo must not exceed 2 MB."
 msgstr "Photo must not exceed 2 MB."
+
+msgid "Good to know"
+msgstr "Good to know"
+
+msgid "You will be placed directly after the last person on this machine. Your slot will start 5 minutes after theirs (time to remove laundry)."
+msgstr "You will be placed directly after the last person on this machine. Your slot will start 5 minutes after theirs (time to remove laundry)."
+
+msgid "Your start time will be at earliest:"
+msgstr "Your start time will be at earliest:"
+
+msgid "at"
+msgstr "at"
+
+msgid "Be present at your slot start time to respect the machine and other users."
+msgstr "Be present at your slot start time to respect the machine and other users."
+
+msgid "Announcements"
+msgstr "Announcements"
+
+msgid "Machines"
+msgstr "Machines"
+
+msgid "Until"
+msgstr "Until"
+
+msgid "Available"
+msgstr "Available"
+
+msgid "In progress"
+msgstr "In progress"
+
+msgid "User"
+msgstr "User"
+
+msgid "Queue"
+msgstr "Queue"
+
+msgid "No ticket — machine available."
+msgstr "No ticket — machine available."
+
+msgid "View tickets"
+msgstr "View tickets"
+
+msgid "Book"
+msgstr "Book"
+
+msgid "No machine configured at the moment."
+msgstr "No machine configured at the moment."
+
+msgid "Back to laundry room"
+msgstr "Back to laundry room"
+
+msgid "Tickets in progress"
+msgstr "Tickets in progress"
+
+msgid "Reservations waiting and in progress on this machine."
+msgstr "Reservations waiting and in progress on this machine."
+
+msgid "End of last ticket:"
+msgstr "End of last ticket:"
+
+msgid "min"
+msgstr "min"
+
+msgid "No ticket in progress on this machine."
+msgstr "No ticket in progress on this machine."
+
+msgid "Book this machine"
+msgstr "Book this machine"
+
+msgid "Close"
+msgstr "Close"
+
+msgid "Dortoir 3 — Laverie"
+msgstr "Dormitory 3 — Laundry"
+
+msgid "Machine"
+msgstr "Machine"
+
+msgid "Programme"
+msgstr "Programme"
+
+msgid "Time slot"
+msgstr "Time slot"
+
+msgid "Holder"
+msgstr "Holder"
+
+msgid "Show this ticket at the machine to avoid conflicts."
+msgstr "Show this ticket at the machine to avoid conflicts."
+
+msgid "Your washing machine reservations."
+msgstr "Your washing machine reservations."
+
+msgid "New reservation"
+msgstr "New reservation"
+
+msgid "Cancel this reservation?"
+msgstr "Cancel this reservation?"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "You have no reservations."
+msgstr "You have no reservations."
+
+msgid "Book a slot"
+msgstr "Book a slot"
+
+msgid "Turn the dial"
+msgstr "Turn the dial"
+
+msgid "Confirm reservation"
+msgstr "Confirm reservation"
+
+msgid "No program"
+msgstr "No program"
+
+msgid "Reserved"
+msgstr "Reserved"
+
+msgid "Completed"
+msgstr "Completed"
+
+msgid "Cancelled"
+msgstr "Cancelled"
+
+msgid "Error while copying."
+msgstr "Error while copying."
+
+msgid "Add machines and their programs. Drag a program onto another machine to copy it."
+msgstr "Add machines and their programs. Drag a program onto another machine to copy it."
+
+msgid "Add machine"
+msgstr "Add machine"
+
+msgid "Add program"
+msgstr "Add program"
+
+msgid "Banner messages"
+msgstr "Banner messages"
+
+msgid "Reported issues"
+msgstr "Reported issues"
+
+msgid "Active"
+msgstr "Active"
+
+msgid "Inactive"
+msgstr "Inactive"
+
+msgid "Order"
+msgstr "Order"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Programs"
+msgstr "Programs"
+
+msgid "Hide = no longer offer for reservation. Show = reactivate."
+msgstr "Hide = no longer offer for reservation. Show = reactivate."
+
+msgid "Drag to another machine to copy"
+msgstr "Drag to another machine to copy"
+
+msgid "Hide"
+msgstr "Hide"
+
+msgid "Show"
+msgstr "Show"
+
+msgid "Hide this program"
+msgstr "Hide this program"
+
+msgid "Show this program"
+msgstr "Show this program"
+
+msgid "Drop a program here to copy it."
+msgstr "Drop a program here to copy it."
+
+msgid "Add some"
+msgstr "Add some"
+
+msgid "No machines"
+msgstr "No machines"
+
+msgid "Add a machine to start managing the laundry room."
+msgstr "Add a machine to start managing the laundry room."
+
+msgid "These messages scroll at the top of the laundry page, above the machines."
+msgstr "These messages scroll at the top of the laundry page, above the machines."
+
+msgid "Post a message"
+msgstr "Post a message"
+
+msgid "Back to machine management"
+msgstr "Back to machine management"
+
+msgid "Displayed"
+msgstr "Displayed"
+
+msgid "Hidden"
+msgstr "Hidden"
+
+msgid "Delete this message?"
+msgstr "Delete this message?"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "No messages. Post one to have it scroll at the top of the laundry page."
+msgstr "No messages. Post one to have it scroll at the top of the laundry page."
+
+msgid "Back to machines"
+msgstr "Back to machines"
+
+msgid "Edit program"
+msgstr "Edit program"
+
+msgid "New program"
+msgstr "New program"
+
+msgid "Edit the program."
+msgstr "Edit the program."
+
+msgid "Choose the machine, program name and duration."
+msgstr "Choose the machine, program name and duration."
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Back to messages"
+msgstr "Back to messages"
+
+msgid "Edit message"
+msgstr "Edit message"
+
+msgid "Edit machine"
+msgstr "Edit machine"
+
+msgid "New machine"
+msgstr "New machine"
+
+msgid "Edit the name, order or status."
+msgstr "Edit the name, order or status."
+
+msgid "Set the name and display order."
+msgstr "Set the name and display order."

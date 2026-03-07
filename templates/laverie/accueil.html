@@ -55,7 +55,7 @@
                 <span class="w-9 h-9 rounded-xl bg-white/90 shadow-md flex items-center justify-center text-amber-600">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317M18 13V9a3 3 0 00-5.356-1.857M11 5.882L13 2v3.882"/></svg>
                 </span>
-                <span class="text-amber-900/90 font-bold text-xs uppercase tracking-wider hidden sm:inline">Annonces</span>
+                <span class="text-amber-900/90 font-bold text-xs uppercase tracking-wider hidden sm:inline">{% trans "Announcements" %}</span>
             </div>
             <div class="flex-1 overflow-hidden">
                 <div class="laverie-messages-track flex items-center py-2.5">
@@ -89,7 +89,7 @@
         <span class="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center">
             <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
         </span>
-        Machines
+        {% trans "Machines" %}
     </h2>
     {% if machines %}
     <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
@@ -107,10 +107,10 @@
                             <span class="inline-flex items-center gap-1.5 mt-1.5 text-xs font-medium {% if m.fin_dernier_ticket %}text-amber-100 bg-white/20{% else %}text-emerald-100 bg-emerald-500/30{% endif %} px-2.5 py-1 rounded-full">
                                 {% if m.fin_dernier_ticket %}
                                 <span class="w-1.5 h-1.5 rounded-full bg-amber-300 animate-pulse"></span>
-                                Jusqu'à {{ m.fin_dernier_ticket|time }}
+                                {% trans "Until" %} {{ m.fin_dernier_ticket|time }}
                                 {% else %}
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>
-                                Disponible
+                                {% trans "Available" %}
                                 {% endif %}
                             </span>
                         </div>
@@ -127,18 +127,18 @@
                             <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-500 text-white">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                             </span>
-                            <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">En cours</span>
+                            <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">{% trans "In progress" %}</span>
                         </div>
-                        <p class="text-base font-bold text-gray-900">#{{ r.numero|default:r.pk }} — {{ r.utilisateur.get_full_name|default:"Utilisateur" }}</p>
+                        <p class="text-base font-bold text-gray-900">#{{ r.numero|default:r.pk }} — {{ r.utilisateur.get_full_name|default:user_display_default }}</p>
                         <p class="text-sm text-emerald-800 mt-0.5">{{ r.fonction.nom|default:"—" }} — {{ r.duree_affichage }} · {{ r.debut|time }} → {{ r.fin|time }}</p>
                     </div>
                     {% endif %}
                     {% endfor %}
-                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">File d'attente ({{ m.file_attente|length }})</p>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">{% trans "Queue" %} ({{ m.file_attente|length }})</p>
                     <ul class="space-y-1.5 max-h-40 overflow-y-auto pr-1">
                         {% for r in m.file_attente %}
                         <li class="flex justify-between gap-2 items-center py-2 px-3 rounded-xl text-sm transition {% if r.debut <= now and r.fin >= now %}bg-emerald-100 text-emerald-900{% else %}bg-gray-50 hover:bg-gray-100 text-gray-700{% endif %}">
-                            <span><strong class="text-indigo-600 font-semibold">#{{ r.numero|default:r.pk }}</strong> {{ r.utilisateur.get_full_name|default:"Utilisateur"|truncatechars:16 }}</span>
+                            <span><strong class="text-indigo-600 font-semibold">#{{ r.numero|default:r.pk }}</strong> {{ r.utilisateur.get_full_name|default:user_display_default|truncatechars:16 }}</span>
                             <span class="text-gray-500 text-xs tabular-nums">{{ r.debut|time }} → {{ r.fin|time }}</span>
                         </li>
                         {% endfor %}
@@ -149,30 +149,18 @@
                     <span class="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                     </span>
-                    <p class="text-sm font-medium text-emerald-800">Aucun ticket — machine disponible.</p>
+                    <p class="text-sm font-medium text-emerald-800">{% trans "No ticket — machine available." %}</p>
                 </div>
                 {% endif %}
-                <div class="border-t border-gray-100 pt-4 mt-4">
-                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Programmes</p>
-                    <ul class="flex flex-wrap gap-2">
-                        {% for f in m.fonctions.all %}
-                        <li class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 text-sm font-medium">
-                            <span>{{ f.nom }}</span>
-                            <span class="text-indigo-500">{{ f.duree_minutes }} min</span>
-                        </li>
-                        {% empty %}
-                        <li class="text-gray-400 text-sm">Aucune fonction</li>
-                        {% endfor %}
-                    </ul>
-                </div>
+               
                 <div class="mt-5 flex gap-3">
                     <a href="{% url 'laverie:tickets_machine' m.pk %}" class="flex-1 text-center bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-                        Voir les tickets
+                        {% trans "View tickets" %}
                     </a>
                     <a href="{% url 'laverie:reserver' %}?machine={{ m.id }}" class="flex-1 text-center bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white py-3 rounded-xl text-sm font-semibold transition shadow-md hover:shadow-lg flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        Réserver
+                        {% trans "Book" %}
                     </a>
                 </div>
             </div>
@@ -180,7 +168,7 @@
         {% endfor %}
     </div>
     {% else %}
-    <p class="text-gray-500 bg-gray-50 rounded-xl p-6 text-center">Aucune machine configurée pour le moment.</p>
+    <p class="text-gray-500 bg-gray-50 rounded-xl p-6 text-center">{% trans "No machine configured at the moment." %}</p>
     {% endif %}
 </div>
 {% endblock %}
