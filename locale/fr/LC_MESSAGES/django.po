@@ -399,3 +399,81 @@ msgstr "Modifiez le nom, l'ordre ou le statut."
 
 msgid "Set the name and display order."
 msgstr "Définissez le nom et l'ordre d'affichage."
+
+msgid "My profile"
+msgstr "Mon profil"
+
+msgid "Manage your personal information and password"
+msgstr "Gérez vos informations personnelles et votre mot de passe"
+
+msgid "Personal information"
+msgstr "Informations personnelles"
+
+msgid "Change password"
+msgstr "Changer le mot de passe"
+
+msgid "Profile photo"
+msgstr "Photo de profil"
+
+msgid "Accepted formats: JPG, PNG, GIF (max 2 MB)"
+msgstr "Formats acceptés : JPG, PNG, GIF (max 2 Mo)"
+
+msgid "Account information"
+msgstr "Informations de compte"
+
+msgid "Not provided"
+msgstr "Non renseigné"
+
+msgid "Email and phone number cannot be changed"
+msgstr "L'email et le numéro de téléphone ne peuvent pas être modifiés"
+
+msgid "Gender"
+msgstr "Genre"
+
+msgid "Change profile photo"
+msgstr "Changer la photo de profil"
+
+msgid "Save changes"
+msgstr "Enregistrer les modifications"
+
+msgid "For your security, you must enter your current password to set a new one."
+msgstr "Pour votre sécurité, vous devez entrer votre ancien mot de passe pour en créer un nouveau."
+
+msgid "Unsupported image format. Use JPG, PNG or GIF."
+msgstr "Format d'image non supporté. Utilisez JPG, PNG ou GIF."
+
+msgid "Current password"
+msgstr "Ancien mot de passe"
+
+msgid "Enter your current password"
+msgstr "Entrez votre ancien mot de passe"
+
+msgid "New password"
+msgstr "Nouveau mot de passe"
+
+msgid "Enter your new password"
+msgstr "Entrez votre nouveau mot de passe"
+
+msgid "Password must be at least 8 characters long."
+msgstr "Le mot de passe doit contenir au moins 8 caractères."
+
+msgid "Confirm new password"
+msgstr "Confirmer le nouveau mot de passe"
+
+msgid "Confirm your new password"
+msgstr "Confirmez votre nouveau mot de passe"
+
+msgid "The current password is incorrect."
+msgstr "L'ancien mot de passe est incorrect."
+
+msgid "The two passwords do not match."
+msgstr "Les deux mots de passe ne correspondent pas."
+
+msgid "Your profile has been updated successfully."
+msgstr "Votre profil a été mis à jour avec succès."
+
+msgid "Please correct the errors in the form."
+msgstr "Veuillez corriger les erreurs dans le formulaire."
+
+msgid "Your password has been changed successfully."
+msgstr "Votre mot de passe a été changé avec succès."

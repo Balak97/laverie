@@ -91,14 +91,20 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['first_name', 'last_name', 'genre', 'photo']
+        labels = {
+            'first_name': _('First name'),
+            'last_name': _('Last name'),
+            'genre': _('Gender'),
+            'photo': _('Profile photo'),
+        }
         widgets = {
             'first_name': forms.TextInput(attrs={
                 'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent',
-                'placeholder': 'Prénom'
+                'placeholder': _('First name'),
             }),
             'last_name': forms.TextInput(attrs={
                 'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent',
-                'placeholder': 'Nom'
+                'placeholder': _('Last name'),
             }),
             'genre': forms.Select(attrs={
                 'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent'
@@ -112,38 +118,37 @@ class ProfileUpdateForm(forms.ModelForm):
         photo = self.cleaned_data.get('photo')
         if photo:
             if photo.size > 2 * 1024 * 1024:  # 2 Mo max
-                raise forms.ValidationError("La photo ne doit pas dépasser 2 Mo.")
-            # Vérifier l'extension
+                raise forms.ValidationError(_("Photo must not exceed 2 MB."))
             valid_extensions = ['.jpg', '.jpeg', '.png', '.gif']
             ext = photo.name.lower().split('.')[-1]
             if f'.{ext}' not in valid_extensions:
-                raise forms.ValidationError("Format d'image non supporté. Utilisez JPG, PNG ou GIF.")
+                raise forms.ValidationError(_("Unsupported image format. Use JPG, PNG or GIF."))
         return photo
 
 
 class PasswordChangeForm(forms.Form):
     """Formulaire pour changer le mot de passe"""
     old_password = forms.CharField(
-        label="Ancien mot de passe",
+        label=_("Current password"),
         widget=forms.PasswordInput(attrs={
             'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent',
-            'placeholder': 'Entrez votre ancien mot de passe'
+            'placeholder': _("Enter your current password"),
         })
     )
     new_password1 = forms.CharField(
-        label="Nouveau mot de passe",
+        label=_("New password"),
         widget=forms.PasswordInput(attrs={
             'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent',
-            'placeholder': 'Entrez votre nouveau mot de passe'
+            'placeholder': _("Enter your new password"),
         }),
         min_length=8,
-        help_text="Le mot de passe doit contenir au moins 8 caractères."
+        help_text=_("Password must be at least 8 characters long."),
     )
     new_password2 = forms.CharField(
-        label="Confirmer le nouveau mot de passe",
+        label=_("Confirm new password"),
         widget=forms.PasswordInput(attrs={
             'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent',
-            'placeholder': 'Confirmez votre nouveau mot de passe'
+            'placeholder': _("Confirm your new password"),
         })
     )
 
@@ -154,7 +159,7 @@ class PasswordChangeForm(forms.Form):
     def clean_old_password(self):
         old_password = self.cleaned_data.get('old_password')
         if not self.user.check_password(old_password):
-            raise forms.ValidationError("L'ancien mot de passe est incorrect.")
+            raise forms.ValidationError(_("The current password is incorrect."))
         return old_password
 
     def clean_new_password2(self):
@@ -162,7 +167,7 @@ class PasswordChangeForm(forms.Form):
         password2 = self.cleaned_data.get('new_password2')
         if password1 and password2:
             if password1 != password2:
-                raise forms.ValidationError("Les deux mots de passe ne correspondent pas.")
+                raise forms.ValidationError(_("The two passwords do not match."))
         return password2
 
     def save(self):

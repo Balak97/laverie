@@ -398,3 +398,81 @@ msgstr "Edit the name, order or status."
 
 msgid "Set the name and display order."
 msgstr "Set the name and display order."
+
+msgid "My profile"
+msgstr "My profile"
+
+msgid "Manage your personal information and password"
+msgstr "Manage your personal information and password"
+
+msgid "Personal information"
+msgstr "Personal information"
+
+msgid "Change password"
+msgstr "Change password"
+
+msgid "Profile photo"
+msgstr "Profile photo"
+
+msgid "Accepted formats: JPG, PNG, GIF (max 2 MB)"
+msgstr "Accepted formats: JPG, PNG, GIF (max 2 MB)"
+
+msgid "Account information"
+msgstr "Account information"
+
+msgid "Not provided"
+msgstr "Not provided"
+
+msgid "Email and phone number cannot be changed"
+msgstr "Email and phone number cannot be changed"
+
+msgid "Gender"
+msgstr "Gender"
+
+msgid "Change profile photo"
+msgstr "Change profile photo"
+
+msgid "Save changes"
+msgstr "Save changes"
+
+msgid "For your security, you must enter your current password to set a new one."
+msgstr "For your security, you must enter your current password to set a new one."
+
+msgid "Unsupported image format. Use JPG, PNG or GIF."
+msgstr "Unsupported image format. Use JPG, PNG or GIF."
+
+msgid "Current password"
+msgstr "Current password"
+
+msgid "Enter your current password"
+msgstr "Enter your current password"
+
+msgid "New password"
+msgstr "New password"
+
+msgid "Enter your new password"
+msgstr "Enter your new password"
+
+msgid "Password must be at least 8 characters long."
+msgstr "Password must be at least 8 characters long."
+
+msgid "Confirm new password"
+msgstr "Confirm new password"
+
+msgid "Confirm your new password"
+msgstr "Confirm your new password"
+
+msgid "The current password is incorrect."
+msgstr "The current password is incorrect."
+
+msgid "The two passwords do not match."
+msgstr "The two passwords do not match."
+
+msgid "Your profile has been updated successfully."
+msgstr "Your profile has been updated successfully."
+
+msgid "Please correct the errors in the form."
+msgstr "Please correct the errors in the form."
+
+msgid "Your password has been changed successfully."
+msgstr "Your password has been changed successfully."

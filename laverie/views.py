@@ -154,13 +154,37 @@ def afficher_ticket(request, pk):
 
 @login_required
 def annuler_ticket(request, pk):
-    """Annuler une réservation (si encore réservée)."""
+    """Annuler une réservation (si encore réservée). Notifie par e-mail (en russe) les utilisateurs qui suivent sur la même machine."""
     resa = get_object_or_404(Reservation, pk=pk, utilisateur=request.user)
     if resa.statut not in ('reserve',):
         messages.warning(request, 'Cette réservation ne peut plus être annulée.')
         return redirect('laverie:mes_tickets')
+    machine = resa.machine
+    debut_annule = resa.debut
     resa.statut = 'annule'
     resa.save()
+
+    # Notifier par e-mail (en russe) toutes les personnes qui suivent sur la même machine
+    from .emails import envoyer_email_changement_horaire
+    suivants = (
+        Reservation.objects.filter(
+            machine=machine,
+            statut__in=('reserve', 'en_cours'),
+            debut__gt=debut_annule,
+        )
+        .values_list('utilisateur', flat=True)
+        .distinct()
+    )
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    for user_id in suivants:
+        if user_id != request.user.pk:
+            try:
+                user = User.objects.get(pk=user_id)
+                envoyer_email_changement_horaire(user, request=request)
+            except Exception:
+                pass
+
     messages.success(request, 'Réservation annulée.')
     return redirect('laverie:mes_tickets')
 

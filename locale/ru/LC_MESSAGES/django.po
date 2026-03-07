@@ -398,3 +398,81 @@ msgstr "Измените название, порядок или статус."
 
 msgid "Set the name and display order."
 msgstr "Укажите название и порядок отображения."
+
+msgid "My profile"
+msgstr "Мой профиль"
+
+msgid "Manage your personal information and password"
+msgstr "Управляйте своими данными и паролем"
+
+msgid "Personal information"
+msgstr "Личные данные"
+
+msgid "Change password"
+msgstr "Изменить пароль"
+
+msgid "Profile photo"
+msgstr "Фото профиля"
+
+msgid "Accepted formats: JPG, PNG, GIF (max 2 MB)"
+msgstr "Допустимые форматы: JPG, PNG, GIF (макс. 2 МБ)"
+
+msgid "Account information"
+msgstr "Данные аккаунта"
+
+msgid "Not provided"
+msgstr "Не указано"
+
+msgid "Email and phone number cannot be changed"
+msgstr "Email и номер телефона нельзя изменить"
+
+msgid "Gender"
+msgstr "Пол"
+
+msgid "Change profile photo"
+msgstr "Изменить фото профиля"
+
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+msgid "For your security, you must enter your current password to set a new one."
+msgstr "В целях безопасности введите текущий пароль, чтобы задать новый."
+
+msgid "Unsupported image format. Use JPG, PNG or GIF."
+msgstr "Неподдерживаемый формат. Используйте JPG, PNG или GIF."
+
+msgid "Current password"
+msgstr "Текущий пароль"
+
+msgid "Enter your current password"
+msgstr "Введите текущий пароль"
+
+msgid "New password"
+msgstr "Новый пароль"
+
+msgid "Enter your new password"
+msgstr "Введите новый пароль"
+
+msgid "Password must be at least 8 characters long."
+msgstr "Пароль должен содержать не менее 8 символов."
+
+msgid "Confirm new password"
+msgstr "Подтвердите новый пароль"
+
+msgid "Confirm your new password"
+msgstr "Подтвердите новый пароль"
+
+msgid "The current password is incorrect."
+msgstr "Текущий пароль неверен."
+
+msgid "The two passwords do not match."
+msgstr "Пароли не совпадают."
+
+msgid "Your profile has been updated successfully."
+msgstr "Ваш профиль успешно обновлён."
+
+msgid "Please correct the errors in the form."
+msgstr "Исправьте ошибки в форме."
+
+msgid "Your password has been changed successfully."
+msgstr "Пароль успешно изменён."

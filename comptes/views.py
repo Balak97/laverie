@@ -12,6 +12,7 @@ from .emails import envoyer_email_activation, envoyer_email_renvoyer_activation
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
+from django.utils.translation import gettext
 from .forms import CustomPasswordResetForm
 
 # Vues de réinitialisation du mot de passe (pour éviter import circulaire dans urls)
@@ -322,11 +323,11 @@ def profile(request):
             profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=user)
             if profile_form.is_valid():
                 profile_form.save()
-                messages.success(request, "Votre profil a été mis à jour avec succès.")
+                messages.success(request, gettext("Your profile has been updated successfully."))
                 return redirect('profile')
             else:
                 active_tab = 'profile'
-                messages.error(request, "Veuillez corriger les erreurs dans le formulaire.")
+                messages.error(request, gettext("Please correct the errors in the form."))
         
         elif 'change_password' in request.POST:
             password_form = PasswordChangeForm(user, request.POST)
@@ -335,16 +336,17 @@ def profile(request):
                 # Ré-authentifier l'utilisateur après changement de mot de passe
                 from django.contrib.auth import update_session_auth_hash
                 update_session_auth_hash(request, user)
-                messages.success(request, "Votre mot de passe a été changé avec succès.")
+                messages.success(request, gettext("Your password has been changed successfully."))
                 return redirect('profile?tab=password')
             else:
                 active_tab = 'password'
-                messages.error(request, "Veuillez corriger les erreurs dans le formulaire.")
+                messages.error(request, gettext("Please correct the errors in the form."))
     
     context = {
         'profile_form': profile_form,
         'password_form': password_form,
         'active_tab': active_tab,
         'user': user,
+        'phone_not_provided': gettext('Not provided'),
     }
     return render(request, 'comptes/profile.html', context)
