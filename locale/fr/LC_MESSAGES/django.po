@@ -244,6 +244,12 @@ msgstr "Titulaire"
 msgid "Show this ticket at the machine to avoid conflicts."
 msgstr "Présentez ce ticket à la machine pour éviter les conflits."
 
+msgid "Activate the machine at the exact time shown above."
+msgstr "Activez la machine à l'heure exacte indiquée ci-dessus."
+
+msgid "Activate the machine at the exact time shown on your ticket."
+msgstr "Activez la machine à l'heure exacte indiquée sur votre ticket."
+
 msgid "Your washing machine reservations."
 msgstr "Vos réservations de machine à laver."
 
@@ -261,6 +267,12 @@ msgstr "Vous n'avez aucune réservation."
 
 msgid "Book a slot"
 msgstr "Prendre un ticket"
+
+msgid "You cannot take more than %(max)s tickets on the same day on the same machine."
+msgstr "Vous ne pouvez pas prendre plus de %(max)s tickets le même jour sur la même machine."
+
+msgid "This function does not belong to the selected machine."
+msgstr "Cette fonction n'appartient pas à la machine choisie."
 
 msgid "Chat with ticket owners"
 msgstr "Discussion avec les titulaires des tickets"

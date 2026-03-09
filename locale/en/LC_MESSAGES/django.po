@@ -243,6 +243,12 @@ msgstr "Holder"
 msgid "Show this ticket at the machine to avoid conflicts."
 msgstr "Show this ticket at the machine to avoid conflicts."
 
+msgid "Activate the machine at the exact time shown above."
+msgstr "Activate the machine at the exact time shown above."
+
+msgid "Activate the machine at the exact time shown on your ticket."
+msgstr "Activate the machine at the exact time shown on your ticket."
+
 msgid "Your washing machine reservations."
 msgstr "Your washing machine reservations."
 
@@ -260,6 +266,12 @@ msgstr "You have no reservations."
 
 msgid "Book a slot"
 msgstr "Book a slot"
+
+msgid "You cannot take more than %(max)s tickets on the same day on the same machine."
+msgstr "You cannot take more than %(max)s tickets on the same day on the same machine."
+
+msgid "This function does not belong to the selected machine."
+msgstr "This function does not belong to the selected machine."
 
 msgid "Chat with ticket owners"
 msgstr "Chat with ticket owners"

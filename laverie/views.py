@@ -7,8 +7,8 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.db.models import Max
-from django.utils.translation import gettext_lazy as _
-from .models import Machine, FonctionMachine, Reservation, MessageLaverie
+from django.utils.translation import gettext_lazy as _, gettext
+from .models import Machine, FonctionMachine, Reservation, MessageLaverie, MAX_TICKETS_SAME_DAY_SAME_MACHINE
 from .forms import MachineForm, FonctionMachineForm, ReservationForm, MessageLaverieForm
 
 
@@ -41,19 +41,17 @@ def accueil(request):
         m.fin_dernier_ticket = max((r.fin for r in full_list), default=None)
         m.file_attente = full_list[:10]
     annonces = MessageLaverie.objects.filter(active=True).order_by('ordre', '-date_creation')
-    mon_ticket_en_cours = (
-        Reservation.objects.filter(
-            utilisateur=request.user,
-            statut__in=('reserve', 'en_cours'),
-            debut__lte=now,
-            fin__gte=now,
-        )
-        .select_related('machine', 'fonction')
-        .first()
-    )
+    tickets_en_cours_qs = Reservation.objects.filter(
+        utilisateur=request.user,
+        statut__in=('reserve', 'en_cours'),
+        debut__lte=now,
+        fin__gte=now,
+    ).select_related('machine', 'fonction').order_by('debut')
+    mon_ticket_en_cours = tickets_en_cours_qs.first()
     return render(request, 'laverie/accueil.html', {
         'machines': machines, 'now': now, 'annonces': annonces,
         'mon_ticket_en_cours': mon_ticket_en_cours,
+        'mes_tickets_en_cours': list(tickets_en_cours_qs),
         'user_display_default': _('User'),
     })
 
@@ -75,9 +73,20 @@ def reserver(request):
     if request.method == 'POST' and form.is_valid():
         resa = form.save(commit=False)
         resa.utilisateur = request.user
-        resa.save()
-        messages.success(request, f'Ticket #{resa.numero} enregistré : {resa.machine.nom} — {resa.fonction.nom} le {resa.debut.strftime("%d/%m/%Y à %H:%M")}.')
-        return redirect('laverie:mes_tickets')
+        nb_meme_jour = Reservation.count_user_same_day_machine(request.user, resa.machine, resa.debut.date())
+        if nb_meme_jour >= MAX_TICKETS_SAME_DAY_SAME_MACHINE:
+            form.add_error(
+                None,
+                gettext('You cannot take more than %(max)s tickets on the same day on the same machine.')
+                % {'max': MAX_TICKETS_SAME_DAY_SAME_MACHINE}
+            )
+        else:
+            resa.save()
+            msg = gettext('Ticket #%(num)s enregistré : %(machine)s — %(prog)s le %(date)s. Activez la machine à l\'heure exacte indiquée.') % {
+                'num': resa.numero, 'machine': resa.machine.nom, 'prog': resa.fonction.nom, 'date': resa.debut.strftime('%d/%m/%Y à %H:%M')
+            }
+            messages.success(request, msg)
+            return redirect('laverie:mes_tickets')
     machines = Machine.objects.filter(active=True).prefetch_related('fonctions').order_by('ordre', 'nom')
     prochain_debut = None
     if machine_prechoice:
@@ -94,7 +103,8 @@ def reserver(request):
         if dernier:
             prochain_debut = dernier.fin + timedelta(minutes=5)
         else:
-            prochain_debut = timezone.now()
+            # Personne sur la machine : premier créneau dans 5 minutes
+            prochain_debut = timezone.now() + timedelta(minutes=5)
     programmes_par_machine = {}
     for m in machines:
         programmes_par_machine[str(m.id)] = [

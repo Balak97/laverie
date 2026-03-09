@@ -243,6 +243,12 @@ msgstr "Владелец"
 msgid "Show this ticket at the machine to avoid conflicts."
 msgstr "Покажите этот талон у машины, чтобы избежать конфликтов."
 
+msgid "Activate the machine at the exact time shown above."
+msgstr "Включите машину точно в указанное время."
+
+msgid "Activate the machine at the exact time shown on your ticket."
+msgstr "Включите машину точно в указанное на талоне время."
+
 msgid "Your washing machine reservations."
 msgstr "Ваши резервации стиральных машин."
 
@@ -260,6 +266,12 @@ msgstr "У вас нет резерваций."
 
 msgid "Book a slot"
 msgstr "Записаться на слот"
+
+msgid "You cannot take more than %(max)s tickets on the same day on the same machine."
+msgstr "Нельзя оформить более %(max)s талонов в один день на одну и ту же машину."
+
+msgid "This function does not belong to the selected machine."
+msgstr "Эта программа не относится к выбранной машине."
 
 msgid "Chat with ticket owners"
 msgstr "Чат с владельцами талонов"

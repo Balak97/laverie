@@ -77,7 +77,8 @@ class ReservationForm(forms.ModelForm):
         )
         if dernier:
             return dernier.fin + timedelta(minutes=5)
-        return now
+        # Personne sur la machine : on laisse 5 minutes à l'utilisateur pour se préparer
+        return now + timedelta(minutes=5)
 
     def clean(self):
         data = super().clean()

@@ -3,7 +3,7 @@ from django.views.i18n import set_language
 from . import views
 from rest_framework.routers import DefaultRouter
 # api
-from .api.app import UserViewSet, current_user_profile, assistant_chat
+from .api.app import UserViewSet, current_user_profile, assistant_chat, api_login
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet, basename='user')
@@ -59,6 +59,10 @@ urlpatterns = [
 
     # api
     path('api/', include(router.urls)),
+    path('api/auth/login/', api_login, name='api-login'),
     path('api/assistant/', assistant_chat, name='api-assistant'),
     path('me/', current_user_profile, name='current-user-profile'),
+    path('api/laverie/', include('laverie.api_urls')),
+    path('api/chat/', include('chat.api_urls')),
+    path('api/signalements/', include('signalements.api_urls')),
 ]

@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'comptes',
     'chat',
     'laverie',
@@ -74,15 +75,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-LANGUAGE_CODE = 'fr'
+LANGUAGE_CODE = 'ru'
 TIME_ZONE = 'Africa/Conakry'
 USE_I18N = True
 USE_TZ = True
 
 LANGUAGES = [
+    ('ru', 'Русский'),
     ('fr', 'Français'),
     ('en', 'English'),
-    ('ru', 'Русский'),
 ]
 LOCALE_PATHS = [BASE_DIR / 'locale']
 
@@ -101,8 +102,33 @@ LOGOUT_REDIRECT_URL = 'laverie:accueil'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Django REST Framework (API pour Flutter)
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
 # E-mail (laverie, activation, etc.)
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@dortoir3.local')
 # En développement : afficher les e-mails dans la console au lieu de les envoyer
 if DEBUG and not os.environ.get('EMAIL_HOST'):
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# ——— Sécurité renforcée en production ———
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', '1') == '1'
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_HTTPONLY = True
+    CSRF_COOKIE_HTTPONLY = False  # False pour permettre JS de lire le token si besoin
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True

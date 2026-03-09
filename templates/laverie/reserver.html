@@ -18,6 +18,7 @@
         <p class="font-semibold">{% trans "Your start time will be at earliest:" %} <span class="text-cyan-700">{{ prochain_debut|date:"d/m/Y" }} {% trans "at" %} {{ prochain_debut|time:"H:i" }}</span>.</p>
         {% endif %}
         <p class="mt-2 text-cyan-800">{% trans "Be present at your slot start time to respect the machine and other users." %}</p>
+        <p class="mt-2 font-medium text-cyan-800">{% trans "Activate the machine at the exact time shown on your ticket." %}</p>
     </div>
 
     {{ programmes_par_machine|json_script:"programmes-data" }}

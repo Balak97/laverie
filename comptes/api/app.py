@@ -1,8 +1,9 @@
 # comptes/api/app.py
 import logging
 from django.conf import settings
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.tokens import default_token_generator
+from rest_framework.authtoken.models import Token
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
 from rest_framework import viewsets, mixins, status
@@ -241,6 +242,48 @@ class UserViewSet(NoDeleteModelViewSet):
 def current_user_profile(request):
     serializer = UserProfileSerializer(request.user, context={'request': request})
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def api_login(request):
+    """
+    Connexion API pour Flutter / clients externes.
+    Body JSON: { "email": "...", "password": "..." }
+    Réponse: { "token": "...", "user_id": 123, "email": "...", "display_name": "..." }
+    """
+    email = (request.data.get('email') or '').strip()
+    password = request.data.get('password') or ''
+    if not email or not password:
+        return Response(
+            {'error': 'Email et mot de passe requis.'},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    username_to_try = email
+    if '@' in email:
+        try:
+            u = CustomUser.objects.get(email__iexact=email)
+            username_to_try = u.get_username()
+        except CustomUser.DoesNotExist:
+            pass
+    user = authenticate(request=request, username=username_to_try, password=password)
+    if user is None:
+        return Response(
+            {'error': "Email ou mot de passe incorrect."},
+            status=status.HTTP_401_UNAUTHORIZED,
+        )
+    if not user.is_active:
+        return Response(
+            {'error': "Compte non activé. Vérifiez votre boîte mail."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+    token, _ = Token.objects.get_or_create(user=user)
+    return Response({
+        'token': token.key,
+        'user_id': user.id,
+        'email': user.email,
+        'display_name': getattr(user, 'display_name', None) or user.get_full_name() or user.email,
+    })
 
 
 # --- Assistant chatbox (pour Flutter / API) ---

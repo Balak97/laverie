@@ -68,6 +68,10 @@ class FonctionMachine(models.Model):
         return f"{m} min"
 
 
+# Limite : même personne, même machine, même jour
+MAX_TICKETS_SAME_DAY_SAME_MACHINE = 5
+
+
 class Reservation(models.Model):
     """Ticket / réservation d'un créneau sur une machine."""
     STATUT_CHOICES = [
@@ -112,6 +116,13 @@ class Reservation(models.Model):
             next_num = (agg['numero__max'] or 0) + 1
             self.numero = next_num
         super().save(*args, **kwargs)
+
+    @classmethod
+    def count_user_same_day_machine(cls, user, machine, day_date):
+        """Nombre de réservations (hors annulées) de cet utilisateur sur cette machine pour ce jour."""
+        return cls.objects.filter(
+            utilisateur=user, machine=machine, debut__date=day_date
+        ).exclude(statut='annule').count()
 
     def duree_minutes(self):
         if self.fonction:
