@@ -5,22 +5,22 @@
 <div class="max-w-2xl mx-auto py-4 sm:py-6 px-3 sm:px-4">
     <a href="{% url 'home' %}" class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-medium mb-4">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-        Retour à l'accueil
+        {{ i18n.back_to_home }}
     </a>
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
         <div>
-            <h1 class="text-xl sm:text-2xl font-bold text-gray-900">Mes signalements</h1>
-            <p class="text-gray-600 text-sm mt-0.5">Suivez l'état de traitement de vos problèmes signalés.</p>
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-900">{{ i18n.my_reports }}</h1>
+            <p class="text-gray-600 text-sm mt-0.5">{{ i18n.track_status_subtitle }}</p>
         </div>
         <a href="{% url 'signalements:signaler' %}" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2.5 rounded-xl font-semibold transition inline-flex items-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            Nouveau signalement
+            {{ i18n.new_report }}
         </a>
     </div>
 
     {% if signalements %}
     <div class="space-y-4">
-        {% for s in signalements %}
+        {% for s, statut_label in signalements %}
         <article class="bg-white rounded-2xl shadow border border-gray-100 overflow-hidden">
             <div class="p-5">
                 <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
@@ -29,7 +29,7 @@
                         {% if s.statut == 'nouveau' %}bg-amber-100 text-amber-800
                         {% elif s.statut == 'en_cours' %}bg-blue-100 text-blue-800
                         {% else %}bg-green-100 text-green-800{% endif %}">
-                        {{ s.get_statut_display }}
+                        {{ statut_label }}
                     </span>
                 </div>
                 <p class="text-sm text-gray-500 mb-2">{{ s.date_creation|date:"d/m/Y à H:i" }}</p>
@@ -43,11 +43,11 @@
         <div class="w-16 h-16 rounded-2xl bg-amber-100 flex items-center justify-center mx-auto mb-4">
             <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
         </div>
-        <p class="text-gray-600 font-medium mb-2">Aucun signalement</p>
-        <p class="text-gray-500 text-sm mb-4">Vos problèmes signalés apparaîtront ici avec leur état (nouveau, en cours, résolu).</p>
+        <p class="text-gray-600 font-medium mb-2">{{ i18n.no_reports }}</p>
+        <p class="text-gray-500 text-sm mb-4">{{ i18n.empty_message }}</p>
         <a href="{% url 'signalements:signaler' %}" class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2.5 rounded-xl font-semibold transition">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            Signaler un problème
+            {{ i18n.report_a_problem }}
         </a>
     </div>
     {% endif %}

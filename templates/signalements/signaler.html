@@ -6,17 +6,17 @@
     <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
         <a href="{% url 'home' %}" class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-medium">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-            Retour à l'accueil
+            {{ i18n.back_to_home }}
         </a>
         <a href="{% url 'signalements:mes_signalements' %}" class="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 font-medium">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-            Voir mes signalements
+            {{ i18n.view_my_reports }}
         </a>
     </div>
     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
         <div class="bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-4 text-white">
-            <h1 class="text-xl font-bold">Signaler un problème</h1>
-            <p class="text-orange-100 text-sm mt-0.5">Décrivez le problème. L'équipe en prendra connaissance.</p>
+            <h1 class="text-xl font-bold">{{ i18n.report_a_problem }}</h1>
+            <p class="text-orange-100 text-sm mt-0.5">{{ i18n.describe_team }}</p>
         </div>
         <form method="post" class="p-6">
             {% csrf_token %}
@@ -24,13 +24,13 @@
             <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">{{ form.non_field_errors }}</div>
             {% endif %}
             <div class="mb-4">
-                <label for="id_description" class="block text-sm font-medium text-gray-700 mb-1">Description du problème <span class="text-red-500">*</span></label>
+                <label for="id_description" class="block text-sm font-medium text-gray-700 mb-1">{{ i18n.problem_description }} <span class="text-red-500">*</span></label>
                 {{ form.description }}
                 {% if form.description.errors %}<p class="text-red-600 text-sm mt-1">{{ form.description.errors.0 }}</p>{% endif %}
             </div>
             <div class="flex gap-3 pt-4 border-t border-gray-100">
-                <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2.5 px-5 rounded-xl transition shadow">Envoyer le signalement</button>
-                <a href="{% url 'home' %}" class="py-2.5 px-4 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 font-medium">Annuler</a>
+                <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2.5 px-5 rounded-xl transition shadow">{{ i18n.submit_report }}</button>
+                <a href="{% url 'home' %}" class="py-2.5 px-4 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 font-medium">{{ i18n.cancel }}</a>
             </div>
         </form>
     </div>

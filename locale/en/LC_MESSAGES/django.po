@@ -261,6 +261,30 @@ msgstr "Cancel this reservation?"
 msgid "Cancel"
 msgstr "Cancel"
 
+msgid "Back to home"
+msgstr "Back to home"
+
+msgid "View my reports"
+msgstr "View my reports"
+
+msgid "Report a problem"
+msgstr "Report a problem"
+
+msgid "Describe the problem. The team will take note of it."
+msgstr "Describe the problem. The team will take note of it."
+
+msgid "Problem description"
+msgstr "Problem description"
+
+msgid "Submit report"
+msgstr "Submit report"
+
+msgid "Describe the problem you encountered…"
+msgstr "Describe the problem you encountered…"
+
+msgid "Your report has been recorded. You can track its status below."
+msgstr "Your report has been recorded. You can track its status below."
+
 msgid "You have no reservations."
 msgstr "You have no reservations."
 

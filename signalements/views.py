@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.utils.translation import gettext as _
 
 from .models import Signalement
 from .forms import SignalementForm
@@ -11,24 +12,97 @@ def is_agent(user):
     return user.is_authenticated and getattr(user, 'user_type', None) == 'ADMIN'
 
 
+# Chaînes des pages signalements (fallback si .mo non compilés)
+_SIGNALEMENTS_STRINGS = {
+    'ru': {
+        'back_to_home': 'На главную',
+        'view_my_reports': 'Мои сообщения о проблемах',
+        'report_a_problem': 'Сообщить о проблеме',
+        'describe_team': 'Опишите проблему. Команда ознакомится с ней.',
+        'problem_description': 'Описание проблемы',
+        'submit_report': 'Отправить сообщение',
+        'cancel': 'Отменить',
+        'placeholder_description': 'Опишите проблему, с которой вы столкнулись…',
+        'success_message': 'Ваше сообщение зафиксировано. Вы можете отслеживать его статус ниже.',
+        'my_reports': 'Мои сообщения о проблемах',
+        'track_status_subtitle': 'Отслеживайте статус ваших сообщений.',
+        'new_report': 'Новое сообщение',
+        'no_reports': 'Нет сообщений',
+        'empty_message': 'Ваши сообщения о проблемах появятся здесь с их статусом (новое, в работе, решено).',
+        'status_nouveau': 'Новое',
+        'status_en_cours': 'В работе',
+        'status_resolu': 'Решено',
+    },
+    'fr': {
+        'back_to_home': "Retour à l'accueil",
+        'view_my_reports': 'Voir mes signalements',
+        'report_a_problem': 'Signaler un problème',
+        'describe_team': "Décrivez le problème. L'équipe en prendra connaissance.",
+        'problem_description': 'Description du problème',
+        'submit_report': 'Envoyer le signalement',
+        'cancel': 'Annuler',
+        'placeholder_description': 'Décrivez le problème rencontré…',
+        'success_message': 'Votre signalement a bien été enregistré. Vous pouvez suivre son état ci-dessous.',
+        'my_reports': 'Mes signalements',
+        'track_status_subtitle': "Suivez l'état de traitement de vos problèmes signalés.",
+        'new_report': 'Nouveau signalement',
+        'no_reports': 'Aucun signalement',
+        'empty_message': "Vos problèmes signalés apparaîtront ici avec leur état (nouveau, en cours, résolu).",
+        'status_nouveau': 'Nouveau',
+        'status_en_cours': 'En cours',
+        'status_resolu': 'Résolu',
+    },
+    'en': {
+        'back_to_home': 'Back to home',
+        'view_my_reports': 'View my reports',
+        'report_a_problem': 'Report a problem',
+        'describe_team': 'Describe the problem. The team will take note of it.',
+        'problem_description': 'Problem description',
+        'submit_report': 'Submit report',
+        'cancel': 'Cancel',
+        'placeholder_description': 'Describe the problem you encountered…',
+        'success_message': 'Your report has been recorded. You can track its status below.',
+        'my_reports': 'My reports',
+        'track_status_subtitle': 'Track the status of your reported problems.',
+        'new_report': 'New report',
+        'no_reports': 'No reports',
+        'empty_message': 'Your reported problems will appear here with their status (new, in progress, resolved).',
+        'status_nouveau': 'New',
+        'status_en_cours': 'In progress',
+        'status_resolu': 'Resolved',
+    },
+}
+
+
 @login_required
 def signaler(request):
     """Formulaire pour signaler un problème (indépendant du lavage)."""
-    form = SignalementForm(request.POST or None)
+    lang = request.LANGUAGE_CODE or 'ru'
+    i18n = _SIGNALEMENTS_STRINGS.get(lang, _SIGNALEMENTS_STRINGS['en'])
+    form = SignalementForm(request.POST or None, lang=lang, i18n=i18n)
     if request.method == 'POST' and form.is_valid():
         obj = form.save(commit=False)
         obj.utilisateur = request.user
         obj.save()
-        messages.success(request, 'Votre signalement a bien été enregistré. Vous pouvez suivre son état ci-dessous.')
+        messages.success(request, i18n['success_message'])
         return redirect('signalements:mes_signalements')
-    return render(request, 'signalements/signaler.html', {'form': form})
+    return render(request, 'signalements/signaler.html', {'form': form, 'i18n': i18n})
+
+
+def _statut_display(s, i18n):
+    """Retourne le libellé traduit du statut."""
+    key = f'status_{s.statut}'
+    return i18n.get(key, s.get_statut_display())
 
 
 @login_required
 def mes_signalements(request):
     """Liste des signalements de l'utilisateur pour suivre l'état de traitement."""
+    lang = request.LANGUAGE_CODE or 'ru'
+    i18n = _SIGNALEMENTS_STRINGS.get(lang, _SIGNALEMENTS_STRINGS['en'])
     signalements = Signalement.objects.filter(utilisateur=request.user).order_by('-date_creation')
-    return render(request, 'signalements/mes_signalements.html', {'signalements': signalements})
+    signalements = [(s, _statut_display(s, i18n)) for s in signalements]
+    return render(request, 'signalements/mes_signalements.html', {'signalements': signalements, 'i18n': i18n})
 
 
 @login_required

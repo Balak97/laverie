@@ -261,6 +261,30 @@ msgstr "Отменить эту резервацию?"
 msgid "Cancel"
 msgstr "Отменить"
 
+msgid "Back to home"
+msgstr "На главную"
+
+msgid "View my reports"
+msgstr "Мои сообщения о проблемах"
+
+msgid "Report a problem"
+msgstr "Сообщить о проблеме"
+
+msgid "Describe the problem. The team will take note of it."
+msgstr "Опишите проблему. Команда ознакомится с ней."
+
+msgid "Problem description"
+msgstr "Описание проблемы"
+
+msgid "Submit report"
+msgstr "Отправить сообщение"
+
+msgid "Describe the problem you encountered…"
+msgstr "Опишите проблему, с которой вы столкнулись…"
+
+msgid "Your report has been recorded. You can track its status below."
+msgstr "Ваше сообщение зафиксировано. Вы можете отслеживать его статус ниже."
+
 msgid "You have no reservations."
 msgstr "У вас нет резерваций."
 

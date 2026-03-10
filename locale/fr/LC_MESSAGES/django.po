@@ -262,6 +262,30 @@ msgstr "Annuler cette réservation ?"
 msgid "Cancel"
 msgstr "Annuler"
 
+msgid "Back to home"
+msgstr "Retour à l'accueil"
+
+msgid "View my reports"
+msgstr "Voir mes signalements"
+
+msgid "Report a problem"
+msgstr "Signaler un problème"
+
+msgid "Describe the problem. The team will take note of it."
+msgstr "Décrivez le problème. L'équipe en prendra connaissance."
+
+msgid "Problem description"
+msgstr "Description du problème"
+
+msgid "Submit report"
+msgstr "Envoyer le signalement"
+
+msgid "Describe the problem you encountered…"
+msgstr "Décrivez le problème rencontré…"
+
+msgid "Your report has been recorded. You can track its status below."
+msgstr "Votre signalement a bien été enregistré. Vous pouvez suivre son état ci-dessous."
+
 msgid "You have no reservations."
 msgstr "Vous n'avez aucune réservation."
 
