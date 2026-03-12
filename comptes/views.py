@@ -235,7 +235,7 @@ def dashboard_admin(request):
     """
     if request.user.user_type != 'ADMIN':
         from django.contrib import messages
-        messages.error(request, "Accès refusé. Vous devez être administrateur.")
+        messages.error(request, gettext("Access denied. You must be an administrator."))
         return redirect('home')
     
     from django.utils import timezone
@@ -278,9 +278,9 @@ def dashboard_admin(request):
 def renvoyer_emails_non_envoyes(request):
     """Désactivé : ce projet (Dortoir 3) ne gère pas les emails Monkilo."""
     if request.user.user_type != 'ADMIN':
-        messages.error(request, "Accès refusé. Vous devez être administrateur.")
+        messages.error(request, gettext("Access denied. You must be an administrator."))
         return redirect('dashboard_admin')
-    messages.info(request, "Cette fonction n'est pas utilisée dans ce projet.")
+    messages.info(request, gettext("This feature is not used in this project."))
     return redirect('dashboard_admin')
 
 
@@ -294,7 +294,7 @@ def list_users(request):
     """
     # Vérifier que l'utilisateur est vendeur ou admin
     if request.user.user_type not in ['vendeur', 'ADMIN']:
-        messages.error(request, "Accès refusé. Vous devez être vendeur ou administrateur.")
+        messages.error(request, gettext("Access denied. You must be a seller or administrator."))
         return redirect('home')
     
     # Liste des utilisateurs (clients) qui peuvent être promus en coursiers

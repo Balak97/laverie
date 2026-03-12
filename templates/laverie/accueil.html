@@ -26,7 +26,25 @@
         </div>
     </div>
 
-    {% if mon_ticket_en_cours %}
+    <div class="mb-6 rounded-2xl border border-indigo-200 bg-indigo-50 p-4 sm:p-5 shadow-sm">
+        <div class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"/>
+                </svg>
+            </span>
+            <div class="min-w-0">
+                <p class="text-sm sm:text-base font-semibold text-indigo-900">
+                    {% trans "Please respect your ticket timing" %}
+                </p>
+                <p class="text-sm text-indigo-800 mt-1">
+                    {% blocktrans %}Respecting the timing ensures the platform performs well. This platform is for all of us—please respect the start and end of your tickets.{% endblocktrans %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {% if ticket_affiche %}
     <div class="mb-6 rounded-2xl shadow-xl border-2 border-emerald-300 bg-gradient-to-br from-emerald-50 to-green-50 p-5 sm:p-6 overflow-hidden">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div class="flex items-center gap-4">
@@ -35,16 +53,16 @@
                 </span>
                 <div>
                     <p class="text-sm font-bold text-emerald-700 uppercase tracking-wider">{% trans "It's your turn" %}</p>
-                    <p class="text-xl sm:text-2xl font-black text-gray-900 mt-0.5">{% trans "Ticket" %} #{{ mon_ticket_en_cours.numero|default:mon_ticket_en_cours.pk }}</p>
-                    <p class="text-gray-700 mt-1">{{ mon_ticket_en_cours.machine.nom }} · {{ mon_ticket_en_cours.fonction.nom|default:"—" }} — {{ mon_ticket_en_cours.duree_affichage }}</p>
+                    <p class="text-xl sm:text-2xl font-black text-gray-900 mt-0.5">{% trans "Ticket" %} #{{ ticket_affiche.numero|default:ticket_affiche.pk }}</p>
+                    <p class="text-gray-700 mt-1">{{ ticket_affiche.machine.nom }} · {{ ticket_affiche.fonction.nom|default:"—" }} — {{ ticket_affiche.duree_affichage }}</p>
                 </div>
             </div>
-            <a href="{% url 'laverie:afficher_ticket' mon_ticket_en_cours.pk %}" class="flex-shrink-0 w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition min-h-[48px] touch-manipulation">
+            <a href="{% url 'laverie:afficher_ticket' ticket_affiche.pk %}" class="flex-shrink-0 w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition min-h-[48px] touch-manipulation">
                 <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                <span>{% trans "Show ticket" %}</span>
+                <span>{{ laverie_i18n.show_ticket }}</span>
             </a>
         </div>
-        <div id="accueil-countdown" class="mt-4 pt-4 border-t border-emerald-200" data-end="{{ mon_ticket_en_cours.fin|date:'c' }}" data-duration-minutes="{{ mon_ticket_en_cours.duree_minutes }}">
+        <div id="accueil-countdown" class="mt-4 pt-4 border-t border-emerald-200" data-end="{{ ticket_affiche.fin|date:'c' }}" data-duration-minutes="{{ ticket_affiche.duree_minutes }}">
             <p class="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">{% trans "Time remaining" %}</p>
             <p id="accueil-countdown-display" class="text-2xl sm:text-3xl font-black text-emerald-700 tabular-nums">--</p>
             <div class="mt-2 h-2 bg-emerald-200 rounded-full overflow-hidden">
@@ -89,16 +107,19 @@
         <p class="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">
             {% trans "Your current tickets" %}
         </p>
+        <p class="text-xs text-emerald-700 mb-2">{% trans "Click a ticket to display it at the top with live countdown." %}</p>
         <ul class="space-y-1.5 text-sm text-emerald-900">
             {% for t in mes_tickets_en_cours %}
-            <li class="flex items-center justify-between gap-2 py-1.5 px-2 rounded-lg {% if t.pk == mon_ticket_en_cours.pk %}bg-emerald-100 font-semibold{% else %}bg-emerald-50{% endif %}">
-                <span>
-                    <span class="text-xs font-bold text-emerald-700 mr-1">#{{ t.numero|default:t.pk }}</span>
-                    {{ t.machine.nom }} · {{ t.fonction.nom|default:"—" }}
-                </span>
-                <span class="text-xs text-emerald-800 tabular-nums">
-                    {{ t.debut|time:"H:i" }} → {{ t.fin|time:"H:i" }}
-                </span>
+            <li>
+                <a href="{% url 'laverie:accueil' %}?focus={{ t.pk }}" class="flex items-center justify-between gap-2 py-2.5 px-3 rounded-lg transition {% if t.pk == ticket_affiche.pk %}bg-emerald-200 font-semibold ring-2 ring-emerald-400{% else %}bg-emerald-50 hover:bg-emerald-100{% endif %}">
+                    <span>
+                        <span class="text-xs font-bold text-emerald-700 mr-1">#{{ t.numero|default:t.pk }}</span>
+                        {{ t.machine.nom }} · {{ t.fonction.nom|default:"—" }}
+                    </span>
+                    <span class="text-xs text-emerald-800 tabular-nums">
+                        {{ t.debut|time:"H:i" }} → {{ t.fin|time:"H:i" }}
+                    </span>
+                </a>
             </li>
             {% endfor %}
         </ul>

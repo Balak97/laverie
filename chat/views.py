@@ -33,6 +33,24 @@ def _other_participant(conv, current_user):
     return conv.participant2 if current_user == conv.participant1 else conv.participant1
 
 
+def _unread_count_for_user(user):
+    """Nombre de messages non lus pour l'utilisateur (reçu, pas envoyés par lui)."""
+    convs = Conversation.objects.filter(
+        Q(participant1=user) | Q(participant2=user)
+    )
+    return Message.objects.filter(
+        Q(conversation__in=convs) & ~Q(sender=user),
+        lu=False
+    ).count()
+
+
+@login_required
+@require_http_methods(['GET'])
+def unread_count_json(request):
+    """API JSON pour le compteur de messages non lus (mise à jour du badge nav en temps réel)."""
+    return JsonResponse({'unread_count': _unread_count_for_user(request.user)})
+
+
 @login_required
 def mes_conversations(request):
     """Liste des conversations avec l'autre participant et la dernière activité."""

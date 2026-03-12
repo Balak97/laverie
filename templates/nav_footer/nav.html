@@ -22,13 +22,12 @@
 
       {% if user.is_authenticated %}
         <a href="{% url 'chat:mes_conversations' %}"
-           class="relative text-gray-700 hover:text-indigo-500 transition">
+           class="relative text-gray-700 hover:text-indigo-500 transition"
+           id="nav-link-messages-desktop">
           {% trans "Messages" %}
-          {% if unread_messages_count > 0 %}
-            <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-5 flex items-center justify-center">
-              {{ unread_messages_count }}
-            </span>
-          {% endif %}
+          <span id="nav-unread-badge-desktop"
+                class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-5 flex items-center justify-center {% if unread_messages_count == 0 %}hidden{% endif %}"
+                aria-hidden="true">{{ unread_messages_count }}</span>
         </a>
 
         {% if user.user_type == 'ADMIN' %}
@@ -122,8 +121,12 @@
 
         <a href="{% url 'chat:mes_conversations' %}"
            onclick="toggleMobileMenu()"
-           class="block py-2 text-gray-700 hover:text-indigo-500">
+           class="relative inline-flex items-center gap-2 py-2 text-gray-700 hover:text-indigo-500"
+           id="nav-link-messages-mobile">
           {% trans "Messages" %}
+          <span id="nav-unread-badge-mobile"
+                class="min-w-[18px] h-5 flex items-center justify-center bg-red-500 text-white text-xs font-bold rounded-full px-1 {% if unread_messages_count == 0 %}hidden{% endif %}"
+                aria-hidden="true">{{ unread_messages_count }}</span>
         </a>
 
         <a href="{% url 'profile' %}"
@@ -218,4 +221,38 @@
       document.body.style.overflow = '';
     }
   });
+
+  (function() {
+    var badgeDesktop = document.getElementById('nav-unread-badge-desktop');
+    if (!badgeDesktop) return;
+    var badgeMobile = document.getElementById('nav-unread-badge-mobile');
+    var unreadCountUrl = '{% url "chat:unread_count_json" %}';
+
+    function updateBadges(count) {
+      var n = typeof count === 'number' ? count : 0;
+      [badgeDesktop, badgeMobile].forEach(function(b) {
+        if (!b) return;
+        b.textContent = n;
+        if (n > 0) {
+          b.classList.remove('hidden');
+          b.setAttribute('aria-hidden', 'false');
+        } else {
+          b.classList.add('hidden');
+          b.setAttribute('aria-hidden', 'true');
+        }
+      });
+    }
+
+    function fetchUnread() {
+      fetch(unreadCountUrl, { credentials: 'same-origin', headers: { 'Accept': 'application/json' } })
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(data) {
+          if (data && typeof data.unread_count === 'number') updateBadges(data.unread_count);
+        })
+        .catch(function() {});
+    }
+
+    setInterval(fetchUnread, 20000);
+    setTimeout(fetchUnread, 3000);
+  })();
 </script>

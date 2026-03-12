@@ -54,6 +54,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'comptes.context_processors.notifications_context',
+                'comptes.context_processors.laverie_i18n_context',
             ],
         },
     },

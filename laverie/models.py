@@ -125,17 +125,16 @@ class Reservation(models.Model):
         ).exclude(statut='annule').count()
 
     def duree_minutes(self):
-        if self.fonction:
-            return self.fonction.duree_minutes
+        """Durée réelle du créneau (debut → fin) en minutes. Prend en compte les prolongations/réductions."""
         if self.debut and self.fin:
             delta = self.fin - self.debut
             return int(delta.total_seconds() / 60)
+        if self.fonction:
+            return self.fonction.duree_minutes
         return 0
 
     def duree_affichage(self):
-        """Durée formatée (ex: 1 h 30 min, 45 min)."""
-        if self.fonction:
-            return self.fonction.duree_affichage()
+        """Durée formatée (ex: 1 h 30 min, 45 min). Utilise la durée réelle du créneau (après modif)."""
         n = self.duree_minutes()
         if n >= 60:
             return f"{n // 60} h {n % 60} min" if n % 60 else f"{n // 60} h"

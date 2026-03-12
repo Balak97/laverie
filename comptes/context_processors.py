@@ -1,5 +1,19 @@
 from django.db.models import Q
 
+# Libellés laverie (Show ticket, Extend, Cancel) disponibles sur toutes les pages (ex. chat, nav)
+LAVERIE_I18N = {
+    'ru': {'show_ticket': 'Показать талон', 'extend': 'Продлить', 'cancel': 'Отменить'},
+    'fr': {'show_ticket': 'Afficher le ticket', 'extend': 'Prolonger', 'cancel': 'Annuler'},
+    'en': {'show_ticket': 'Show ticket', 'extend': 'Extend', 'cancel': 'Cancel'},
+}
+
+
+def laverie_i18n_context(request):
+    """Expose laverie labels (show_ticket, extend, cancel) in all templates for consistent i18n."""
+    lang = getattr(request, 'LANGUAGE_CODE', None) or 'ru'
+    return {'laverie_i18n': LAVERIE_I18N.get(lang, LAVERIE_I18N['en'])}
+
+
 def notifications_context(request):
     """
     Context processor pour ajouter les compteurs de notifications dans tous les templates

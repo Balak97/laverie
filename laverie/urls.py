@@ -9,6 +9,7 @@ urlpatterns = [
     path('mes-tickets/', views.mes_tickets, name='mes_tickets'),
     path('machine/<int:pk>/tickets/', views.tickets_machine, name='tickets_machine'),
     path('ticket/<int:pk>/', views.afficher_ticket, name='afficher_ticket'),
+    path('ticket/<int:pk>/modifier-duree/', views.modifier_duree_ticket, name='modifier_duree_ticket'),
     path('mes-tickets/<int:pk>/annuler/', views.annuler_ticket, name='annuler_ticket'),
     path('api/creneaux/', views.api_creneaux, name='api_creneaux'),
     path('api/fonctions/', views.api_fonctions_machine, name='api_fonctions'),

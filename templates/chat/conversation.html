@@ -1,5 +1,6 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block contenu %}
 <style>
@@ -417,8 +418,8 @@
                 </svg>
             </a>
             <div class="flex-1 min-w-0">
-                <h1 class="text-base font-bold text-white truncate">Conversation</h1>
-                <p class="text-xs text-cyan-100 truncate">Avec {{ other_participant.display_name }}</p>
+                <h1 class="text-base font-bold text-white truncate">{% trans "Conversation" %}</h1>
+                <p class="text-xs text-cyan-100 truncate">{% trans "With" %} {{ other_participant.display_name }}</p>
             </div>
         </div>
     </div>
@@ -431,30 +432,30 @@
             <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
-            <span class="hidden sm:inline">Retour aux conversations</span>
-            <span class="sm:hidden">Retour</span>
+            <span class="hidden sm:inline">{% trans "Back to conversations" %}</span>
+            <span class="sm:hidden">{% trans "Back" %}</span>
         </a>
         <div class="header-card rounded-xl sm:rounded-2xl shadow-lg p-2 sm:p-4 md:p-6 text-white">
             <div class="flex items-center justify-between gap-2">
                 <div class="flex-1 min-w-0">
-                    <h1 class="chat-header-title text-lg sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2">Conversation</h1>
+                    <h1 class="chat-header-title text-lg sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2">{% trans "Conversation" %}</h1>
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                        <p class="chat-header-subtitle text-cyan-50 text-xs sm:text-sm md:text-base truncate">Avec {{ other_participant.display_name }}</p>
+                        <p class="chat-header-subtitle text-cyan-50 text-xs sm:text-sm md:text-base truncate">{% trans "With" %} {{ other_participant.display_name }}</p>
                         <div class="flex items-center gap-1">
                             <span class="status-indicator w-2 h-2 rounded-full {% if other_participant.is_online %}bg-green-400 animate-pulse{% else %}bg-gray-400{% endif %}"></span>
                             <span class="status-text text-xs text-cyan-100">
-                                {% if other_participant.is_online %}En ligne{% else %}Hors ligne{% endif %}
+                                {% if other_participant.is_online %}{% trans "Online" %}{% else %}{% trans "Offline" %}{% endif %}
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-                    <button id="audio-call-btn" class="call-button bg-white/20 hover:bg-white/30 text-white p-1.5 sm:p-2 rounded-lg transition-all shadow-md" title="Appel audio">
+                    <button id="audio-call-btn" class="call-button bg-white/20 hover:bg-white/30 text-white p-1.5 sm:p-2 rounded-lg transition-all shadow-md" title="{% trans 'Voice call' %}">
                         <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                         </svg>
                     </button>
-                    <button id="video-call-btn" class="call-button bg-white/20 hover:bg-white/30 text-white p-1.5 sm:p-2 rounded-lg transition-all shadow-md" title="Appel vidéo">
+                    <button id="video-call-btn" class="call-button bg-white/20 hover:bg-white/30 text-white p-1.5 sm:p-2 rounded-lg transition-all shadow-md" title="{% trans 'Video call' %}">
                         <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                         </svg>
@@ -489,10 +490,10 @@
                             <div class="mb-2 audio-message-container" data-audio-url="{{ message.fichier.url }}" data-message-id="{{ message.id }}">
                                 <div class="audio-loading">
                                     <div class="audio-loading-spinner"></div>
-                                    <span class="text-xs {% if message.sender == user %}text-white/80{% else %}text-gray-600{% endif %}">Téléchargement...</span>
+                                    <span class="text-xs {% if message.sender == user %}text-white/80{% else %}text-gray-600{% endif %}">{% trans "Downloading..." %}</span>
                                 </div>
                                 <audio controls class="w-full hidden" style="max-width: 100%; height: 32px;">
-                                    Votre navigateur ne supporte pas l'élément audio.
+                                    {% trans "Your browser does not support the audio element." %}
                                 </audio>
                             </div>
                             {% if message.contenu %}
@@ -540,7 +541,7 @@
                     <span id="file-name" class="font-medium text-gray-800 truncate block"></span>
                     <span id="file-size" class="text-xs text-cyan-700"></span>
                 </div>
-                <button type="button" id="remove-file" class="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 transition-colors" title="Retirer">
+                <button type="button" id="remove-file" class="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 transition-colors" title="{% trans 'Remove' %}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
@@ -560,36 +561,36 @@
                     <button type="button" 
                             id="attach-file-btn" 
                             class="chat-action-btn chat-input-buttons"
-                            title="Joindre une image ou un fichier (PDF, Word, etc.)"
-                            aria-label="Joindre un fichier">
+                            title="{% trans 'Attach an image or file (PDF, Word, etc.)' %}"
+                            aria-label="{% trans 'Attach file' %}">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
                         </svg>
-                        <span class="hidden sm:inline">Fichier</span>
+                        <span class="hidden sm:inline">{% trans "File" %}</span>
                     </button>
                     
                     <button type="button" 
                             id="record-audio-btn" 
                             class="chat-action-btn chat-input-buttons"
-                            title="Enregistrer un message vocal"
-                            aria-label="Message vocal">
+                            title="{% trans 'Record a voice message' %}"
+                            aria-label="{% trans 'Voice message' %}">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
                         </svg>
-                        <span class="hidden sm:inline">Vocal</span>
+                        <span class="hidden sm:inline">{% trans "Voice" %}</span>
                     </button>
                     
                     <div class="message-input-wrapper flex-1">
                         <input type="text" 
                                id="message-input" 
                                name="contenu"
-                               placeholder="Message... (ou joignez un fichier / enregistrez un vocal)" 
+                               placeholder="{% trans 'Message... (or attach a file / record voice)' %}" 
                                class="message-input-mobile focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-sm sm:text-base">
                     </div>
                     
                     <button type="submit" 
                             class="chat-send-btn bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold transition-all transform hover:scale-105 shadow-lg active:scale-95"
-                            aria-label="Envoyer">
+                            aria-label="{% trans 'Send' %}">
                         <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                         </svg>
@@ -602,15 +603,15 @@
                 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                     <div class="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                         <div class="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full animate-pulse flex-shrink-0"></div>
-                        <span class="text-xs sm:text-sm font-medium text-red-700 truncate">Enregistrement en cours...</span>
+                        <span class="text-xs sm:text-sm font-medium text-red-700 truncate">{% trans "Recording in progress..." %}</span>
                         <span id="recording-time" class="text-xs text-red-600 whitespace-nowrap">00:00</span>
                     </div>
                     <div class="flex gap-2 w-full sm:w-auto">
                         <button type="button" id="stop-recording-btn" class="flex-1 sm:flex-none bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm">
-                            Arrêter
+                            {% trans "Stop" %}
                         </button>
                         <button type="button" id="cancel-recording-btn" class="flex-1 sm:flex-none bg-gray-300 hover:bg-gray-400 text-gray-700 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm">
-                            Annuler
+                            {{ laverie_i18n.cancel }}
                         </button>
                     </div>
                 </div>
@@ -626,8 +627,8 @@
         <div id="call-header" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white p-4 rounded-t-2xl">
             <div class="flex items-center justify-between">
                 <div>
-                    <h2 id="call-title" class="text-xl font-bold">Appel en cours...</h2>
-                    <p id="call-status" class="text-cyan-100 text-sm">Connexion...</p>
+                    <h2 id="call-title" class="text-xl font-bold">{% trans "Call in progress..." %}</h2>
+                    <p id="call-status" class="text-cyan-100 text-sm">{% trans "Connecting..." %}</p>
                 </div>
                 <button id="end-call-btn" class="bg-red-500 hover:bg-red-600 text-white p-3 rounded-full transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -654,7 +655,7 @@
                         {{ other_participant.first_name|first|default:other_participant.email|first|upper }}
                     </div>
                     <h3 id="incoming-caller-name" class="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">{{ other_participant.display_name }}</h3>
-                    <p id="incoming-call-type" class="text-sm sm:text-base text-gray-300">Appel entrant</p>
+                    <p id="incoming-call-type" class="text-sm sm:text-base text-gray-300">{% trans "Incoming call" %}</p>
                 </div>
                 <div class="flex gap-3 sm:gap-4">
                     <button id="accept-call-btn" class="bg-green-500 hover:bg-green-600 text-white p-3 sm:p-4 rounded-full transition-all">
@@ -677,24 +678,24 @@
                         {{ other_participant.first_name|first|default:other_participant.email|first|upper }}
                     </div>
                     <h3 class="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">{{ other_participant.display_name }}</h3>
-                    <p class="text-sm sm:text-base text-gray-300">Appel en cours...</p>
+                    <p class="text-sm sm:text-base text-gray-300">{% trans "Call in progress..." %}</p>
                 </div>
             </div>
         </div>
         
         <!-- Contrôles d'appel -->
         <div id="call-controls" class="hidden bg-gray-800 p-3 sm:p-4 flex items-center justify-center gap-2 sm:gap-4">
-            <button id="mute-btn" class="bg-gray-700 hover:bg-gray-600 text-white p-2 sm:p-3 rounded-full transition-all" title="Muet">
+            <button id="mute-btn" class="bg-gray-700 hover:bg-gray-600 text-white p-2 sm:p-3 rounded-full transition-all" title="{% trans 'Mute' %}">
                 <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
                 </svg>
             </button>
-            <button id="video-btn" class="bg-gray-700 hover:bg-gray-600 text-white p-2 sm:p-3 rounded-full transition-all" title="Vidéo">
+            <button id="video-btn" class="bg-gray-700 hover:bg-gray-600 text-white p-2 sm:p-3 rounded-full transition-all" title="{% trans 'Video' %}">
                 <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                 </svg>
             </button>
-            <button id="end-call-control-btn" class="bg-red-500 hover:bg-red-600 text-white p-3 sm:p-4 rounded-full transition-all" title="Raccrocher">
+            <button id="end-call-control-btn" class="bg-red-500 hover:bg-red-600 text-white p-3 sm:p-4 rounded-full transition-all" title="{% trans 'Hang up' %}">
                 <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
@@ -733,7 +734,7 @@ function getMessageContent(msg, isSender) {
                     <span class="text-xs ${isSender ? 'text-white/80' : 'text-gray-600'}">Téléchargement...</span>
                 </div>
                 <audio controls class="w-full hidden" style="max-width: 100%; height: 32px;">
-                    Votre navigateur ne supporte pas l'élément audio.
+                    {% trans "Your browser does not support the audio element." %}
                 </audio>
             </div>
             ${msg.contenu ? `<p class="text-xs sm:text-sm md:text-base whitespace-pre-wrap mt-2 break-words message-bubble-content">${msg.contenu}</p>` : ''}

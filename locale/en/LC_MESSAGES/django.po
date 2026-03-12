@@ -698,3 +698,297 @@ msgstr "Thank you,"
 
 msgid "The Dortoir 3 team"
 msgstr "The Dortoir 3 team"
+
+# Chat
+msgid "My conversations"
+msgstr "My conversations"
+
+msgid "Manage all your conversations"
+msgstr "Manage all your conversations"
+
+msgid "Online"
+msgstr "Online"
+
+msgid "Offline"
+msgstr "Offline"
+
+msgid "No conversations"
+msgstr "No conversations"
+
+msgid "You don't have any conversations yet. Conversations will appear here when you start chatting with other users."
+msgstr "You don't have any conversations yet. Conversations will appear here when you start chatting with other users."
+
+msgid "Conversation"
+msgstr "Conversation"
+
+msgid "With"
+msgstr "With"
+
+msgid "Back to conversations"
+msgstr "Back to conversations"
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Voice call"
+msgstr "Voice call"
+
+msgid "Video call"
+msgstr "Video call"
+
+msgid "Downloading..."
+msgstr "Downloading..."
+
+msgid "Your browser does not support the audio element."
+msgstr "Your browser does not support the audio element."
+
+msgid "No messages yet. Start the conversation!"
+msgstr "No messages yet. Start the conversation!"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "Attach an image or file (PDF, Word, etc.)"
+msgstr "Attach an image or file (PDF, Word, etc.)"
+
+msgid "Attach file"
+msgstr "Attach file"
+
+msgid "File"
+msgstr "File"
+
+msgid "Record a voice message"
+msgstr "Record a voice message"
+
+msgid "Voice message"
+msgstr "Voice message"
+
+msgid "Voice"
+msgstr "Voice"
+
+msgid "Message... (or attach a file / record voice)"
+msgstr "Message... (or attach a file / record voice)"
+
+msgid "Recording in progress..."
+msgstr "Recording in progress..."
+
+msgid "Stop"
+msgstr "Stop"
+
+msgid "Call in progress..."
+msgstr "Call in progress..."
+
+msgid "Connecting..."
+msgstr "Connecting..."
+
+msgid "Incoming call"
+msgstr "Incoming call"
+
+msgid "Mute"
+msgstr "Mute"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Hang up"
+msgstr "Hang up"
+
+# Dashboard client
+msgid "My space"
+msgstr "My space"
+
+msgid "Welcome"
+msgstr "Welcome"
+
+msgid "My laundry tickets"
+msgstr "My laundry tickets"
+
+msgid "View my tickets"
+msgstr "View my tickets"
+
+msgid "My reports"
+msgstr "My reports"
+
+msgid "View my reports"
+msgstr "View my reports"
+
+msgid "Pending resolution"
+msgstr "Pending resolution"
+
+msgid "Track status"
+msgstr "Track status"
+
+msgid "Laundry reservation(s) in progress"
+msgstr "Laundry reservation(s) in progress"
+
+msgid "ticket"
+msgstr "ticket"
+
+msgid "Laundry"
+msgstr "Laundry"
+
+msgid "Book a washing machine, view slots and my tickets."
+msgstr "Book a washing machine, view slots and my tickets."
+
+msgid "Go to laundry"
+msgstr "Go to laundry"
+
+msgid "Describe a problem (equipment, building, etc.) for staff follow-up."
+msgstr "Describe a problem (equipment, building, etc.) for staff follow-up."
+
+msgid "Create a report"
+msgstr "Create a report"
+
+msgid "pending"
+msgstr "pending"
+
+# Dashboard admin
+msgid "Administrator Dashboard"
+msgstr "Administrator Dashboard"
+
+msgid "Dormitory 3 — Overview"
+msgstr "Dormitory 3 — Overview"
+
+msgid "Django Administration"
+msgstr "Django Administration"
+
+msgid "Users"
+msgstr "Users"
+
+msgid "View in admin"
+msgstr "View in admin"
+
+msgid "Machines (laundry)"
+msgstr "Machines (laundry)"
+
+msgid "Active reservations"
+msgstr "Active reservations"
+
+msgid "View laundry"
+msgstr "View laundry"
+
+msgid "Reports"
+msgstr "Reports"
+
+msgid "Process reports"
+msgstr "Process reports"
+
+msgid "New"
+msgstr "New"
+
+msgid "Resolved"
+msgstr "Resolved"
+
+msgid "View"
+msgstr "View"
+
+msgid "Recent reports"
+msgstr "Recent reports"
+
+msgid "View all"
+msgstr "View all"
+
+msgid "Anonymous"
+msgstr "Anonymous"
+
+msgid "No reports"
+msgstr "No reports"
+
+msgid "Recent users"
+msgstr "Recent users"
+
+msgid "No users"
+msgstr "No users"
+
+msgid "Quick access"
+msgstr "Quick access"
+
+msgid "Laundry, reports and administration."
+msgstr "Laundry, reports and administration."
+
+msgid "Machine management"
+msgstr "Machine management"
+
+msgid "Reported issues"
+msgstr "Reported issues"
+
+msgid "Django Admin"
+msgstr "Django Admin"
+
+msgid "Access denied. You must be an administrator."
+msgstr "Access denied. You must be an administrator."
+
+msgid "This feature is not used in this project."
+msgstr "This feature is not used in this project."
+
+msgid "Access denied. You must be a seller or administrator."
+msgstr "Access denied. You must be a seller or administrator."
+
+msgid "Please respect your ticket timing"
+msgstr "Please respect your ticket timing"
+
+msgid "Respecting the timing ensures the platform performs well. This platform is for all of us—please respect the start and end of your tickets."
+msgstr "Respecting the timing ensures the platform performs well. This platform is for all of us—please respect the start and end of your tickets."
+
+msgid "Change duration"
+msgstr "Change duration"
+
+msgid "You can extend (max +60 min) or shorten your slot."
+msgstr "You can extend (max +60 min) or shorten your slot."
+
+msgid "You can extend your slot (max +%(max_min)s min). The following tickets on the same machine will be shifted."
+msgstr "You can extend your slot (max +%(max_min)s min). The following tickets on the same machine will be shifted."
+
+msgid "Extend by"
+msgstr "Extend by"
+
+msgid "Extend"
+msgstr "Extend"
+
+msgid "Shorten by"
+msgstr "Shorten by"
+
+msgid "Shorten"
+msgstr "Shorten"
+
+msgid "This ticket can no longer be modified."
+msgstr "This ticket can no longer be modified."
+
+msgid "You can add at most %(max)s minutes."
+msgstr "You can add at most %(max)s minutes."
+
+msgid "Cannot extend: the next slot starts too soon."
+msgstr "Cannot extend: the next slot starts too soon."
+
+msgid "Your slot has been extended."
+msgstr "Your slot has been extended."
+
+msgid "Please specify how many minutes to subtract."
+msgstr "Please specify how many minutes to subtract."
+
+msgid "The slot must last at least %(min)s minutes."
+msgstr "The slot must last at least %(min)s minutes."
+
+msgid "The new end time would be in the past."
+msgstr "The new end time would be in the past."
+
+msgid "Your slot has been shortened."
+msgstr "Your slot has been shortened."
+
+msgid "Invalid action."
+msgstr "Invalid action."
+
+msgid "Your current tickets"
+msgstr "Your current tickets"
+
+msgid "Click a ticket to display it at the top with live countdown."
+msgstr "Click a ticket to display it at the top with live countdown."
+
+msgid "Total duration cannot exceed program duration + %(max)s minutes."
+msgstr "Total duration cannot exceed program duration + %(max)s minutes."
+
+msgid "This reservation can no longer be cancelled."
+msgstr "This reservation can no longer be cancelled."
+
+msgid "Reservation cancelled."
+msgstr "Reservation cancelled."

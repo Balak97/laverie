@@ -18,6 +18,8 @@ class Conversation(models.Model):
     class Meta:
         ordering = ['-date_creation']
 
+   
+
 
 class Message(models.Model):
     conversation = models.ForeignKey(
@@ -36,3 +38,6 @@ class Message(models.Model):
 
     class Meta:
         ordering = ['date_envoi']
+
+    def __str__(self):
+        return ""

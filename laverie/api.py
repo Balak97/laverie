@@ -10,6 +10,8 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 from .models import Machine, FonctionMachine, Reservation, MAX_TICKETS_SAME_DAY_SAME_MACHINE
 
+MAX_EXTEND_MINUTES = 20
+
 
 # ——— Serializers ———
 
@@ -204,3 +206,53 @@ class ReservationViewSet(viewsets.ModelViewSet):
         if not resa:
             return Response(None)
         return Response(ReservationSerializer(resa).data)
+
+    @action(detail=True, methods=['post'], url_path='modify-duration')
+    def modify_duration(self, request, pk=None):
+        """Prolonger (max +60 min) ou raccourcir le créneau. Autorisé en reserve et en_cours."""
+        Reservation.marquer_tickets_termines()
+        Reservation.marquer_tickets_en_cours()
+        resa = self.get_object()
+        if resa.statut not in ('reserve', 'en_cours'):
+            return Response(
+                {'error': _('This ticket can no longer be modified.')},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        now = timezone.now()
+        add_minutes = request.data.get('add_minutes')
+        subtract_minutes = request.data.get('subtract_minutes')
+
+        if add_minutes is not None:
+            try:
+                add_minutes = max(0, int(add_minutes))
+            except (TypeError, ValueError):
+                add_minutes = 0
+            duree_prog = resa.fonction.duree_minutes if resa.fonction else 60
+            max_fin = resa.debut + timedelta(minutes=duree_prog + MAX_EXTEND_MINUTES)
+            max_ajout_restant = int((max_fin - resa.fin).total_seconds() / 60)
+            add_minutes = min(add_minutes, max(0, max_ajout_restant))
+            if add_minutes <= 0:
+                return Response(
+                    {'error': _('Total duration cannot exceed program duration + %(max)s minutes.') % {'max': MAX_EXTEND_MINUTES}},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            old_fin = resa.fin
+            new_fin = old_fin + timedelta(minutes=add_minutes)
+            delta = timedelta(minutes=add_minutes)
+            suivants = Reservation.objects.filter(
+                machine=resa.machine,
+                statut__in=('reserve', 'en_cours'),
+                debut__gte=old_fin,
+            ).exclude(pk=resa.pk).order_by('debut')
+            for r in suivants:
+                r.debut += delta
+                r.fin += delta
+                r.save(update_fields=['debut', 'fin'])
+            resa.fin = new_fin
+            resa.save(update_fields=['fin'])
+            return Response(ReservationSerializer(resa).data)
+
+        return Response(
+            {'error': _('Invalid action.')},
+            status=status.HTTP_400_BAD_REQUEST,
+        )

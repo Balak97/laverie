@@ -1,0 +1,4 @@
+# Optional: compile .po -> .mo without installing GNU gettext (msgfmt) on Windows
+# pip install -r requirements-i18n.txt
+# python manage.py compilemo
+polib>=1.2.0

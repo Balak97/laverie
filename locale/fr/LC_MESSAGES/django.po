@@ -699,3 +699,297 @@ msgstr "Merci,"
 
 msgid "The Dortoir 3 team"
 msgstr "L'équipe Dortoir 3"
+
+# Chat
+msgid "My conversations"
+msgstr "Mes conversations"
+
+msgid "Manage all your conversations"
+msgstr "Gérez toutes vos conversations"
+
+msgid "Online"
+msgstr "En ligne"
+
+msgid "Offline"
+msgstr "Hors ligne"
+
+msgid "No conversations"
+msgstr "Aucune conversation"
+
+msgid "You don't have any conversations yet. Conversations will appear here when you start chatting with other users."
+msgstr "Vous n'avez pas encore de conversation. Les conversations apparaîtront ici lorsque vous commencerez à échanger avec d'autres utilisateurs."
+
+msgid "Conversation"
+msgstr "Conversation"
+
+msgid "With"
+msgstr "Avec"
+
+msgid "Back to conversations"
+msgstr "Retour aux conversations"
+
+msgid "Back"
+msgstr "Retour"
+
+msgid "Voice call"
+msgstr "Appel audio"
+
+msgid "Video call"
+msgstr "Appel vidéo"
+
+msgid "Downloading..."
+msgstr "Téléchargement..."
+
+msgid "Your browser does not support the audio element."
+msgstr "Votre navigateur ne supporte pas l'élément audio."
+
+msgid "No messages yet. Start the conversation!"
+msgstr "Aucun message pour le moment. Commencez la conversation !"
+
+msgid "Remove"
+msgstr "Retirer"
+
+msgid "Attach an image or file (PDF, Word, etc.)"
+msgstr "Joindre une image ou un fichier (PDF, Word, etc.)"
+
+msgid "Attach file"
+msgstr "Joindre un fichier"
+
+msgid "File"
+msgstr "Fichier"
+
+msgid "Record a voice message"
+msgstr "Enregistrer un message vocal"
+
+msgid "Voice message"
+msgstr "Message vocal"
+
+msgid "Voice"
+msgstr "Vocal"
+
+msgid "Message... (or attach a file / record voice)"
+msgstr "Message... (ou joignez un fichier / enregistrez un vocal)"
+
+msgid "Recording in progress..."
+msgstr "Enregistrement en cours..."
+
+msgid "Stop"
+msgstr "Arrêter"
+
+msgid "Call in progress..."
+msgstr "Appel en cours..."
+
+msgid "Connecting..."
+msgstr "Connexion..."
+
+msgid "Incoming call"
+msgstr "Appel entrant"
+
+msgid "Mute"
+msgstr "Muet"
+
+msgid "Video"
+msgstr "Vidéo"
+
+msgid "Hang up"
+msgstr "Raccrocher"
+
+# Dashboard client
+msgid "My space"
+msgstr "Mon espace"
+
+msgid "Welcome"
+msgstr "Bienvenue"
+
+msgid "My laundry tickets"
+msgstr "Mes tickets laverie"
+
+msgid "View my tickets"
+msgstr "Voir mes tickets"
+
+msgid "My reports"
+msgstr "Mes signalements"
+
+msgid "View my reports"
+msgstr "Voir mes signalements"
+
+msgid "Pending resolution"
+msgstr "En attente de résolution"
+
+msgid "Track status"
+msgstr "Suivre l'état"
+
+msgid "Laundry reservation(s) in progress"
+msgstr "Réservation(s) laverie en cours"
+
+msgid "ticket"
+msgstr "ticket"
+
+msgid "Laundry"
+msgstr "Laverie"
+
+msgid "Book a washing machine, view slots and my tickets."
+msgstr "Réserver une machine à laver, consulter les créneaux et mes tickets."
+
+msgid "Go to laundry"
+msgstr "Accéder à la laverie"
+
+msgid "Describe a problem (equipment, building, etc.) for staff follow-up."
+msgstr "Décrire un problème (équipement, bâtiment, etc.) pour suivi par les agents."
+
+msgid "Create a report"
+msgstr "Créer un signalement"
+
+msgid "pending"
+msgstr "en attente"
+
+# Dashboard admin
+msgid "Administrator Dashboard"
+msgstr "Dashboard Administrateur"
+
+msgid "Dormitory 3 — Overview"
+msgstr "Dortoir 3 — Vue d'ensemble"
+
+msgid "Django Administration"
+msgstr "Administration Django"
+
+msgid "Users"
+msgstr "Utilisateurs"
+
+msgid "View in admin"
+msgstr "Voir dans l'admin"
+
+msgid "Machines (laundry)"
+msgstr "Machines (laverie)"
+
+msgid "Active reservations"
+msgstr "Réservations actives"
+
+msgid "View laundry"
+msgstr "Voir la laverie"
+
+msgid "Reports"
+msgstr "Signalements"
+
+msgid "Process reports"
+msgstr "Traiter les signalements"
+
+msgid "New"
+msgstr "Nouveaux"
+
+msgid "Resolved"
+msgstr "Résolus"
+
+msgid "View"
+msgstr "Voir"
+
+msgid "Recent reports"
+msgstr "Signalements récents"
+
+msgid "View all"
+msgstr "Voir tout"
+
+msgid "Anonymous"
+msgstr "Anonyme"
+
+msgid "No reports"
+msgstr "Aucun signalement"
+
+msgid "Recent users"
+msgstr "Utilisateurs récents"
+
+msgid "No users"
+msgstr "Aucun utilisateur"
+
+msgid "Quick access"
+msgstr "Accès rapides"
+
+msgid "Laundry, reports and administration."
+msgstr "Laverie, signalements et administration."
+
+msgid "Machine management"
+msgstr "Gestion machines"
+
+msgid "Reported issues"
+msgstr "Problèmes signalés"
+
+msgid "Django Admin"
+msgstr "Admin Django"
+
+msgid "Access denied. You must be an administrator."
+msgstr "Accès refusé. Vous devez être administrateur."
+
+msgid "This feature is not used in this project."
+msgstr "Cette fonction n'est pas utilisée dans ce projet."
+
+msgid "Access denied. You must be a seller or administrator."
+msgstr "Accès refusé. Vous devez être vendeur ou administrateur."
+
+msgid "Please respect your ticket timing"
+msgstr "Veuillez respecter les horaires de vos tickets"
+
+msgid "Respecting the timing ensures the platform performs well. This platform is for all of us—please respect the start and end of your tickets."
+msgstr "Le respect des horaires assure le bon fonctionnement de la plateforme. Cette plateforme est pour nous tous : veuillez respecter le début et la fin de vos tickets."
+
+msgid "Change duration"
+msgstr "Modifier la durée"
+
+msgid "You can extend (max +60 min) or shorten your slot."
+msgstr "Vous pouvez prolonger (max +60 min) ou raccourcir votre créneau."
+
+msgid "You can extend your slot (max +%(max_min)s min). The following tickets on the same machine will be shifted."
+msgstr "Vous pouvez prolonger votre créneau (max +%(max_min)s min). Les tickets suivants sur la même machine seront décalés."
+
+msgid "Extend by"
+msgstr "Prolonger de"
+
+msgid "Extend"
+msgstr "Prolonger"
+
+msgid "Shorten by"
+msgstr "Raccourcir de"
+
+msgid "Shorten"
+msgstr "Raccourcir"
+
+msgid "This ticket can no longer be modified."
+msgstr "Ce ticket ne peut plus être modifié."
+
+msgid "You can add at most %(max)s minutes."
+msgstr "Vous pouvez ajouter au maximum %(max)s minutes."
+
+msgid "Cannot extend: the next slot starts too soon."
+msgstr "Impossible de prolonger : le créneau suivant commence trop tôt."
+
+msgid "Your slot has been extended."
+msgstr "Votre créneau a été prolongé."
+
+msgid "Please specify how many minutes to subtract."
+msgstr "Indiquez de combien de minutes raccourcir."
+
+msgid "The slot must last at least %(min)s minutes."
+msgstr "Le créneau doit durer au moins %(min)s minutes."
+
+msgid "The new end time would be in the past."
+msgstr "La nouvelle heure de fin serait dans le passé."
+
+msgid "Your slot has been shortened."
+msgstr "Votre créneau a été raccourci."
+
+msgid "Invalid action."
+msgstr "Action invalide."
+
+msgid "Your current tickets"
+msgstr "Vos tickets en cours"
+
+msgid "Click a ticket to display it at the top with live countdown."
+msgstr "Cliquez sur un ticket pour l'afficher en haut avec le compte à rebours en direct."
+
+msgid "Total duration cannot exceed program duration + %(max)s minutes."
+msgstr "La durée totale ne peut pas dépasser la durée du programme + %(max)s minutes."
+
+msgid "This reservation can no longer be cancelled."
+msgstr "Cette réservation ne peut plus être annulée."
+
+msgid "Reservation cancelled."
+msgstr "Réservation annulée."

@@ -32,6 +32,13 @@ _SIGNALEMENTS_STRINGS = {
         'status_nouveau': 'Новое',
         'status_en_cours': 'В работе',
         'status_resolu': 'Решено',
+        'agent_title': 'Сообщённые проблемы',
+        'agent_subtitle': 'Просматривайте сообщения и обновляйте статус (в работе / решено).',
+        'user_default': 'Пользователь',
+        'mark_in_progress': 'Отметить в работе',
+        'mark_resolved': 'Отметить решённым',
+        'resolved_label': 'Решено',
+        'agent_empty': 'Сообщения появятся здесь.',
     },
     'fr': {
         'back_to_home': "Retour à l'accueil",
@@ -51,6 +58,13 @@ _SIGNALEMENTS_STRINGS = {
         'status_nouveau': 'Nouveau',
         'status_en_cours': 'En cours',
         'status_resolu': 'Résolu',
+        'agent_title': 'Problèmes signalés',
+        'agent_subtitle': 'Consultez les signalements et mettez à jour le statut (en cours / résolu).',
+        'user_default': 'Utilisateur',
+        'mark_in_progress': 'Marquer en cours',
+        'mark_resolved': 'Marquer résolu',
+        'resolved_label': 'Résolu',
+        'agent_empty': 'Les signalements apparaîtront ici.',
     },
     'en': {
         'back_to_home': 'Back to home',
@@ -70,6 +84,13 @@ _SIGNALEMENTS_STRINGS = {
         'status_nouveau': 'New',
         'status_en_cours': 'In progress',
         'status_resolu': 'Resolved',
+        'agent_title': 'Reported problems',
+        'agent_subtitle': 'View reports and update status (in progress / resolved).',
+        'user_default': 'User',
+        'mark_in_progress': 'Mark in progress',
+        'mark_resolved': 'Mark resolved',
+        'resolved_label': 'Resolved',
+        'agent_empty': 'Reports will appear here.',
     },
 }
 
@@ -109,10 +130,13 @@ def mes_signalements(request):
 def agent_liste(request):
     """Liste des signalements (agents uniquement)."""
     if not is_agent(request.user):
-        messages.error(request, 'Accès réservé aux agents.')
+        messages.error(request, _('Access restricted to agents.'))
         return redirect('signalements:signaler')
-    signalements = Signalement.objects.all().order_by('-date_creation')
-    return render(request, 'signalements/agent/liste.html', {'signalements': signalements})
+    lang = request.LANGUAGE_CODE or 'ru'
+    i18n = _SIGNALEMENTS_STRINGS.get(lang, _SIGNALEMENTS_STRINGS['en'])
+    signalements = list(Signalement.objects.all().order_by('-date_creation'))
+    signalements = [(s, _statut_display(s, i18n)) for s in signalements]
+    return render(request, 'signalements/agent/liste.html', {'signalements': signalements, 'i18n': i18n})
 
 
 @login_required

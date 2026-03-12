@@ -698,3 +698,297 @@ msgstr "С уважением,"
 
 msgid "The Dortoir 3 team"
 msgstr "Команда Dortoir 3"
+
+# Chat
+msgid "My conversations"
+msgstr "Мои беседы"
+
+msgid "Manage all your conversations"
+msgstr "Управляйте всеми вашими беседами"
+
+msgid "Online"
+msgstr "В сети"
+
+msgid "Offline"
+msgstr "Не в сети"
+
+msgid "No conversations"
+msgstr "Нет бесед"
+
+msgid "You don't have any conversations yet. Conversations will appear here when you start chatting with other users."
+msgstr "У вас пока нет бесед. Они появятся здесь, когда вы начнёте общаться с другими пользователями."
+
+msgid "Conversation"
+msgstr "Беседа"
+
+msgid "With"
+msgstr "С"
+
+msgid "Back to conversations"
+msgstr "Назад к беседам"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Voice call"
+msgstr "Голосовой звонок"
+
+msgid "Video call"
+msgstr "Видеозвонок"
+
+msgid "Downloading..."
+msgstr "Загрузка..."
+
+msgid "Your browser does not support the audio element."
+msgstr "Ваш браузер не поддерживает воспроизведение аудио."
+
+msgid "No messages yet. Start the conversation!"
+msgstr "Пока нет сообщений. Начните беседу!"
+
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "Attach an image or file (PDF, Word, etc.)"
+msgstr "Прикрепить изображение или файл (PDF, Word и т.д.)"
+
+msgid "Attach file"
+msgstr "Прикрепить файл"
+
+msgid "File"
+msgstr "Файл"
+
+msgid "Record a voice message"
+msgstr "Записать голосовое сообщение"
+
+msgid "Voice message"
+msgstr "Голосовое сообщение"
+
+msgid "Voice"
+msgstr "Голос"
+
+msgid "Message... (or attach a file / record voice)"
+msgstr "Сообщение... (или прикрепите файл / запишите голос)"
+
+msgid "Recording in progress..."
+msgstr "Идёт запись..."
+
+msgid "Stop"
+msgstr "Остановить"
+
+msgid "Call in progress..."
+msgstr "Звонок..."
+
+msgid "Connecting..."
+msgstr "Подключение..."
+
+msgid "Incoming call"
+msgstr "Входящий звонок"
+
+msgid "Mute"
+msgstr "Отключить звук"
+
+msgid "Video"
+msgstr "Видео"
+
+msgid "Hang up"
+msgstr "Завершить звонок"
+
+# Dashboard client
+msgid "My space"
+msgstr "Моё пространство"
+
+msgid "Welcome"
+msgstr "Добро пожаловать"
+
+msgid "My laundry tickets"
+msgstr "Мои талоны прачечной"
+
+msgid "View my tickets"
+msgstr "Посмотреть мои талоны"
+
+msgid "My reports"
+msgstr "Мои сообщения"
+
+msgid "View my reports"
+msgstr "Посмотреть мои сообщения"
+
+msgid "Pending resolution"
+msgstr "Ожидают решения"
+
+msgid "Track status"
+msgstr "Отслеживать статус"
+
+msgid "Laundry reservation(s) in progress"
+msgstr "Резервация(и) прачечной в процессе"
+
+msgid "ticket"
+msgstr "талон"
+
+msgid "Laundry"
+msgstr "Прачечная"
+
+msgid "Book a washing machine, view slots and my tickets."
+msgstr "Забронируйте стиральную машину, просмотрите слоты и мои талоны."
+
+msgid "Go to laundry"
+msgstr "Перейти в прачечную"
+
+msgid "Describe a problem (equipment, building, etc.) for staff follow-up."
+msgstr "Опишите проблему (оборудование, здание и т.д.) для обработки персоналом."
+
+msgid "Create a report"
+msgstr "Создать сообщение"
+
+msgid "pending"
+msgstr "ожидают"
+
+# Dashboard admin
+msgid "Administrator Dashboard"
+msgstr "Панель администратора"
+
+msgid "Dormitory 3 — Overview"
+msgstr "Общежитие 3 — Обзор"
+
+msgid "Django Administration"
+msgstr "Администрирование Django"
+
+msgid "Users"
+msgstr "Пользователи"
+
+msgid "View in admin"
+msgstr "В админке"
+
+msgid "Machines (laundry)"
+msgstr "Машины (прачечная)"
+
+msgid "Active reservations"
+msgstr "Активные резервации"
+
+msgid "View laundry"
+msgstr "Прачечная"
+
+msgid "Reports"
+msgstr "Сообщения"
+
+msgid "Process reports"
+msgstr "Обработать сообщения"
+
+msgid "New"
+msgstr "Новые"
+
+msgid "Resolved"
+msgstr "Решённые"
+
+msgid "View"
+msgstr "Просмотр"
+
+msgid "Recent reports"
+msgstr "Недавние сообщения"
+
+msgid "View all"
+msgstr "Показать все"
+
+msgid "Anonymous"
+msgstr "Аноним"
+
+msgid "No reports"
+msgstr "Нет сообщений"
+
+msgid "Recent users"
+msgstr "Недавние пользователи"
+
+msgid "No users"
+msgstr "Нет пользователей"
+
+msgid "Quick access"
+msgstr "Быстрый доступ"
+
+msgid "Laundry, reports and administration."
+msgstr "Прачечная, сообщения и администрирование."
+
+msgid "Machine management"
+msgstr "Управление машинами"
+
+msgid "Reported issues"
+msgstr "Сообщённые проблемы"
+
+msgid "Django Admin"
+msgstr "Админ Django"
+
+msgid "Access denied. You must be an administrator."
+msgstr "Доступ запрещён. Вы должны быть администратором."
+
+msgid "This feature is not used in this project."
+msgstr "Эта функция не используется в данном проекте."
+
+msgid "Access denied. You must be a seller or administrator."
+msgstr "Доступ запрещён. Вы должны быть продавцом или администратором."
+
+msgid "Please respect your ticket timing"
+msgstr "Соблюдайте, пожалуйста, время по вашим талонам"
+
+msgid "Respecting the timing ensures the platform performs well. This platform is for all of us—please respect the start and end of your tickets."
+msgstr "Соблюдение времени обеспечивает хорошую работу платформы. Платформа создана для всех нас — пожалуйста, соблюдайте начало и конец ваших талонов."
+
+msgid "Change duration"
+msgstr "Изменить длительность"
+
+msgid "You can extend (max +60 min) or shorten your slot."
+msgstr "Вы можете продлить (макс. +60 мин) или сократить ваш слот."
+
+msgid "You can extend your slot (max +%(max_min)s min). The following tickets on the same machine will be shifted."
+msgstr "Вы можете продлить слот (макс. +%(max_min)s мин). Следующие талоны на этой же машине будут сдвинуты."
+
+msgid "Extend by"
+msgstr "Продлить на"
+
+msgid "Extend"
+msgstr "Продлить"
+
+msgid "Shorten by"
+msgstr "Сократить на"
+
+msgid "Shorten"
+msgstr "Сократить"
+
+msgid "This ticket can no longer be modified."
+msgstr "Этот талон больше нельзя изменить."
+
+msgid "You can add at most %(max)s minutes."
+msgstr "Вы можете добавить не более %(max)s минут."
+
+msgid "Cannot extend: the next slot starts too soon."
+msgstr "Нельзя продлить: следующий слот начинается слишком скоро."
+
+msgid "Your slot has been extended."
+msgstr "Ваш слот продлён."
+
+msgid "Please specify how many minutes to subtract."
+msgstr "Укажите, на сколько минут сократить."
+
+msgid "The slot must last at least %(min)s minutes."
+msgstr "Слот должен длиться не менее %(min)s минут."
+
+msgid "The new end time would be in the past."
+msgstr "Новое время окончания было бы в прошлом."
+
+msgid "Your slot has been shortened."
+msgstr "Ваш слот сокращён."
+
+msgid "Invalid action."
+msgstr "Неверное действие."
+
+msgid "Your current tickets"
+msgstr "Ваши текущие талоны"
+
+msgid "Click a ticket to display it at the top with live countdown."
+msgstr "Нажмите на талон, чтобы отобразить его вверху с обратным отсчётом в реальном времени."
+
+msgid "Total duration cannot exceed program duration + %(max)s minutes."
+msgstr "Общая длительность не может превышать длительность программы + %(max)s минут."
+
+msgid "This reservation can no longer be cancelled."
+msgstr "Эту резервацию больше нельзя отменить."
+
+msgid "Reservation cancelled."
+msgstr "Резервация отменена."

@@ -1,15 +1,16 @@
 {% extends 'home.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block contenu %}
 <div class="max-w-7xl mx-auto py-6">
     <div class="mb-6 flex items-center justify-between flex-wrap gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-gray-900">Dashboard Administrateur</h1>
-            <p class="text-gray-600 mt-2">Dortoir 3 — Vue d'ensemble</p>
+            <h1 class="text-3xl font-bold text-gray-900">{% trans "Administrator Dashboard" %}</h1>
+            <p class="text-gray-600 mt-2">{% trans "Dormitory 3 — Overview" %}</p>
         </div>
         <a href="{% url 'admin:index' %}" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg font-medium transition shadow-md hover:shadow-lg active:scale-[0.98]">
-            Administration Django
+            {% trans "Django Administration" %}
         </a>
     </div>
 
@@ -18,7 +19,7 @@
         <a href="{% url 'admin:index' %}auth/user/" class="group block bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:border-cyan-300 hover:shadow-lg transition-all duration-200 active:scale-[0.99]">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-600 text-sm font-medium group-hover:text-cyan-600 transition-colors">Utilisateurs</p>
+                    <p class="text-gray-600 text-sm font-medium group-hover:text-cyan-600 transition-colors">{% trans "Users" %}</p>
                     <p class="text-3xl font-bold text-gray-900 mt-2 group-hover:text-cyan-700 transition-colors">{{ total_users }}</p>
                 </div>
                 <div class="bg-cyan-100 rounded-full p-3 group-hover:scale-110 transition-transform duration-200">
@@ -27,13 +28,13 @@
                     </svg>
                 </div>
             </div>
-            <p class="text-xs text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Voir dans l'admin →</p>
+            <p class="text-xs text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">{% trans "View in admin" %} →</p>
         </a>
 
         <a href="{% url 'laverie:agent_machines' %}" class="group block bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:border-green-300 hover:shadow-lg transition-all duration-200 active:scale-[0.99]">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-600 text-sm font-medium group-hover:text-green-600 transition-colors">Machines (laverie)</p>
+                    <p class="text-gray-600 text-sm font-medium group-hover:text-green-600 transition-colors">{% trans "Machines (laundry)" %}</p>
                     <p class="text-3xl font-bold text-gray-900 mt-2 group-hover:text-green-700 transition-colors">{{ total_machines }}</p>
                 </div>
                 <div class="bg-green-100 rounded-full p-3 group-hover:scale-110 transition-transform duration-200">
@@ -42,13 +43,13 @@
                     </svg>
                 </div>
             </div>
-            <p class="text-xs text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Gérer les machines →</p>
+            <p class="text-xs text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">{% trans "Manage machines" %} →</p>
         </a>
 
         <a href="{% url 'laverie:accueil' %}" class="group block bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all duration-200 active:scale-[0.99]">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-600 text-sm font-medium group-hover:text-blue-600 transition-colors">Réservations actives</p>
+                    <p class="text-gray-600 text-sm font-medium group-hover:text-blue-600 transition-colors">{% trans "Active reservations" %}</p>
                     <p class="text-3xl font-bold text-gray-900 mt-2 group-hover:text-blue-700 transition-colors">{{ reservations_actives }}</p>
                 </div>
                 <div class="bg-blue-100 rounded-full p-3 group-hover:scale-110 transition-transform duration-200">
@@ -57,13 +58,13 @@
                     </svg>
                 </div>
             </div>
-            <p class="text-xs text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Voir la laverie →</p>
+            <p class="text-xs text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">{% trans "View laundry" %} →</p>
         </a>
 
         <a href="{% url 'signalements:agent_liste' %}" class="group block bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:border-amber-300 hover:shadow-lg transition-all duration-200 active:scale-[0.99]">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-600 text-sm font-medium group-hover:text-amber-600 transition-colors">Signalements</p>
+                    <p class="text-gray-600 text-sm font-medium group-hover:text-amber-600 transition-colors">{% trans "Reports" %}</p>
                     <p class="text-3xl font-bold text-gray-900 mt-2 group-hover:text-amber-700 transition-colors">{{ total_signalements }}</p>
                 </div>
                 <div class="bg-amber-100 rounded-full p-3 group-hover:scale-110 transition-transform duration-200">
@@ -72,7 +73,7 @@
                     </svg>
                 </div>
             </div>
-            <p class="text-xs text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Traiter les signalements →</p>
+            <p class="text-xs text-gray-500 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">{% trans "Process reports" %} →</p>
         </a>
     </div>
 
@@ -81,28 +82,28 @@
         <a href="{% url 'signalements:agent_liste' %}" class="group block bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:border-amber-400 hover:shadow-md transition-all duration-200">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-600 text-sm font-medium mb-2">Nouveaux</p>
+                    <p class="text-gray-600 text-sm font-medium mb-2">{% trans "New" %}</p>
                     <p class="text-2xl font-bold text-amber-600 group-hover:scale-105 transition-transform">{{ signalements_nouveaux }}</p>
                 </div>
-                <span class="text-xs text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity">Voir →</span>
+                <span class="text-xs text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity">{% trans "View" %} →</span>
             </div>
         </a>
         <a href="{% url 'signalements:agent_liste' %}" class="group block bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:border-blue-400 hover:shadow-md transition-all duration-200">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-600 text-sm font-medium mb-2">En cours</p>
+                    <p class="text-gray-600 text-sm font-medium mb-2">{% trans "In progress" %}</p>
                     <p class="text-2xl font-bold text-blue-600 group-hover:scale-105 transition-transform">{{ signalements_en_cours }}</p>
                 </div>
-                <span class="text-xs text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">Voir →</span>
+                <span class="text-xs text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">{% trans "View" %} →</span>
             </div>
         </a>
         <a href="{% url 'signalements:agent_liste' %}" class="group block bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:border-green-400 hover:shadow-md transition-all duration-200">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-600 text-sm font-medium mb-2">Résolus</p>
+                    <p class="text-gray-600 text-sm font-medium mb-2">{% trans "Resolved" %}</p>
                     <p class="text-2xl font-bold text-green-600 group-hover:scale-105 transition-transform">{{ signalements_resolus }}</p>
                 </div>
-                <span class="text-xs text-green-600 opacity-0 group-hover:opacity-100 transition-opacity">Voir →</span>
+                <span class="text-xs text-green-600 opacity-0 group-hover:opacity-100 transition-opacity">{% trans "View" %} →</span>
             </div>
         </a>
     </div>
@@ -111,15 +112,15 @@
         <!-- Signalements récents -->
         <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow">
             <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-gray-900">Signalements récents</h2>
-                <a href="{% url 'signalements:agent_liste' %}" class="text-cyan-600 hover:text-cyan-700 text-sm font-medium hover:underline">Voir tout →</a>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "Recent reports" %}</h2>
+                <a href="{% url 'signalements:agent_liste' %}" class="text-cyan-600 hover:text-cyan-700 text-sm font-medium hover:underline">{% trans "View all" %} →</a>
             </div>
             <div class="space-y-2">
                 {% for sig in recent_signalements %}
                 <a href="{% url 'signalements:agent_liste' %}" class="flex items-center justify-between p-3 bg-gray-50 hover:bg-amber-50 rounded-lg border border-transparent hover:border-amber-200 transition-all duration-150 group">
                     <div>
                         <p class="font-semibold text-gray-900 group-hover:text-amber-800">#{{ sig.pk }}</p>
-                        <p class="text-sm text-gray-600">{{ sig.utilisateur.email|default:"Anonyme" }}</p>
+                        <p class="text-sm text-gray-600">{{ sig.utilisateur.email|default:_("Anonymous") }}</p>
                     </div>
                     <span class="text-xs px-2 py-1 rounded-full
                         {% if sig.statut == 'nouveau' %}bg-amber-100 text-amber-800
@@ -129,7 +130,7 @@
                     </span>
                 </a>
                 {% empty %}
-                <p class="text-gray-500 text-center py-4">Aucun signalement</p>
+                <p class="text-gray-500 text-center py-4">{% trans "No reports" %}</p>
                 {% endfor %}
             </div>
         </div>
@@ -137,8 +138,8 @@
         <!-- Utilisateurs récents -->
         <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
             <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-gray-900">Utilisateurs récents</h2>
-                <a href="{% url 'admin:index' %}auth/user/" class="text-cyan-600 hover:text-cyan-700 text-sm font-medium hover:underline">Voir tout →</a>
+                <h2 class="text-xl font-bold text-gray-900">{% trans "Recent users" %}</h2>
+                <a href="{% url 'admin:index' %}auth/user/" class="text-cyan-600 hover:text-cyan-700 text-sm font-medium hover:underline">{% trans "View all" %} →</a>
             </div>
             <div class="space-y-2">
                 {% for user_obj in recent_users %}
@@ -152,7 +153,7 @@
                     </span>
                 </div>
                 {% empty %}
-                <p class="text-gray-500 text-center py-4">Aucun utilisateur</p>
+                <p class="text-gray-500 text-center py-4">{% trans "No users" %}</p>
                 {% endfor %}
             </div>
         </div>
@@ -160,13 +161,13 @@
 
     <!-- Accès rapides (boutons interactifs) -->
     <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mt-6">
-        <h2 class="text-xl font-bold text-gray-900 mb-2">Accès rapides</h2>
-        <p class="text-gray-600 text-sm mb-4">Laverie, signalements et administration.</p>
+        <h2 class="text-xl font-bold text-gray-900 mb-2">{% trans "Quick access" %}</h2>
+        <p class="text-gray-600 text-sm mb-4">{% trans "Laundry, reports and administration." %}</p>
         <div class="flex flex-wrap gap-3">
-            <a href="{% url 'laverie:accueil' %}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-cyan-50 text-cyan-700 hover:bg-cyan-100 border border-cyan-200 font-medium transition shadow-sm hover:shadow">Laverie →</a>
-            <a href="{% url 'laverie:agent_machines' %}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 font-medium transition shadow-sm hover:shadow">Gestion machines →</a>
-            <a href="{% url 'signalements:agent_liste' %}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200 font-medium transition shadow-sm hover:shadow">Problèmes signalés →</a>
-            <a href="{% url 'admin:index' %}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 font-medium transition shadow-sm hover:shadow">Admin Django →</a>
+            <a href="{% url 'laverie:accueil' %}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-cyan-50 text-cyan-700 hover:bg-cyan-100 border border-cyan-200 font-medium transition shadow-sm hover:shadow">{% trans "Laundry" %} →</a>
+            <a href="{% url 'laverie:agent_machines' %}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 font-medium transition shadow-sm hover:shadow">{% trans "Machine management" %} →</a>
+            <a href="{% url 'signalements:agent_liste' %}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200 font-medium transition shadow-sm hover:shadow">{% trans "Reported issues" %} →</a>
+            <a href="{% url 'admin:index' %}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 font-medium transition shadow-sm hover:shadow">{% trans "Django Admin" %} →</a>
         </div>
     </div>
 </div>
