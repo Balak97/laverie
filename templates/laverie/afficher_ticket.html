@@ -2,67 +2,78 @@
 {% load static %}
 
 {% block contenu %}
-<div class="min-h-[70vh] flex flex-col items-center justify-center px-4 py-8">
-    <a href="{% url 'laverie:mes_tickets' %}" class="absolute top-20 right-4 text-indigo-600 hover:text-indigo-700 text-sm font-medium">
+<div class="min-h-[70vh] flex flex-col items-center justify-center px-3 sm:px-4 py-6 sm:py-8 pb-24 md:pb-8 safe-area-pb">
+    <a href="{% url 'laverie:mes_tickets' %}" class="fixed top-18 right-3 sm:absolute sm:top-20 sm:right-4 z-10 inline-flex items-center justify-center min-h-[44px] min-w-[44px] py-2.5 px-4 text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 rounded-xl text-sm font-medium transition touch-manipulation bg-white/90 sm:bg-transparent shadow sm:shadow-none">
         {{ i18n.close }}
     </a>
-    <div class="w-full max-w-md bg-white rounded-3xl shadow-xl border-2 border-indigo-200 p-8 text-center">
-        <p class="text-sm text-gray-500 uppercase tracking-wide mb-2">{{ i18n.dortoir_laverie }}</p>
-        <p class="text-4xl sm:text-5xl font-black text-indigo-600 mb-6">{{ i18n.ticket }} #{{ resa.numero|default:resa.pk }}</p>
-        <div class="space-y-4 text-left bg-gray-50 rounded-2xl p-5">
-            {% if resa.statut == 'en_cours' %}
-            <div id="countdown-block" class="mb-4 p-4 bg-indigo-50 rounded-xl border-2 border-indigo-200" data-end="{{ resa.fin|date:'c' }}" data-duration-minutes="{{ resa.duree_minutes }}">
-                <p class="text-xs text-indigo-600 uppercase tracking-wide mb-2">{{ i18n.time_remaining }}</p>
-                <p id="countdown-display" class="text-3xl sm:text-4xl font-black text-indigo-600 tabular-nums">--</p>
-                <div class="mt-3 h-2 bg-indigo-200 rounded-full overflow-hidden">
-                    <div id="countdown-bar" class="h-full bg-indigo-500 rounded-full transition-all duration-1000 ease-linear" style="width: 100%"></div>
+    <div class="w-full max-w-md bg-white rounded-2xl sm:rounded-3xl shadow-xl border-2 border-indigo-200 overflow-hidden">
+        <div class="p-5 sm:p-8 text-center">
+            <p class="text-xs sm:text-sm text-gray-500 uppercase tracking-wide mb-1">{{ i18n.dortoir_laverie }}</p>
+            <p class="text-3xl sm:text-5xl font-black text-indigo-600 mb-4 sm:mb-6 tabular-nums">{{ i18n.ticket }} #{{ resa.numero|default:resa.pk }}</p>
+            <div class="space-y-4 text-left bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-5">
+                {% if resa.statut == 'en_cours' %}
+                <div id="countdown-block" class="mb-2 p-4 bg-indigo-50 rounded-xl border-2 border-indigo-200" data-end="{{ resa.fin|date:'c' }}" data-duration-minutes="{{ resa.duree_minutes }}">
+                    <p class="text-xs text-indigo-600 uppercase tracking-wide mb-2">{{ i18n.time_remaining }}</p>
+                    <p id="countdown-display" class="text-2xl sm:text-4xl font-black text-indigo-600 tabular-nums">--</p>
+                    <div class="mt-2 h-2.5 bg-indigo-200 rounded-full overflow-hidden">
+                        <div id="countdown-bar" class="h-full bg-indigo-500 rounded-full transition-all duration-1000 ease-linear" style="width: 100%"></div>
+                    </div>
+                </div>
+                {% endif %}
+                <div>
+                    <p class="text-xs text-gray-500 uppercase">{{ i18n.machine }}</p>
+                    <p class="text-lg sm:text-xl font-bold text-gray-900 break-words">{{ resa.machine.nom }}</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500 uppercase">{{ i18n.programme }}</p>
+                    <p class="text-base sm:text-lg font-semibold text-gray-800 break-words">{{ resa.fonction.nom|default:"—" }} — {{ resa.duree_affichage }}</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500 uppercase">{{ i18n.time_slot }}</p>
+                    <p class="text-base sm:text-lg font-semibold text-gray-800 tabular-nums">{{ resa.debut|date:"d/m/Y" }} · {{ resa.debut|time:"H:i" }} → {{ resa.fin|time:"H:i" }}</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500 uppercase">{{ i18n.holder }}</p>
+                    <p class="text-base sm:text-lg font-semibold text-gray-800 break-words">{{ resa.utilisateur.get_full_name|default:user_display_default }}</p>
                 </div>
             </div>
-            {% endif %}
-            <div>
-                <p class="text-xs text-gray-500 uppercase">{{ i18n.machine }}</p>
-                <p class="text-xl font-bold text-gray-900">{{ resa.machine.nom }}</p>
-            </div>
-            <div>
-                <p class="text-xs text-gray-500 uppercase">{{ i18n.programme }}</p>
-                <p class="text-lg font-semibold text-gray-800">{{ resa.fonction.nom|default:"—" }} — {{ resa.duree_affichage }}</p>
-            </div>
-            <div>
-                <p class="text-xs text-gray-500 uppercase">{{ i18n.time_slot }}</p>
-                <p class="text-lg font-semibold text-gray-800">{{ resa.debut|date:"d/m/Y" }} · {{ resa.debut|time:"H:i" }} → {{ resa.fin|time:"H:i" }}</p>
-            </div>
-            <div>
-                <p class="text-xs text-gray-500 uppercase">{{ i18n.holder }}</p>
-                <p class="text-lg font-semibold text-gray-800">{{ resa.utilisateur.get_full_name|default:user_display_default }}</p>
-            </div>
-        </div>
-        <p class="mt-6 text-sm font-medium text-amber-700 bg-amber-50 rounded-xl py-2 px-4">
-            {{ i18n.show_at_machine }}
-        </p>
-        <p class="mt-3 text-sm font-medium text-indigo-700 bg-indigo-50 rounded-xl py-2 px-4">
-            {{ i18n.activate_at_time }}
-        </p>
-        <p class="mt-4 text-xs text-gray-400">{{ resa.get_statut_display }}</p>
+            <p class="mt-4 sm:mt-6 text-xs sm:text-sm font-medium text-amber-700 bg-amber-50 rounded-xl py-2.5 px-4">
+                {{ i18n.show_at_machine }}
+            </p>
+            <p class="mt-2 sm:mt-3 text-xs sm:text-sm font-medium text-indigo-700 bg-indigo-50 rounded-xl py-2.5 px-4">
+                {{ i18n.activate_at_time }}
+            </p>
+            <p class="mt-3 sm:mt-4 text-xs text-gray-400">{{ resa.get_statut_display }}</p>
 
-        {% if resa.statut == 'reserve' or resa.statut == 'en_cours' %}
-        <div class="mt-6 pt-6 border-t border-gray-200">
-            <p class="text-xs text-gray-500 uppercase tracking-wide mb-3">{{ i18n.change_duration }}</p>
-            <p class="text-sm text-gray-600 mb-3">{{ i18n.extend_slot_info }}</p>
-            {% if max_extend_minutes > 0 %}
-            <form action="{% url 'laverie:modifier_duree_ticket' resa.pk %}" method="post" class="inline-flex flex-wrap gap-2 items-center">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="extend">
-                <label for="add_minutes" class="text-sm text-gray-600">{{ i18n.extend_by }}</label>
-                <input type="number" name="add_minutes" id="add_minutes" min="1" max="{{ max_extend_minutes }}" step="1" placeholder="1–{{ max_extend_minutes }}" required
-                       class="w-20 rounded-lg border border-gray-300 px-3 py-1.5 text-sm focus:ring-2 focus:ring-indigo-500">
-                <span class="text-sm text-gray-500">{{ i18n.min }}</span>
-                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">{{ i18n.extend }}</button>
-            </form>
+            {% if resa.statut == 'reserve' or resa.statut == 'en_cours' %}
+            <div class="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-200">
+                <p class="text-xs text-gray-500 uppercase tracking-wide mb-2">{{ i18n.change_duration }}</p>
+                <p class="text-xs sm:text-sm text-gray-600 mb-3">{{ i18n.extend_slot_info }}</p>
+                {% if max_extend_minutes > 0 %}
+                <form action="{% url 'laverie:modifier_duree_ticket' resa.pk %}" method="post" class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-2 sm:items-center">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="extend">
+                    <div class="flex items-center gap-2 sm:gap-3">
+                        <label for="add_minutes" class="text-sm text-gray-600 shrink-0">{{ i18n.extend_by }}</label>
+                        <input type="number" name="add_minutes" id="add_minutes" min="1" max="{{ max_extend_minutes }}" step="1" placeholder="1–{{ max_extend_minutes }}" required
+                               class="w-20 sm:w-24 rounded-xl border-2 border-gray-300 px-4 py-3 sm:py-2 text-base sm:text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <span class="text-sm text-gray-500">{{ i18n.min }}</span>
+                    </div>
+                    <button type="submit" class="w-full sm:w-auto min-h-[48px] bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white text-sm font-semibold px-5 py-3 rounded-xl transition touch-manipulation">
+                        {{ i18n.extend }}
+                    </button>
+                </form>
+                {% endif %}
+            </div>
             {% endif %}
         </div>
-        {% endif %}
     </div>
 </div>
+<style>
+    @media (max-width: 640px) {
+        .safe-area-pb { padding-bottom: max(1.5rem, env(safe-area-inset-bottom)); }
+    }
+</style>
 {% if resa.statut == 'en_cours' %}
 <script>
 (function() {
